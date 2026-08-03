@@ -86,12 +86,14 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
               />
             </div>
 
-            {/* Category Buttons */}
+            {/* Category Buttons — horizontal scroll on mobile */}
             <div style={{
               display: 'flex',
-              gap: '0.6rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap'
+              gap: '0.5rem',
+              overflowX: 'auto',
+              paddingBottom: '4px',
+              scrollbarWidth: 'none',
+              WebkitOverflowScrolling: 'touch',
             }}>
               <button
                 onClick={() => setSelectedCategory('all')}

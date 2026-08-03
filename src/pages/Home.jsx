@@ -39,8 +39,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       <section style={{
         background: 'radial-gradient(120% 100% at 85% 15%, #0F3560 0%, #0A2540 50%, #051526 100%)',
         color: '#FFFFFF',
-        paddingTop: '6.5rem',
-        paddingBottom: '5.5rem',
+        paddingTop: 'clamp(4rem, 10vw, 6.5rem)',
+        paddingBottom: 'clamp(3rem, 8vw, 5.5rem)',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -59,8 +59,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '3rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+            gap: 'clamp(2rem, 5vw, 3rem)',
             alignItems: 'center'
           }}>
             {/* Hero Text */}
@@ -85,13 +85,13 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               </p>
 
               {/* Action Buttons */}
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
-                <button onClick={() => setActivePage('products')} className="btn btn-primary btn-lg">
-                  <span>{hero.ctaPrimary || "Explore Products"}</span>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+                <button onClick={() => setActivePage('products')} className="btn btn-primary btn-lg" style={{ flex: '1 1 auto', justifyContent: 'center', minWidth: '140px' }}>
+                  <span>{hero.ctaPrimary || 'Explore Products'}</span>
                   <ArrowRight size={18} />
                 </button>
-                <button onClick={() => setActivePage('contact')} className="btn btn-ghost-dark btn-lg">
-                  <span>{hero.ctaSecondary || "Become a Distributor"}</span>
+                <button onClick={() => setActivePage('contact')} className="btn btn-ghost-dark btn-lg" style={{ flex: '1 1 auto', justifyContent: 'center', minWidth: '140px' }}>
+                  <span>{hero.ctaSecondary || 'Become a Distributor'}</span>
                 </button>
               </div>
 
@@ -172,30 +172,21 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             <p>Engineered with zero compromises on chemical purity, extreme pressure performance, and thermal endurance.</p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: '1.5rem'
-          }}>
+          <div className="grid-responsive-4">
             {whyUs.map((item) => (
-              <div key={item.id} className="glass-card" style={{ padding: '1.75rem 1.5rem' }}>
+              <div key={item.id} className="glass-card" style={{ padding: '1.5rem 1.25rem' }}>
                 <div style={{
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '12px',
+                  width: '44px', height: '44px', borderRadius: '12px',
                   background: 'rgba(0, 90, 171, 0.1)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '1.25rem',
-                  color: 'var(--blue)'
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '1rem', color: 'var(--blue)'
                 }}>
                   {getIcon(item.icon)}
                 </div>
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', fontFamily: 'var(--font-display)' }}>
+                <h3 style={{ fontSize: '1rem', marginBottom: '0.45rem', fontFamily: 'var(--font-display)' }}>
                   {item.title}
                 </h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--steel)', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.875rem', color: 'var(--steel)', lineHeight: 1.55 }}>
                   {item.desc}
                 </p>
               </div>
@@ -225,11 +216,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             </button>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '1.75rem'
-          }}>
+          <div className="grid-responsive-3">
             {featuredProducts.map(product => (
               <ProductCard
                 key={product.id}
