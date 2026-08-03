@@ -33,7 +33,7 @@ Copy-Item "dist\assets\*" "assets\" -Recurse -Force
 Write-Host "4. Setting root index.html to production build output..." -ForegroundColor Cyan
 $prodHtml = Get-Content "dist\index.html" -Raw
 $timestamp = Get-Date -Format "yyyyMMddHHmmss"
-$prodHtmlWithCacheBuster = $prodHtml -replace 'app\.js"', "app.js?v=$timestamp`"" -replace 'style\.css"', "style.css?v=$timestamp`""
+$prodHtmlWithCacheBuster = $prodHtml -replace 'app\.js"', "app.js?v=$timestamp`"" -replace 'index\.css"', "index.css?v=$timestamp`""
 Set-Content -Path "index.html" -Value $prodHtmlWithCacheBuster
 
 Write-Host "Build prep complete! 1612 modules compiled with app.js." -ForegroundColor Green
