@@ -39,7 +39,7 @@ export const Footer = ({ setActivePage }) => {
           <div>
             <div style={{ marginBottom: '1.5rem', background: '#FFFFFF', padding: '0.6rem 1rem', borderRadius: '10px', display: 'inline-block' }}>
               <img
-                src="/logo.png"
+                src={settings?.logoUrl || '/logo.png'}
                 alt="Orbit Lubricants Official Logo"
                 style={{ height: '42px', width: 'auto', objectFit: 'contain', display: 'block' }}
               />

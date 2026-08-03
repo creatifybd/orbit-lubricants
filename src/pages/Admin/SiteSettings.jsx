@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCms } from '../../context/CmsContext';
-import { Settings, Save, Download, Upload, RotateCcw, ShieldAlert, Sparkles } from 'lucide-react';
+import { ImageUploader } from '../../components/ImageUploader';
+import { Save, Download, Upload, RotateCcw, ShieldAlert } from 'lucide-react';
 
 export const SiteSettings = () => {
   const { 
@@ -34,7 +35,7 @@ export const SiteSettings = () => {
           Site Settings & Backup System
         </h2>
         <p style={{ color: '#94A3B8', fontSize: '0.9rem' }}>
-          Control top announcement banner, site title, and backup/restore CMS configuration.
+          Control top announcement banner, brand logo, site title, and backup/restore CMS configuration.
         </p>
       </div>
 
@@ -48,8 +49,14 @@ export const SiteSettings = () => {
         }}>
           <form onSubmit={handleSave} className="dark-form">
             <h3 style={{ color: '#FFFFFF', fontSize: '1.2rem', marginBottom: '1.25rem', fontFamily: 'var(--font-display)' }}>
-              General & Banner Configuration
+              General & Brand Configuration
             </h3>
+
+            <ImageUploader
+              label="Website Brand Logo (Drag & Drop or Paste URL)"
+              value={settingsForm.logoUrl || '/logo.png'}
+              onChange={url => setSettingsForm({ ...settingsForm, logoUrl: url })}
+            />
 
             <div className="form-group">
               <label>Website Title</label>

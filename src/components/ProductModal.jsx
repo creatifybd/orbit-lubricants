@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ShieldCheck, CheckCircle2, Package, Cpu, ArrowRight } from 'lucide-react';
+import { X, Package, ArrowRight } from 'lucide-react';
 
 export const ProductModal = ({ product, onClose, onInquire }) => {
   if (!product) return null;
@@ -9,7 +9,7 @@ export const ProductModal = ({ product, onClose, onInquire }) => {
       <div 
         className="modal-card" 
         onClick={e => e.stopPropagation()}
-        style={{ padding: 0, overflow: 'hidden' }}
+        style={{ padding: 0, overflow: 'hidden', maxWidth: '640px' }}
       >
         {/* Header Header */}
         <div style={{
@@ -66,12 +66,30 @@ export const ProductModal = ({ product, onClose, onInquire }) => {
             </span>
           </div>
 
-          <h2 style={{ color: '#FFFFFF', fontSize: '1.8rem', marginBottom: '0.5rem', fontFamily: 'var(--font-display)' }}>
-            {product.name}
-          </h2>
-
-          <div style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.85)' }}>
-            Standard: {product.apiGrade}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginTop: '0.5rem' }}>
+            {product.image && (
+              <img
+                src={product.image}
+                alt={product.name}
+                style={{
+                  maxHeight: '100px',
+                  maxWidth: '120px',
+                  objectFit: 'contain',
+                  background: '#FFFFFF',
+                  borderRadius: '10px',
+                  padding: '6px',
+                  boxShadow: '0 10px 20px rgba(0,0,0,0.3)'
+                }}
+              />
+            )}
+            <div>
+              <h2 style={{ color: '#FFFFFF', fontSize: '1.8rem', marginBottom: '0.3rem', fontFamily: 'var(--font-display)' }}>
+                {product.name}
+              </h2>
+              <div style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.85)' }}>
+                Standard: {product.apiGrade}
+              </div>
+            </div>
           </div>
         </div>
 

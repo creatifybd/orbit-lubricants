@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, ChevronRight, Award, Layers } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 export const ProductCard = ({ product, onSelect }) => {
   return (
@@ -10,17 +10,18 @@ export const ProductCard = ({ product, onSelect }) => {
       overflow: 'hidden',
       position: 'relative'
     }}>
-      {/* Top Color Accent Header */}
+      {/* Top Header / Image Area */}
       <div style={{
-        height: '140px',
+        height: '160px',
         background: `linear-gradient(135deg, ${product.imageColor || '#005AAB'} 0%, #0A2540 100%)`,
         padding: '1.25rem',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        position: 'relative'
+        position: 'relative',
+        alignItems: 'center'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', zIndex: 2 }}>
           {product.badge && (
             <span style={{
               fontFamily: 'var(--font-mono)',
@@ -50,31 +51,49 @@ export const ProductCard = ({ product, onSelect }) => {
           </span>
         </div>
 
-        {/* 3D Rendered Oil Can Visual */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '10px',
-            background: '#FFFFFF',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 8px 16px rgba(0,0,0,0.2)'
-          }}>
-            <svg width="24" height="24" viewBox="0 0 100 100">
-              <path d="M50 15 L75 40 L75 85 L25 85 L25 40 Z" fill={product.imageColor || '#005AAB'} />
-              <circle cx="50" cy="60" r="12" fill="#F7941D" />
-            </svg>
-          </div>
-          <div>
-            <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Grade Standard
+        {/* Product Image or Can Visual */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '90px', width: '100%', zIndex: 1 }}>
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.name}
+              style={{
+                maxHeight: '90px',
+                maxWidth: '120px',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.4))',
+                background: '#FFFFFF',
+                borderRadius: '8px',
+                padding: '6px'
+              }}
+            />
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '12px',
+                background: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 8px 16px rgba(0,0,0,0.2)'
+              }}>
+                <svg width="26" height="26" viewBox="0 0 100 100">
+                  <path d="M50 15 L75 40 L75 85 L25 85 L25 40 Z" fill={product.imageColor || '#005AAB'} />
+                  <circle cx="50" cy="60" r="12" fill="#F7941D" />
+                </svg>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Grade Standard
+                </div>
+                <div style={{ fontSize: '0.85rem', color: '#FFFFFF', fontWeight: 600 }}>
+                  {product.apiGrade}
+                </div>
+              </div>
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#FFFFFF', fontWeight: 600 }}>
-              {product.apiGrade}
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

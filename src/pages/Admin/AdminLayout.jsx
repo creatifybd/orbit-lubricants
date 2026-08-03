@@ -33,7 +33,7 @@ export const AdminLayout = ({ onReturnHome }) => {
       <aside className="admin-sidebar">
         <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: '#FFFFFF', borderRadius: '8px', margin: '1rem' }}>
           <img 
-            src="/logo.png" 
+            src={data?.settings?.logoUrl || '/logo.png'} 
             alt="Orbit Lubricants Logo" 
             style={{ height: '36px', width: 'auto', display: 'block', margin: '0 auto' }}
           />

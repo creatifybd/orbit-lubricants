@@ -67,7 +67,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
             style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
           >
             <img
-              src="/logo.png"
+              src={settings?.logoUrl || '/logo.png'}
               alt="Orbit Lubricants Official Logo"
               style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
             />
