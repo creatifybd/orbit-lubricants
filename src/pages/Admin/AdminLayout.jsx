@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 export const AdminLayout = ({ onReturnHome }) => {
-  const { isAdminLoggedIn, logoutAdmin } = useCms();
+  const { data, isAdminLoggedIn, logoutAdmin } = useCms();
   const [activeTab, setActiveTab] = useState('overview');
 
   if (!isAdminLoggedIn) {
