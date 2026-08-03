@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { UploadCloud, Link as LinkIcon, X, Image as ImageIcon } from 'lucide-react';
+import React, { useState, useId } from 'react';
+import { UploadCloud, Link as LinkIcon, X } from 'lucide-react';
 
 export const ImageUploader = ({ value, onChange, label = "Upload Image" }) => {
+  const uid = useId().replace(/:/g, '');
   const [tab, setTab] = useState('drag'); // 'drag' or 'url'
   const [urlInput, setUrlInput] = useState('');
   const [isDragging, setIsDragging] = useState(false);
@@ -160,7 +161,7 @@ export const ImageUploader = ({ value, onChange, label = "Upload Image" }) => {
                 cursor: 'pointer',
                 transition: 'all 0.2s ease'
               }}
-              onClick={() => document.getElementById('fileInputCustom').click()}
+              onClick={() => document.getElementById(`fileInput_${uid}`).click()}
             >
               <UploadCloud size={32} style={{ color: 'var(--orange)', marginBottom: '0.5rem' }} />
               <div style={{ fontSize: '0.88rem', color: '#F8FAFC', fontWeight: 600 }}>
@@ -170,7 +171,7 @@ export const ImageUploader = ({ value, onChange, label = "Upload Image" }) => {
                 Supports PNG, JPG, WEBP, SVG
               </div>
               <input
-                id="fileInputCustom"
+                id={`fileInput_${uid}`}
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
