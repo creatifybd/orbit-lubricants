@@ -1,6 +1,10 @@
 import React from 'react';
+import { useCms } from '../context/CmsContext';
 
 export const OrbitRing = () => {
+  const { data } = useCms();
+  const { settings } = data || {};
+
   return (
     <div style={{
       position: 'relative',
@@ -19,7 +23,7 @@ export const OrbitRing = () => {
           position: 'absolute',
           inset: '-15%',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(247, 148, 29, 0.4) 0%, rgba(0, 90, 171, 0.3) 45%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(247, 148, 29, 0.45) 0%, rgba(0, 90, 171, 0.3) 45%, transparent 70%)',
           filter: 'blur(24px)',
           pointerEvents: 'none'
         }}
@@ -32,8 +36,8 @@ export const OrbitRing = () => {
           position: 'absolute',
           inset: 0,
           borderRadius: '50%',
-          border: '2px dashed rgba(255, 255, 255, 0.25)',
-          boxShadow: '0 0 30px rgba(0, 90, 171, 0.2)'
+          border: '2px dashed rgba(255, 255, 255, 0.28)',
+          boxShadow: '0 0 30px rgba(0, 90, 171, 0.25)'
         }}
       />
 
@@ -44,12 +48,12 @@ export const OrbitRing = () => {
           position: 'absolute',
           inset: '12%',
           borderRadius: '50%',
-          border: '1.5px stroke rgba(247, 148, 29, 0.45)',
+          border: '1.5px stroke rgba(247, 148, 29, 0.5)',
           boxShadow: 'inset 0 0 35px rgba(0, 90, 171, 0.45)'
         }}
       />
 
-      {/* Primary Orbiting Droplet */}
+      {/* Primary Orbiting Droplet (Orange) */}
       <div
         className="animate-spin-slow"
         style={{
@@ -70,7 +74,7 @@ export const OrbitRing = () => {
         }} />
       </div>
 
-      {/* Secondary Orbiting Blue Accent Particle */}
+      {/* Secondary Orbiting Particle (Blue) */}
       <div
         className="animate-spin-reverse"
         style={{
@@ -91,47 +95,34 @@ export const OrbitRing = () => {
         }} />
       </div>
 
-      {/* Center 3D Drop Logo Card */}
+      {/* Center Circle with Official Orbit Logo */}
       <div
         className="animate-float"
         style={{
-          width: '55%',
-          height: '55%',
+          width: '58%',
+          height: '58%',
           borderRadius: '50%',
-          background: 'linear-gradient(145deg, #0D325E 0%, #051526 100%)',
-          border: '2px solid rgba(255, 255, 255, 0.22)',
+          background: 'linear-gradient(145deg, #FFFFFF 0%, #F1F5F9 100%)',
+          border: '3px solid rgba(247, 148, 29, 0.5)',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.65), inset 0 0 25px rgba(0, 90, 171, 0.5)',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(247, 148, 29, 0.35)',
           position: 'relative',
           zIndex: 2,
-          padding: '1.5rem'
+          padding: '1.2rem'
         }}
       >
-        {/* Large SVG Liquid Drop */}
-        <svg width="72" height="72" viewBox="0 0 100 100" style={{ filter: 'drop-shadow(0 8px 18px rgba(247,148,29,0.6))' }}>
-          <path d="M50 12 C50 12 22 52 22 70 A28 28 0 0 0 78 70 C78 52 50 12 50 12 Z" fill="url(#dropGrad)" />
-          <path d="M42 35 C42 35 30 58 30 68 A16 16 0 0 0 45 74 C36 70 36 55 42 35 Z" fill="rgba(255,255,255,0.4)" />
-          <defs>
-            <linearGradient id="dropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#F7941D" />
-              <stop offset="100%" stopColor="#D97706" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <div style={{
-          fontFamily: 'var(--font-display)',
-          fontWeight: 700,
-          fontSize: '1.05rem',
-          color: '#FFFFFF',
-          letterSpacing: '0.08em',
-          marginTop: '6px'
-        }}>
-          ORBIT
-        </div>
+        <img
+          src={settings?.logoUrl || '/logo.png'}
+          alt="Orbit Lubricants Official Logo"
+          style={{
+            maxWidth: '85%',
+            maxHeight: '85%',
+            objectFit: 'contain',
+            filter: 'drop-shadow(0 6px 12px rgba(10, 37, 64, 0.15))'
+          }}
+        />
       </div>
     </div>
   );
