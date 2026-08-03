@@ -1,10 +1,6 @@
 import React from 'react';
-import { useCms } from '../context/CmsContext';
 
 export const OrbitRing = () => {
-  const { data } = useCms();
-  const { settings } = data || {};
-
   return (
     <div style={{
       position: 'relative',
@@ -23,7 +19,7 @@ export const OrbitRing = () => {
           position: 'absolute',
           inset: '-15%',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(247, 148, 29, 0.45) 0%, rgba(0, 90, 171, 0.3) 45%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(247, 148, 29, 0.4) 0%, rgba(0, 90, 171, 0.3) 45%, transparent 70%)',
           filter: 'blur(24px)',
           pointerEvents: 'none'
         }}
@@ -36,7 +32,7 @@ export const OrbitRing = () => {
           position: 'absolute',
           inset: 0,
           borderRadius: '50%',
-          border: '2px dashed rgba(255, 255, 255, 0.28)',
+          border: '2px dashed rgba(255, 255, 255, 0.25)',
           boxShadow: '0 0 30px rgba(0, 90, 171, 0.25)'
         }}
       />
@@ -48,12 +44,12 @@ export const OrbitRing = () => {
           position: 'absolute',
           inset: '12%',
           borderRadius: '50%',
-          border: '1.5px stroke rgba(247, 148, 29, 0.5)',
+          border: '1.5px stroke rgba(247, 148, 29, 0.45)',
           boxShadow: 'inset 0 0 35px rgba(0, 90, 171, 0.45)'
         }}
       />
 
-      {/* Primary Orbiting Droplet (Orange) */}
+      {/* Primary Orbiting Droplet */}
       <div
         className="animate-spin-slow"
         style={{
@@ -74,7 +70,7 @@ export const OrbitRing = () => {
         }} />
       </div>
 
-      {/* Secondary Orbiting Particle (Blue) */}
+      {/* Secondary Orbiting Blue Particle */}
       <div
         className="animate-spin-reverse"
         style={{
@@ -95,32 +91,31 @@ export const OrbitRing = () => {
         }} />
       </div>
 
-      {/* Center Circle with Official Orbit Logo */}
+      {/* Center 3D Circle with Special Dark-Background Logo */}
       <div
         className="animate-float"
         style={{
           width: '58%',
           height: '58%',
           borderRadius: '50%',
-          background: 'linear-gradient(145deg, #FFFFFF 0%, #F1F5F9 100%)',
-          border: '3px solid rgba(247, 148, 29, 0.5)',
+          background: 'linear-gradient(145deg, #0D325E 0%, #051526 100%)',
+          border: '2px solid rgba(255, 255, 255, 0.18)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(247, 148, 29, 0.35)',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.65), inset 0 0 25px rgba(0, 90, 171, 0.5)',
           position: 'relative',
           zIndex: 2,
           padding: '1.2rem'
         }}
       >
         <img
-          src={settings?.logoUrl || '/logo.png'}
-          alt="Orbit Lubricants Official Logo"
+          src="/logo-dark-bg.png"
+          alt="Orbit Lubricants"
           style={{
             maxWidth: '85%',
             maxHeight: '85%',
-            objectFit: 'contain',
-            filter: 'drop-shadow(0 6px 12px rgba(10, 37, 64, 0.15))'
+            objectFit: 'contain'
           }}
         />
       </div>
