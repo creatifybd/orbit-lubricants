@@ -3,7 +3,7 @@ import { initialData } from '../data/initialData';
 
 const CmsContext = createContext();
 
-const STORAGE_KEY = 'orbit_lubricants_cms_v3';
+const STORAGE_KEY = 'orbit_lubricants_cms_v4';
 const AUTH_KEY = 'orbit_admin_authenticated';
 
 export const CmsProvider = ({ children }) => {

@@ -1,7 +1,7 @@
 export const initialData = {
   hero: {
     title: "Power in Every Drop",
-    subtitle: "Orbit Lubricant Industries — premium automotive and industrial lubricants engineered for superior engine protection, maximum thermal efficiency, and peak operational performance.",
+    subtitle: "Orbit Lubricant Industries — premium automotive, motorcycle, CNG, and heavy-duty industrial lubricants engineered for superior engine protection, maximum thermal efficiency, and peak performance.",
     ctaPrimary: "Explore Product Range",
     ctaSecondary: "Become a Distributor",
     stat1: { number: "50+", label: "Formulated Lubricants" },
@@ -13,7 +13,7 @@ export const initialData = {
     heroTitle: "Protecting Engines. Powering Global Industry.",
     heroSubtitle: "Engineered in Bangladesh for tough road conditions, extreme climates, and heavy-duty industrial demands.",
     story: "Orbit Lubricant Industries is a premier lubricant manufacturer dedicated to formulating high-performance engine oils, gear fluids, hydraulic oils, and specialized greases. Founded with a vision to deliver world-class tribological solutions, Orbit combines advanced synthetic additive chemistry with refined base stocks to provide unmatched anti-wear and thermal stability.",
-    mission: "To engineer and supply high-performance lubricants that maximize machinery lifespan, reduce maintenance downtime, and lower operational costs for automotive, industrial, and maritime clients.",
+    mission: "To engineer and supply high-performance lubricants that maximize machinery lifespan, reduce maintenance downtime, and lower operational costs for automotive, industrial, and motorcycle clients.",
     vision: "To become South Asia's leading lubricant brand and a trusted export partner recognized globally for uncompromising quality, technical innovation, and environmental responsibility.",
     values: [
       { title: "Precision Chemistry", desc: "Every drop is blended using premium virgin base oils and internationally certified additive packages." },
@@ -23,124 +23,213 @@ export const initialData = {
   },
 
   categories: [
-    { id: "automotive", name: "Passenger Car Motor Oils", icon: "Car" },
-    { id: "heavy-duty", name: "Heavy Duty Diesel Engine Oils", icon: "Truck" },
-    { id: "industrial", name: "Industrial & Gear Oils", icon: "Factory" },
-    { id: "grease", name: "Greases & Specialty Lubricants", icon: "Zap" },
     { id: "motorcycle", name: "4T / 2T Motorcycle Oils", icon: "Bike" },
+    { id: "cng", name: "CNG Special Engine Oils", icon: "Zap" },
+    { id: "automotive", name: "Passenger Car Motor Oils", icon: "Car" },
+    { id: "heavy-duty", name: "Heavy Duty Commercial Engine Oils", icon: "Truck" },
+    { id: "industrial", name: "Industrial & Gear Oils", icon: "Factory" },
     { id: "hydraulic", name: "Hydraulic & Transmission Fluids", icon: "Sliders" }
   ],
 
   products: [
     {
-      id: "orb-5w30-syn",
-      name: "Orbit Ultra Synth 5W-30",
-      category: "automotive",
-      viscosity: "5W-30",
-      apiGrade: "API SP / SN Plus / ILSAC GF-6",
-      packing: "1L, 4L, 5L, 208L Barrel",
+      id: "orb-20w50-cng-gold",
+      name: "Orbit 20W50 CNG Premium Engine Oil",
+      category: "cng",
+      viscosity: "20W-50",
+      apiGrade: "CNG Compatible Special Grade",
+      packing: "2L Net Volume",
       featured: true,
-      badge: "Fully Synthetic",
-      imageColor: "#005AAB",
-      description: "Ultra-premium fully synthetic engine oil engineered for modern turbocharged gasoline and hybrid passenger vehicles. Provides instantaneous cold-start lubrication and extreme high-temperature oxidation resistance.",
+      badge: "CNG Vehicle Special",
+      image: "/products/Selected.png",
+      imageColor: "#007A3D",
+      description: "Specially formulated premium engine oil designed for CNG vehicles and auto-rickshaws. Offers superior engine protection, excellent thermal stability, cleaner engine operation, and enhanced fuel efficiency.",
       specs: {
-        "Base Type": "100% Synthetic Group III+",
-        "Viscosity Index": "172",
-        "Pour Point": "-42°C",
-        "Flash Point": "228°C",
-        "Recommended Drain": "12,000 km / 12 Months"
+        "Base Type": "Refined Mineral Base + CNG Additives",
+        "Target Vehicles": "CNG Auto-Rickshaws, CNG Cars & Commercial",
+        "Viscosity Index": "135",
+        "Thermal Stability": "High Heat Resistant",
+        "Recommended Drain": "4,000 km / 3 Months"
       }
     },
     {
-      id: "orb-15w40-heavy",
-      name: "Orbit Titan HD 15W-40",
+      id: "orb-15w40-truck",
+      name: "Orbit Fusion-Tech 15W-40 Heavy Duty Engine Oil",
       category: "heavy-duty",
       viscosity: "15W-40",
-      apiGrade: "API CK-4 / CJ-4 / CI-4 Plus",
-      packing: "5L, 20L, 208L Barrel",
+      apiGrade: "API CI-4 / ACEA E7",
+      packing: "5 Liters",
       featured: true,
-      badge: "Heavy Duty Commercial",
-      imageColor: "#F7941D",
-      description: "Heavy-duty diesel engine oil specially formulated for long-haul trucks, buses, construction equipment, and agricultural machinery operating under severe load and heat conditions.",
-      specs: {
-        "Base Type": "Premium Mineral Group II",
-        "Viscosity Index": "140",
-        "TBN (Base Number)": "10.5 mg KOH/g",
-        "Pour Point": "-33°C",
-        "Recommended Drain": "25,000 km (Highways)"
-      }
-    },
-    {
-      id: "orb-iso-68-ind",
-      name: "Orbit Hydro-Tech ISO VG 68",
-      category: "industrial",
-      viscosity: "ISO VG 68",
-      apiGrade: "DIN 51524 Part 2 (HLP) / ISO 11158",
-      packing: "20L, 208L Barrel",
-      featured: true,
-      badge: "Industrial Grade",
-      imageColor: "#0A2540",
-      description: "Anti-wear industrial hydraulic fluid designed for high-pressure hydraulic systems in manufacturing plants, injection molding machines, presses, and heavy earthmoving machinery.",
-      specs: {
-        "Base Type": "High Viscosity Index Mineral",
-        "ISO Grade": "68",
-        "Demulsibility": "15 min (ASTM D1401)",
-        "Pour Point": "-24°C",
-        "Flash Point": "240°C"
-      }
-    },
-    {
-      id: "orb-ep2-grease",
-      name: "Orbit Lithium Complex EP-2 Grease",
-      category: "grease",
-      viscosity: "NLGI 2",
-      apiGrade: "DIN 51825: KP2K-30",
-      packing: "500g, 1kg, 18kg Bucket, 180kg Drum",
-      featured: false,
-      badge: "High Temp EP",
+      badge: "Commercial Heavy Duty",
+      image: "/products/Selected4.png",
       imageColor: "#D97706",
-      description: "High-performance lithium complex grease enriched with extreme pressure (EP) additives for heavy wheel bearings, chassis points, industrial conveyors, and high-impact machinery.",
+      description: "Fusion-Tech synthetic technology heavy duty engine oil engineered for commercial trucks, buses, and industrial equipment. Delivers advanced wear protection, engine cleanliness, thermal stability, and fuel economy support.",
       specs: {
-        "Thickener": "Lithium Complex",
-        "Dropping Point": "280°C+",
-        "Four Ball Weld Load": "315 kg",
-        "Operating Temp": "-30°C to +160°C"
+        "Base Type": "Synthetic Technology",
+        "OEM Level": "CI-4 / ACEA E7 Approved",
+        "Viscosity Index": "145",
+        "Pour Point": "-36°C",
+        "Recommended Drain": "15,000 km / Heavy Duty"
       }
     },
     {
-      id: "orb-10w40-4t",
-      name: "Orbit MotoRacer 4T 10W-40",
+      id: "orb-20w50-fusion-silver",
+      name: "Orbit Fusion-Tech 20W-50 Synthetic Tech Engine Oil",
+      category: "automotive",
+      viscosity: "20W-50",
+      apiGrade: "API CI-4 / ACEA E7",
+      packing: "4 Liters",
+      featured: true,
+      badge: "Synthetic Technology",
+      image: "/products/Selected5.png",
+      imageColor: "#005AAB",
+      description: "Premium Fusion-Tech synthetic technology engine oil engineered for modern passenger cars, SUVs, and light commercial vehicles. Ensures advanced wear protection, engine cleanliness, and fuel economy support.",
+      specs: {
+        "Base Type": "Synthetic Technology Blend",
+        "Viscosity Index": "140",
+        "Pour Point": "-33°C",
+        "Flash Point": "230°C",
+        "Recommended Drain": "8,000 km"
+      }
+    },
+    {
+      id: "orb-20w50-fusion-car",
+      name: "Orbit Fusion-Tech 20W-50 Passenger Motor Oil",
+      category: "automotive",
+      viscosity: "20W-50",
+      apiGrade: "API CI-4 / ACEA E7",
+      packing: "4 Liters",
+      featured: true,
+      badge: "Fusion-Tech Performance",
+      image: "/products/Selected6.png",
+      imageColor: "#0A2540",
+      description: "High-performance motor oil formulated with synthetic technology for smooth engine operation, thermal stability, and prolonged engine durability under tough operating conditions.",
+      specs: {
+        "Base Type": "Synthetic Technology",
+        "Viscosity Index": "138",
+        "Pour Point": "-30°C",
+        "Recommended Drain": "7,500 km"
+      }
+    },
+    {
+      id: "orb-10w30-xpower-black",
+      name: "Orbit XPower 10W30 4T Mineral Motorcycle Oil",
+      category: "motorcycle",
+      viscosity: "10W-30",
+      apiGrade: "JASO MA2 / API SL",
+      packing: "1L Net Volume",
+      featured: true,
+      badge: "4T Motorcycle Oil",
+      image: "/products/Selected7.png",
+      imageColor: "#0A2540",
+      description: "High-performance 4T mineral engine oil engineered for 4-stroke motorcycles. Delivers reliable protection against wear, smooth clutch engagement, and excellent heat stability.",
+      specs: {
+        "Engine Type": "4-Stroke Motorcycle",
+        "JASO Standard": "JASO MA2 (Wet Clutch)",
+        "API Standard": "API SL",
+        "Viscosity Index": "130",
+        "Recommended Drain": "2,500 km"
+      }
+    },
+    {
+      id: "orb-10w30-xpower-green",
+      name: "Orbit XPower 10W30 4T Performance & Protection",
+      category: "motorcycle",
+      viscosity: "10W-30",
+      apiGrade: "JASO MA2 / API SL",
+      packing: "1L Net Volume",
+      featured: true,
+      badge: "Smooth Acceleration",
+      image: "/products/Selected8.png",
+      imageColor: "#007A3D",
+      description: "Mineral 4T engine oil engineered for maximum reliability, smooth acceleration, engine durability, and optimal clutch performance under urban and highway riding.",
+      specs: {
+        "Engine Type": "4-Stroke Motorcycle",
+        "JASO Standard": "JASO MA2",
+        "API Standard": "API SL",
+        "Viscosity Index": "132",
+        "Recommended Drain": "2,500 km"
+      }
+    },
+    {
+      id: "orb-10w40-xpower-red",
+      name: "Orbit XPower 10W40 4T Mineral Engine Oil",
       category: "motorcycle",
       viscosity: "10W-40",
-      apiGrade: "API SN / JASO MA2",
-      packing: "1L Bottle",
+      apiGrade: "JASO MA2 / API SL",
+      packing: "1L Net Volume",
       featured: true,
-      badge: "Synthetic Blend",
-      imageColor: "#E11D48",
-      description: "Advanced 4-stroke motorcycle oil formulated for wet-clutch performance, crisp gear shifting, and maximum thermal protection during high-RPM city stop-and-go riding.",
+      badge: "10W-40 4T Mineral",
+      image: "/products/Selected9.png",
+      imageColor: "#EF4444",
+      description: "Premium mineral 4T motorcycle oil formulated for bikes requiring 10W40 grade. Ensures reliable wear protection, smooth clutch response, and high thermal endurance.",
       specs: {
-        "Clutch Approval": "JASO MA2 Certified",
-        "Base Type": "Synthetic Technology",
-        "Pour Point": "-36°C",
+        "Engine Type": "4-Stroke Motorcycle",
+        "JASO Standard": "JASO MA2",
+        "API Standard": "API SL",
+        "Viscosity Index": "135",
         "Recommended Drain": "3,000 km"
       }
     },
     {
-      id: "orb-atf-v",
-      name: "Orbit TransGlide ATF VI",
-      category: "hydraulic",
-      viscosity: "Low Viscosity ATF",
-      apiGrade: "Dexron VI / Mercon LV",
-      packing: "1L, 4L, 20L",
-      featured: false,
-      badge: "Automatic Trans",
-      imageColor: "#7C3AED",
-      description: "Premium full synthetic automatic transmission fluid offering smooth shifting performance, anti-shudder stability, and extended fluid service life for modern 6-speed+ automatic gearboxes.",
+      id: "orb-20w40-xpower-blue",
+      name: "Orbit XPower 20W40 4T Mineral Engine Oil",
+      category: "motorcycle",
+      viscosity: "20W-40",
+      apiGrade: "JASO MA2 / API SL",
+      packing: "1L Net Volume",
+      featured: true,
+      badge: "20W-40 Heavy Duty 4T",
+      image: "/products/Selected10.png",
+      imageColor: "#005AAB",
+      description: "Heavy-duty mineral 4T engine oil designed for 4-stroke motorcycles operating in high ambient temperatures. Offers reliable engine protection, smooth clutch performance, and high heat stability.",
       specs: {
-        "Base Type": "100% Synthetic",
-        "Viscosity @ 100°C": "6.0 cSt",
-        "Flash Point": "215°C"
+        "Engine Type": "4-Stroke Motorcycle",
+        "JASO Standard": "JASO MA2",
+        "API Standard": "API SL",
+        "Viscosity Index": "128",
+        "Recommended Drain": "2,500 km"
       }
+    }
+  ],
+
+  standards: [
+    { code: "API CI-4", name: "American Petroleum Institute Heavy Duty Diesel Standard", status: "Certified" },
+    { code: "JASO MA2", name: "Japanese Automotive Standards Org 4T Motorcycle Wet-Clutch Standard", status: "Certified" },
+    { code: "ACEA E7", name: "European Automobile Manufacturers Association Commercial Standard", status: "Compliant" },
+    { code: "API SL", name: "API 4-Stroke Gasoline & Motorcycle Engine Service Specification", status: "Certified" }
+  ],
+
+  contactInfo: {
+    address: "Orbit Lubricant Industries, Industrial Zone, Dhaka, Bangladesh",
+    phone: "+880 1700-000000 / +880 1800-000000",
+    email: "info@orbit-lubricants.com",
+    salesEmail: "sales@orbit-lubricants.com",
+    hours: "Saturday – Thursday: 9:00 AM – 6:00 PM"
+  },
+
+  inquiries: [
+    {
+      id: "inq-101",
+      date: "2026-08-02 14:30",
+      name: "Rafiqul Islam",
+      email: "rafiq.motors@gmail.com",
+      phone: "+8801711223344",
+      product: "Orbit XPower 10W30 4T Mineral Motorcycle Oil",
+      type: "Distributor Inquiry",
+      status: "New",
+      message: "We have 15 motorcycle workshops in Gazipur. Want bulk quotation for 100 cartons of 1L 10W30 4T oil."
+    },
+    {
+      id: "inq-102",
+      date: "2026-08-01 11:15",
+      name: "Tariqul Alam",
+      email: "tariq.transport@yahoo.com",
+      phone: "+8801819887766",
+      product: "Orbit Fusion-Tech 15W-40 Heavy Duty Engine Oil",
+      type: "Bulk Order",
+      status: "In Progress",
+      message: "Looking for 5L cans and 208L barrels for our fleet of 25 commercial trucks."
     }
   ],
 
@@ -148,81 +237,33 @@ export const initialData = {
     {
       id: "w1",
       icon: "ShieldCheck",
-      title: "Certified International Standards",
-      desc: "Blended in compliance with API (American Petroleum Institute), SAE, and ISO 9001:2015 quality management benchmarks."
+      title: "Certified Quality Additives",
+      desc: "Blended using Tier-1 global additive packages meeting API CI-4, JASO MA2, and ACEA specifications."
     },
     {
       id: "w2",
-      icon: "Cpu",
-      title: "Virgin Base Oil Chemistry",
-      desc: "We exclusively use 100% pure virgin base stocks imported from Tier-1 refineries with zero recycled contaminants."
+      icon: "Zap",
+      title: "CNG & Tropical Climate Formulations",
+      desc: "Engineered specifically for Bangladesh high heat, traffic gridlocks, and CNG fuel operation."
     },
     {
       id: "w3",
-      icon: "Flame",
-      title: "High Thermal & Oxidation Stability",
-      desc: "Designed to resist viscosity breakdown under tropical temperatures and prolonged high-torque engine operations."
+      icon: "Factory",
+      title: "Direct Factory Distribution",
+      desc: "Guaranteed authentic products with zero counterfeit risk and competitive margin structure for dealers."
     },
     {
       id: "w4",
       icon: "Truck",
-      title: "Nationwide Distribution",
-      desc: "Dedicated logistics infrastructure ensuring timely deliveries to dealers, service centers, and industrial hubs across Bangladesh."
-    },
-    {
-      id: "w5",
-      icon: "Wrench",
-      title: "B2B Technical Support",
-      desc: "Our team of tribology engineers provides free oil analysis, lube surveys, and custom lubrication recommendations."
-    }
-  ],
-
-  standards: [
-    { code: "API SP/CK-4", name: "American Petroleum Institute", status: "Certified" },
-    { code: "SAE J300", name: "Society of Automotive Engineers", status: "Compliant" },
-    { code: "ISO 9001:2015", name: "Quality Management System", status: "Certified" },
-    { code: "JASO MA2", name: "Japanese Automotive Standards Org", status: "Approved" },
-    { code: "ACEA E9/A3/B4", name: "European Automobile Manufacturers", status: "Verified" }
-  ],
-
-  contactInfo: {
-    address: "Orbit Lubricant Industries Ltd., Industrial Zone, Tejgaon, Dhaka-1208, Bangladesh",
-    phone: "+880 1711-000000 / +880 2-9888888",
-    email: "info@orbitlubricants.com",
-    salesEmail: "sales@orbitlubricants.com",
-    hours: "Saturday - Thursday: 9:00 AM - 6:00 PM (Friday Closed)",
-    facebook: "https://facebook.com",
-    linkedin: "https://linkedin.com"
-  },
-
-  inquiries: [
-    {
-      id: "inq-101",
-      date: "2026-08-01 14:30",
-      name: "Tariqul Islam",
-      email: "tariqul@dhakatransport.com",
-      phone: "+880 1819-123456",
-      type: "Becoming a Distributor",
-      message: "We operate a commercial transport dealership in Chittagong. We want to discuss regional distribution rights for Orbit Titan HD 15W-40.",
-      status: "New"
-    },
-    {
-      id: "inq-102",
-      date: "2026-07-28 11:15",
-      name: "Engr. Mahmudul Hasan",
-      email: "mahmud@bengaltextiles.com",
-      phone: "+880 1712-987654",
-      type: "Industrial Lubricants",
-      message: "We need bulk quotation for 10 barrels of Orbit Hydro-Tech ISO VG 68 hydraulic oil for our spinning mill machinery.",
-      status: "Contacted"
+      title: "Rapid Nationwide Supply Chain",
+      desc: "Dedicated logistics network ensuring fast delivery to workshops, fleets, and retail networks."
     }
   ],
 
   settings: {
-    siteTitle: "Orbit Lubricant Industries",
-    tagline: "Power in Every Drop",
-    bannerText: "📢 Now Expanding Distribution Network across Chittagong, Sylhet, and Bogra! Contact us today.",
+    siteTitle: "Orbit Lubricants | Power in Every Drop",
+    bannerText: "⚡ Official Launch: Orbit XPower 4T Motorcycle & Fusion-Tech Engine Oils Now Available Nationwide!",
     showBanner: true,
-    maintenanceMode: false
+    logoUrl: "/logo.png"
   }
 };
