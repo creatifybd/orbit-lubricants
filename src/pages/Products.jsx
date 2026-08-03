@@ -116,8 +116,8 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
           {filteredProducts.length > 0 ? (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))',
-              gap: '2rem'
+              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+              gap: '1.75rem'
             }}>
               {filteredProducts.map(product => (
                 <ProductCard

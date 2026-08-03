@@ -227,8 +227,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem'
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '1.75rem'
           }}>
             {featuredProducts.map(product => (
               <ProductCard
