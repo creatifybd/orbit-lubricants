@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin, Clock, ArrowUpRight } from 'lucide-react';
 
 export const Footer = ({ setActivePage }) => {
   const { data } = useCms();
-  const { contactInfo, standards } = data;
+  const { contactInfo, standards, settings } = data || {};
 
   return (
     <footer style={{

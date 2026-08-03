@@ -4,7 +4,7 @@ import { Car, Truck, Factory, Bike, Sliders, Check, Sparkles, ArrowRight, Rotate
 
 export const LubricantFinder = ({ onSelectProduct }) => {
   const { data } = useCms();
-  const { products } = data;
+  const { products } = data || {};
 
   const [step, setStep] = useState(1);
   const [appType, setAppType] = useState('automotive');
