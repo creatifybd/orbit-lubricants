@@ -1,4 +1,4 @@
-# deploy.ps1 — Automated Build & Deploy Prep for Hostinger
+# deploy.ps1 — Automated Build & Deploy Prep with Fixed Filenames
 
 Write-Host "1. Setting index.html entrypoint to /src/main.jsx..." -ForegroundColor Cyan
 $sourceHtml = @"
@@ -33,7 +33,7 @@ Copy-Item "dist\assets\*" "assets\" -Recurse -Force
 Write-Host "4. Setting root index.html to production build output..." -ForegroundColor Cyan
 $prodHtml = Get-Content "dist\index.html" -Raw
 $timestamp = Get-Date -Format "yyyyMMddHHmmss"
-$prodHtmlWithCacheBuster = $prodHtml -replace '\.js"', ".js?v=$timestamp`"" -replace '\.css"', ".css?v=$timestamp`""
+$prodHtmlWithCacheBuster = $prodHtml -replace 'app\.js"', "app.js?v=$timestamp`"" -replace 'style\.css"', "style.css?v=$timestamp`""
 Set-Content -Path "index.html" -Value $prodHtmlWithCacheBuster
 
-Write-Host "Build prep complete! 1612 modules compiled with ImageUploader." -ForegroundColor Green
+Write-Host "Build prep complete! 1612 modules compiled with app.js." -ForegroundColor Green
