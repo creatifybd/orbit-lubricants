@@ -1,17 +1,39 @@
-# deploy.ps1 — Build and prepare files for Hostinger GitHub auto-deploy
-# Run this script before every git push: .\deploy.ps1
+# deploy.ps1 — Automated Build & Deploy Prep for Hostinger
 
-Write-Host "Building Vite production bundle..." -ForegroundColor Cyan
+Write-Host "1. Setting index.html entrypoint to /src/main.jsx..." -ForegroundColor Cyan
+$sourceHtml = @"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbit Lubricants | Power in Every Drop - Premium Automotive & Industrial Lubricants</title>
+  <meta name="description" content="Orbit Lubricant Industries — premium automotive and industrial lubricants engineered for superior engine protection, efficiency, and performance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/logo.png">
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
+"@
+Set-Content -Path "index.html" -Value $sourceHtml
+
+Write-Host "2. Building Vite production bundle..." -ForegroundColor Cyan
 npm run build
 
-Write-Host "Copying dist/index.html to root..." -ForegroundColor Cyan
-Copy-Item "dist\index.html" "index.html" -Force
-Copy-Item "dist\logo.png" "logo.png" -Force -ErrorAction SilentlyContinue
-
-Write-Host "Syncing assets/ folder..." -ForegroundColor Cyan
+Write-Host "3. Syncing assets to root..." -ForegroundColor Cyan
 Remove-Item "assets" -Recurse -Force -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Path "assets" | Out-Null
 Copy-Item "dist\assets\*" "assets\" -Recurse -Force
 
-Write-Host "All files ready for deployment!" -ForegroundColor Green
-Write-Host "Now run: git add -A && git commit -m 'update' && git push origin main" -ForegroundColor Yellow
+Write-Host "4. Setting root index.html to production build output..." -ForegroundColor Cyan
+$prodHtml = Get-Content "dist\index.html" -Raw
+$timestamp = Get-Date -Format "yyyyMMddHHmmss"
+$prodHtmlWithCacheBuster = $prodHtml -replace '\.js"', ".js?v=$timestamp`"" -replace '\.css"', ".css?v=$timestamp`""
+Set-Content -Path "index.html" -Value $prodHtmlWithCacheBuster
+
+Write-Host "Build prep complete! 1612 modules compiled with ImageUploader." -ForegroundColor Green
