@@ -41,7 +41,7 @@ export const initialData = {
       packing: "2L Net Volume",
       featured: true,
       badge: "CNG Vehicle Special",
-      image: "/products/cng-20w50.png",
+      image: "/products/cng-20w50.jpg",
       imageColor: "#007A3D",
       description: "Specially formulated premium engine oil designed for CNG vehicles and auto-rickshaws. Offers superior engine protection, excellent thermal stability, cleaner engine operation, and enhanced fuel efficiency.",
       specs: {
@@ -61,7 +61,7 @@ export const initialData = {
       packing: "5 Liters",
       featured: true,
       badge: "Commercial Heavy Duty",
-      image: "/products/fusion-15w40.png",
+      image: "/products/fusion-15w40.jpg",
       imageColor: "#D97706",
       description: "Fusion-Tech synthetic technology heavy duty engine oil engineered for commercial trucks, buses, and industrial equipment. Delivers advanced wear protection, engine cleanliness, thermal stability, and fuel economy support.",
       specs: {
@@ -81,7 +81,7 @@ export const initialData = {
       packing: "4 Liters",
       featured: true,
       badge: "Synthetic Technology",
-      image: "/products/fusion-20w50.png",
+      image: "/products/fusion-20w50.jpg",
       imageColor: "#005AAB",
       description: "Premium Fusion-Tech synthetic technology engine oil engineered for modern passenger cars, SUVs, and light commercial vehicles. Ensures advanced wear protection, engine cleanliness, and fuel economy support.",
       specs: {
@@ -101,7 +101,7 @@ export const initialData = {
       packing: "4 Liters",
       featured: true,
       badge: "Fusion-Tech Performance",
-      image: "/products/fusion-motor.png",
+      image: "/products/fusion-motor.jpg",
       imageColor: "#0A2540",
       description: "High-performance motor oil formulated with synthetic technology for smooth engine operation, thermal stability, and prolonged engine durability under tough operating conditions.",
       specs: {
@@ -120,7 +120,7 @@ export const initialData = {
       packing: "1L Net Volume",
       featured: true,
       badge: "4T Motorcycle Oil",
-      image: "/products/xpower-10w30-black.png",
+      image: "/products/xpower-10w30-black.jpg",
       imageColor: "#0A2540",
       description: "High-performance 4T mineral engine oil engineered for 4-stroke motorcycles. Delivers reliable protection against wear, smooth clutch engagement, and excellent heat stability.",
       specs: {
@@ -140,7 +140,7 @@ export const initialData = {
       packing: "1L Net Volume",
       featured: true,
       badge: "Smooth Acceleration",
-      image: "/products/xpower-10w30-green.png",
+      image: "/products/xpower-10w30-green.jpg",
       imageColor: "#007A3D",
       description: "Mineral 4T engine oil engineered for maximum reliability, smooth acceleration, engine durability, and optimal clutch performance under urban and highway riding.",
       specs: {
@@ -160,7 +160,7 @@ export const initialData = {
       packing: "1L Net Volume",
       featured: true,
       badge: "10W-40 4T Mineral",
-      image: "/products/xpower-10w40-red.png",
+      image: "/products/xpower-10w40-red.jpg",
       imageColor: "#EF4444",
       description: "Premium mineral 4T motorcycle oil formulated for bikes requiring 10W40 grade. Ensures reliable wear protection, smooth clutch response, and high thermal endurance.",
       specs: {
@@ -180,7 +180,7 @@ export const initialData = {
       packing: "1L Net Volume",
       featured: true,
       badge: "20W-40 Heavy Duty 4T",
-      image: "/products/xpower-20w40-blue.png",
+      image: "/products/xpower-20w40-blue.jpg",
       imageColor: "#005AAB",
       description: "Heavy-duty mineral 4T engine oil designed for 4-stroke motorcycles operating in high ambient temperatures. Offers reliable engine protection, smooth clutch performance, and high heat stability.",
       specs: {
