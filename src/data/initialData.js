@@ -1,7 +1,7 @@
 export const initialData = {
   hero: {
     title: "Power in Every Drop",
-    subtitle: "Orbit Lubricant Industries — premium automotive, motorcycle, CNG, and heavy-duty industrial lubricants engineered for superior engine protection, maximum thermal efficiency, and peak performance.",
+    subtitle: "Orbit Lubricant Industries is a performance-driven lubricant company specializing in premium automotive and industrial oils. We combine advanced technology, high-quality raw materials, and strict quality control to deliver lubricants that provide superior engine protection, reliability, and efficiency for modern vehicles and machinery.",
     ctaPrimary: "Explore Product Range",
     ctaSecondary: "Become a Distributor",
     stat1: { number: "50+", label: "Formulated Lubricants" },
@@ -10,16 +10,13 @@ export const initialData = {
   },
 
   about: {
-    heroTitle: "Protecting Engines. Powering Global Industry.",
-    heroSubtitle: "Engineered in Bangladesh for tough road conditions, extreme climates, and heavy-duty industrial demands.",
-    story: "Orbit Lubricant Industries is a premier lubricant manufacturer dedicated to formulating high-performance engine oils, gear fluids, hydraulic oils, and specialized greases. Founded with a vision to deliver world-class tribological solutions, Orbit combines advanced synthetic additive chemistry with refined base stocks to provide unmatched anti-wear and thermal stability.",
-    mission: "To engineer and supply high-performance lubricants that maximize machinery lifespan, reduce maintenance downtime, and lower operational costs for automotive, industrial, and motorcycle clients.",
-    vision: "To become South Asia's leading lubricant brand and a trusted export partner recognized globally for uncompromising quality, technical innovation, and environmental responsibility.",
-    values: [
-      { title: "Precision Chemistry", desc: "Every drop is blended using premium virgin base oils and internationally certified additive packages." },
-      { title: "Customer-First Support", desc: "Comprehensive technical advisory, oil condition monitoring, and tailored industrial solutions." },
-      { title: "Sustainability", desc: "Formulated to optimize fuel economy, minimize emissions, and extend drain intervals." }
-    ]
+    heroTitle: "Driving Performance Through Advanced Lubrication Technology",
+    heroSubtitle: "Orbit Lubricant Industries is a modern lubricant manufacturing and marketing company committed to delivering premium-quality automotive and industrial lubrication solutions for local and international markets.",
+    story: "With a strong focus on innovation, quality assurance, and customer satisfaction, we produce high-performance engine oils, gear oils, hydraulic oils, transmission fluids, greases, brake fluids, and specialty lubricants designed to meet the demanding requirements of modern engines and machinery. Our products are formulated using high-quality base oils and advanced additive technologies to ensure superior protection, longer engine life, enhanced fuel efficiency, and reliable performance under extreme operating conditions. At Orbit Lubricant Industries, we believe lubrication is not just about oil — it is about protecting engines, maximizing efficiency, and powering the future of mobility and industry.",
+    mission: "To provide world-class lubricant solutions that deliver maximum engine protection, operational efficiency, and long-term value to customers through continuous innovation and uncompromising quality standards.",
+    vision: "To become one of the most trusted and globally recognized lubricant brands by delivering technologically advanced, environmentally responsible, and performance-driven products.",
+    qualityCommitment: "Quality is the foundation of our business. Every product is manufactured through strict quality control procedures and tested to ensure compliance with international performance standards. Our technical team continuously works on research and product development to deliver lubricants that perform efficiently in Bangladesh’s climate and road conditions as well as international operating environments.",
+    ourCommitment: "Orbit Lubricant Industries is committed to building long-term relationships with distributors, workshops, industries, transport operators, and end users by delivering reliable products, technical support, and professional service. We are continuously expanding our distribution network and strengthening our presence in both domestic and export markets."
   },
 
   categories: [
@@ -29,6 +26,33 @@ export const initialData = {
     { id: "heavy-duty", name: "Heavy Duty Commercial Engine Oils", icon: "Truck" },
     { id: "industrial", name: "Industrial & Gear Oils", icon: "Factory" },
     { id: "hydraulic", name: "Hydraulic & Transmission Fluids", icon: "Sliders" }
+  ],
+
+  productRangeList: [
+    "Passenger Car Motor Oil",
+    "Motorcycle Engine Oil",
+    "Diesel Engine Oil",
+    "Hydraulic Oil",
+    "Gear Oil",
+    "Automatic Transmission Fluid (ATF)",
+    "Brake Fluid (DOT 3 / DOT 4)",
+    "Greases",
+    "Coolants",
+    "Industrial Lubricants",
+    "Specialty Performance Fluids"
+  ],
+
+  whyUs: [
+    { id: "w1", icon: "ShieldCheck", title: "Premium Quality Lubricants", desc: "Blended using high-quality virgin base oils and Tier-1 additive chemistry." },
+    { id: "w2", icon: "Zap", title: "Advanced Additive Technology", desc: "Formulated for extreme heat, heavy gridlock traffic, and high-load demands." },
+    { id: "w3", icon: "Award", title: "International Standard Formulations", desc: "Strictly compliant with API, JASO, and ACEA international performance specifications." },
+    { id: "w4", icon: "Flame", title: "Reliable Engine Protection", desc: "Ensures longer engine life, anti-wear protection, and enhanced fuel economy." },
+    { id: "w5", icon: "CheckCircle2", title: "Consistent Product Quality", desc: "Manufactured under rigorous quality control procedures and batch testing." },
+    { id: "w6", icon: "Layers", title: "Modern Packaging & Branding", desc: "Leak-proof, tamper-evident, world-class ergonomic bottle designs." },
+    { id: "w7", icon: "Users", title: "Customer-Centric Service", desc: "Dedicated technical advisory, oil condition monitoring, and sales support." },
+    { id: "w8", icon: "DollarSign", title: "Competitive Pricing", desc: "Maximum margin structures and commercial value for distributors and dealers." },
+    { id: "w9", icon: "Factory", title: "Industrial & Automotive Solutions", desc: "Comprehensive product coverage for fleet, plant machinery, and consumer rides." },
+    { id: "w10", icon: "Sparkles", title: "Commitment to Innovation", desc: "Continuous R&D focused on next-gen synthetic lubricants and lower emissions." }
   ],
 
   products: [
@@ -233,36 +257,9 @@ export const initialData = {
     }
   ],
 
-  whyUs: [
-    {
-      id: "w1",
-      icon: "ShieldCheck",
-      title: "Certified Quality Additives",
-      desc: "Blended using Tier-1 global additive packages meeting API CI-4, JASO MA2, and ACEA specifications."
-    },
-    {
-      id: "w2",
-      icon: "Zap",
-      title: "CNG & Tropical Climate Formulations",
-      desc: "Engineered specifically for Bangladesh high heat, traffic gridlocks, and CNG fuel operation."
-    },
-    {
-      id: "w3",
-      icon: "Factory",
-      title: "Direct Factory Distribution",
-      desc: "Guaranteed authentic products with zero counterfeit risk and competitive margin structure for dealers."
-    },
-    {
-      id: "w4",
-      icon: "Truck",
-      title: "Rapid Nationwide Supply Chain",
-      desc: "Dedicated logistics network ensuring fast delivery to workshops, fleets, and retail networks."
-    }
-  ],
-
   settings: {
     siteTitle: "Orbit Lubricants | Power in Every Drop",
-    bannerText: "⚡ Official Launch: Orbit XPower 4T Motorcycle & Fusion-Tech Engine Oils Now Available Nationwide!",
+    bannerText: "⚡ Official Announcement: Orbit Lubricant Industries — Advanced Automotive & Industrial Solutions Nationwide!",
     showBanner: true,
     logoUrl: "/logo.png"
   }
