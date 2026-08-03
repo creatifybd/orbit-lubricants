@@ -64,17 +64,17 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             alignItems: 'center'
           }}>
             {/* Hero Text */}
-            <div>
-              <span className="eyebrow on-dark">
+            <div className="fade-in-left">
+              <span className="eyebrow on-dark fade-in-up delay-100">
                 <Sparkles size={14} style={{ display: 'inline', marginRight: '6px' }} />
                 PREMIUM LUBRICANTS INDUSTRY
               </span>
 
-              <h1 style={{ color: '#FFFFFF', marginBottom: '1.25rem' }}>
+              <h1 className="fade-in-up delay-200" style={{ color: '#FFFFFF', marginBottom: '1.25rem' }}>
                 {hero.title || "Power in Every Drop"}
               </h1>
 
-              <p style={{
+              <p className="fade-in-up delay-300" style={{
                 color: 'rgba(255, 255, 255, 0.78)',
                 fontSize: '1.12rem',
                 lineHeight: 1.6,
@@ -85,7 +85,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               </p>
 
               {/* Action Buttons */}
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+              <div className="fade-in-up delay-400" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
                 <button onClick={() => setActivePage('products')} className="btn btn-primary btn-lg" style={{ flex: '1 1 auto', justifyContent: 'center', minWidth: '140px' }}>
                   <span>{hero.ctaPrimary || 'Explore Products'}</span>
                   <ArrowRight size={18} />
@@ -96,7 +96,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               </div>
 
               {/* Statistics Strip */}
-              <div style={{
+              <div className="fade-in-up delay-500" style={{
                 display: 'flex',
                 gap: '2.5rem',
                 paddingTop: '2rem',
@@ -133,7 +133,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             </div>
 
             {/* 3D Orbit Drop Visual */}
-            <div>
+            <div className="fade-in-right delay-200">
               <OrbitRing />
             </div>
           </div>

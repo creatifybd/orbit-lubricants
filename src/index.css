@@ -1,5 +1,5 @@
 /* ============================================================
-   ORBIT LUBRICANTS - ADVANCED DESIGN SYSTEM
+   ORBIT LUBRICANTS - ADVANCED DESIGN SYSTEM & ANIMATION SUITE
    ============================================================ */
 
 :root {
@@ -214,6 +214,114 @@ p { color: var(--steel); }
     gap: 1rem;
   }
 }
+
+/* ============================================================
+   KEYFRAME ANIMATION SUITE & ENHANCEMENTS
+   ============================================================ */
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.08); }
+}
+
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation Utility Classes */
+.animate-spin-slow {
+  animation: spinSlow 20s linear infinite !important;
+}
+
+.animate-spin-reverse {
+  animation: spinReverse 14s linear infinite !important;
+}
+
+.animate-float {
+  animation: floatAnim 4s ease-in-out infinite !important;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 5s ease-in-out infinite !important;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fade-in-left {
+  animation: fadeInLeft 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fade-in-right {
+  animation: fadeInRight 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.scale-in {
+  animation: scaleIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger Animation Delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
 
 /* ── Form Controls ── */
 .form-group { margin-bottom: 1.25rem; }
