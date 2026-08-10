@@ -2,3 +2,9 @@ node_modules/
 .env
 .env.local
 *.log
+
+# Prevent large uncompressed files from being committed
+products/*.png
+public/assets/*.png
+*.zip
+dist/
