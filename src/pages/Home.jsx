@@ -228,6 +228,91 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         </div>
       </section>
 
+      {/* ==================== INDUSTRY SOLUTIONS SHOWCASE (MJL/MOBIL STYLE) ==================== */}
+      <section className="section" style={{ background: '#0A2540', color: '#FFFFFF', padding: '5.5rem 0' }}>
+        <div className="container">
+          <div className="section-head center">
+            <span className="eyebrow on-dark">APPLICATION DOMAINS</span>
+            <h2 style={{ color: '#FFFFFF' }}>Advanced Solutions for Every Sector</h2>
+            <p style={{ color: 'rgba(255,255,255,0.78)' }}>From high-mileage passenger cars to heavy industrial plant machinery, Orbit lubricants ensure maximum equipment uptime and thermal resilience.</p>
+          </div>
+
+          <div className="grid-responsive-4">
+            {/* Sector 1: Automotive */}
+            <div className="img-card-hover" style={{ height: '320px', cursor: 'pointer' }} onClick={() => setActivePage('products')}>
+              <img
+                src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=600&auto=format&fit=crop"
+                alt="Passenger Cars"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(180deg, rgba(10,37,64,0.1) 0%, rgba(10,37,64,0.92) 100%)',
+                padding: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'
+              }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#F7941D', fontWeight: 700 }}>PASSENGER CARS</span>
+                <h3 style={{ color: '#FFFFFF', fontSize: '1.25rem', marginTop: '4px' }}>Synthetic Engine Oils</h3>
+                <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem', marginTop: '4px' }}>Maximum thermal stability & fuel economy.</p>
+              </div>
+            </div>
+
+            {/* Sector 2: Heavy Duty */}
+            <div className="img-card-hover" style={{ height: '320px', cursor: 'pointer' }} onClick={() => setActivePage('products')}>
+              <img
+                src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=600&auto=format&fit=crop"
+                alt="Commercial Fleet"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(180deg, rgba(10,37,64,0.1) 0%, rgba(10,37,64,0.92) 100%)',
+                padding: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'
+              }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#F7941D', fontWeight: 700 }}>COMMERCIAL FLEET</span>
+                <h3 style={{ color: '#FFFFFF', fontSize: '1.25rem', marginTop: '4px' }}>Heavy Duty Diesel</h3>
+                <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem', marginTop: '4px' }}>API CI-4 / ACEA E7 drain interval performance.</p>
+              </div>
+            </div>
+
+            {/* Sector 3: Industrial */}
+            <div className="img-card-hover" style={{ height: '320px', cursor: 'pointer' }} onClick={() => setActivePage('products')}>
+              <img
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop"
+                alt="Industrial Hydraulics"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(180deg, rgba(10,37,64,0.1) 0%, rgba(10,37,64,0.92) 100%)',
+                padding: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'
+              }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#F7941D', fontWeight: 700 }}>INDUSTRIAL PLANTS</span>
+                <h3 style={{ color: '#FFFFFF', fontSize: '1.25rem', marginTop: '4px' }}>Hydraulics & Gear Oils</h3>
+                <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem', marginTop: '4px' }}>Extreme pressure protection & zero anti-foam.</p>
+              </div>
+            </div>
+
+            {/* Sector 4: Motorcycle */}
+            <div className="img-card-hover" style={{ height: '320px', cursor: 'pointer' }} onClick={() => setActivePage('products')}>
+              <img
+                src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=600&auto=format&fit=crop"
+                alt="4T Motorcycles"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(180deg, rgba(10,37,64,0.1) 0%, rgba(10,37,64,0.92) 100%)',
+                padding: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'
+              }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#F7941D', fontWeight: 700 }}>4T MOTORCYCLES</span>
+                <h3 style={{ color: '#FFFFFF', fontSize: '1.25rem', marginTop: '4px' }}>JASO MA2 4T Fluids</h3>
+                <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem', marginTop: '4px' }}>Wet-clutch protection & rapid acceleration.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ==================== LUBRICANT FINDER WIZARD ==================== */}
       <section className="section" style={{ background: '#F1F5F9' }}>
         <div className="container">
