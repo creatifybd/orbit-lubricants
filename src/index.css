@@ -525,9 +525,120 @@ p { color: var(--steel); font-weight: 500; }
   .mobile-call-btn { display: flex; }
 }
 
+/* ── MJL Red Curtain Reveal Transition (.overlay-reveal) ── */
+.overlay-reveal {
+  position: relative;
+  overflow: hidden;
+}
+.overlay-reveal:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(237, 27, 52, 0.88);
+  z-index: 5;
+  transition: width 1.1s cubic-bezier(0.25, 0.74, 0.22, 0.99);
+}
+.overlay-reveal.revealed:before {
+  width: 0;
+}
+
+/* ── Hero Slideshow Cross-Fade ── */
+@keyframes heroSlideFade {
+  0% { opacity: 0; transform: scale(1.05); }
+  15% { opacity: 1; transform: scale(1); }
+  85% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 0; transform: scale(1.05); }
+}
+.hero-slider-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+.hero-slider-img.active {
+  opacity: 0.38;
+}
+
+/* ── Premium Glassmorphic Card (.glass-card-premium) ── */
+.glass-card-premium {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(222, 222, 222, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.glass-card-premium:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--mjl-red), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.glass-card-premium:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  border-color: rgba(237, 27, 52, 0.3);
+}
+.glass-card-premium:hover:before {
+  opacity: 1;
+}
+
+/* ── LOBP Laboratory Equipment Card Grid ── */
+.lab-equip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.lab-equip-card {
+  background: #FFFFFF;
+  border: 1px solid #DEDEDE;
+  border-radius: 14px;
+  padding: 1.6rem 1.4rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.lab-equip-card:hover {
+  border-color: var(--mjl-red);
+  box-shadow: 0 12px 30px rgba(237, 27, 52, 0.12);
+  transform: translateY(-4px);
+}
+.lab-equip-card .equip-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--mjl-red);
+  background: rgba(237, 27, 52, 0.08);
+  padding: 3px 10px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 1023px) {
+  .lab-equip-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 639px) {
+  .lab-equip-grid { grid-template-columns: 1fr; }
+}
+
 /* ── Utility Spacing ── */
 .pt-160 { padding-top: clamp(4rem, 9vw, 9rem); }
 .pb-160 { padding-bottom: clamp(4rem, 9vw, 9rem); }
 .pt-120 { padding-top: clamp(3rem, 7vw, 7.5rem); }
 .pb-120 { padding-bottom: clamp(3rem, 7vw, 7.5rem); }
+
 

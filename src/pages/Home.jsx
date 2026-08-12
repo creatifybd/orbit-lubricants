@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
 import { OrbitRing } from '../components/OrbitRing';
 import { ProductCard } from '../components/ProductCard';
@@ -6,7 +6,8 @@ import { ProductModal } from '../components/ProductModal';
 import { LubricantFinder } from '../components/LubricantFinder';
 import { 
   ShieldCheck, Cpu, Flame, Truck, Wrench, ArrowRight, 
-  Sparkles, Award, Layers, CheckCircle2, ChevronRight, Plus, ChevronDown, ChevronUp 
+  Sparkles, Award, Layers, CheckCircle2, ChevronRight, Plus, ChevronDown, ChevronUp,
+  FlaskConical, Gauge, Activity, Beaker, FileCheck, Layers3
 } from 'lucide-react';
 
 export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
@@ -14,6 +15,32 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
   const { hero, whyUs, products, standards } = data;
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeAccordion, setActiveAccordion] = useState('car');
+  const [heroSlide, setHeroSlide] = useState(0);
+
+  const heroSlides = [
+    {
+      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop',
+      title: 'Ultra-Modern Lube Oil Blending Plant',
+      tag: 'STATE-OF-THE-ART MANUFACTURING'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1600&auto=format&fit=crop',
+      title: 'Advanced Lubrication Technology',
+      tag: 'AUTOMOTIVE & INDUSTRIAL EXCELLENCE'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1600&auto=format&fit=crop',
+      title: 'Commercial Heavy-Duty Fleet Protection',
+      tag: 'API CK-4 / ACEA E7 CERTIFIED'
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, []);
 
   const featuredProducts = products.filter(p => p.featured).slice(0, 3);
 
@@ -56,6 +83,45 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     }
   ];
 
+  const labEquipments = [
+    {
+      icon: <FlaskConical size={24} style={{ color: '#ED1B34' }} />,
+      tag: 'SPECTROPHOTOMETER',
+      title: 'FTIR & ICP Spectrometer',
+      desc: 'Analyzes additive elemental concentration and molecular contamination with precision accuracy.'
+    },
+    {
+      icon: <Gauge size={24} style={{ color: '#ED1B34' }} />,
+      tag: 'VISCOSITY LAB',
+      title: 'Automatic Viscometer',
+      desc: 'Measures exact kinematic viscosity at 40°C & 100°C according to ASTM D445 standards.'
+    },
+    {
+      icon: <Activity size={24} style={{ color: '#ED1B34' }} />,
+      tag: 'CHEMICAL ANALYSIS',
+      title: 'TAN & TBN Analyzer',
+      desc: 'Determines Total Acid & Base Numbers to guarantee thermal oxidation resistance.'
+    },
+    {
+      icon: <Beaker size={24} style={{ color: '#ED1B34' }} />,
+      tag: 'FLUID TESTING',
+      title: 'Pour Point & Flash Point',
+      desc: 'Ensures cold-cranking fluid flow down to -35°C and extreme temperature safety.'
+    },
+    {
+      icon: <FileCheck size={24} style={{ color: '#ED1B34' }} />,
+      tag: 'WATER ANALYSIS',
+      title: 'Karl Fischer Coulometer',
+      desc: 'Detects micro-trace moisture levels ensuring zero water contamination in hydraulic fluids.'
+    },
+    {
+      icon: <Layers3 size={24} style={{ color: '#ED1B34' }} />,
+      tag: 'ACCREDITATION',
+      title: 'ISO 17025 Compliant',
+      desc: 'Operated under ExxonMobil QP&G and ISO/IEC 17025:2017 international quality guidelines.'
+    }
+  ];
+
   const handleInquireFromModal = (prod) => {
     if (setSelectedProductForInquiry) {
       setSelectedProductForInquiry(prod.name);
@@ -65,7 +131,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
 
   return (
     <div>
-      {/* ==================== HERO SECTION (MJL BANNER STYLE) ==================== */}
+      {/* ==================== HERO SECTION (MJL DYNAMIC SLIDER STYLE) ==================== */}
       <section style={{
         background: 'radial-gradient(120% 100% at 85% 15%, #0F3560 0%, #0A2540 50%, #051526 100%)',
         color: '#FFFFFF',
@@ -74,6 +140,23 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         position: 'relative',
         overflow: 'hidden'
       }}>
+        {/* Auto Cross-Fade Background Images */}
+        {heroSlides.map((slide, idx) => (
+          <img
+            key={idx}
+            src={slide.img}
+            alt={slide.title}
+            className={`hero-slider-img ${heroSlide === idx ? 'active' : ''}`}
+          />
+        ))}
+
+        {/* Dark Overlay Gradient */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(90deg, rgba(5,21,38,0.92) 0%, rgba(10,37,64,0.78) 50%, rgba(5,21,38,0.92) 100%)',
+          zIndex: 1
+        }} />
+
         {/* Verification Seal Badge (D&B / Quality Seal Style) */}
         <div style={{
           position: 'absolute', top: '25px', right: '30px', zIndex: 10,
@@ -98,7 +181,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             <div className="fade-in-left">
               <span className="eyebrow on-dark fade-in-up delay-100" style={{ color: '#ED1B34' }}>
                 <Sparkles size={14} style={{ display: 'inline', marginRight: '6px' }} />
-                ORBIT LUBRICANT INDUSTRIES PLC
+                {heroSlides[heroSlide].tag}
               </span>
 
               <h1 className="fade-in-up delay-200" style={{ color: '#FFFFFF', marginBottom: '1.25rem', fontSize: 'clamp(2.4rem, 4.8vw, 3.8rem)' }}>
@@ -106,7 +189,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               </h1>
 
               <p className="fade-in-up delay-300" style={{
-                color: 'rgba(255, 255, 255, 0.82)',
+                color: 'rgba(255, 255, 255, 0.85)',
                 fontSize: '1.12rem',
                 lineHeight: 1.65,
                 marginBottom: '2.25rem',
@@ -127,6 +210,25 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                     <span>Become a Distributor</span>
                   </button>
                 </div>
+              </div>
+
+              {/* Slide Indicators */}
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                {heroSlides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setHeroSlide(i)}
+                    style={{
+                      width: heroSlide === i ? '28px' : '8px',
+                      height: '8px',
+                      borderRadius: '4px',
+                      background: heroSlide === i ? '#ED1B34' : 'rgba(255,255,255,0.3)',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                  />
+                ))}
               </div>
             </div>
 
@@ -320,7 +422,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               <span className="eyebrow" style={{ color: '#ED1B34' }}>WORLD-CLASS MANUFACTURING</span>
               <h2 style={{ fontSize: '2.2rem', marginBottom: '1.25rem' }}>Lube Oil Blending Plant (LOBP)</h2>
               <p style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-                Orbit Lubricant Industries ensures the authenticity of lube oils with an extensive touch of perfection. Our state-of-the-art Lube Oil Blending Plant is engineered as an ultra-modern and technologically enhanced in-line blending facility.
+                Orbit Lubricant Industries ensures the authenticity of lube oils with an extensive touch of perfection. Our state-of-the-art Lube Oil Blending Plant is engineered as an ultra-modern and technologically enhanced in-line blending facility in South East Asia.
               </p>
               <ul style={{ listStyle: 'none', padding: 0, marginBottom: '2rem' }}>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', color: '#221F1F', fontWeight: 600 }}>
@@ -352,41 +454,26 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         </div>
       </section>
 
-      {/* ==================== LUBE OIL TESTING LAB SHOWCASE ==================== */}
+      {/* ==================== INTERACTIVE LAB EQUIPMENT SHOWCASE GRID ==================== */}
       <section className="section pt-120 pb-160" style={{ background: '#F9F9F9', borderTop: '1px solid #DEDEDE' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3.5rem', alignItems: 'center' }}>
-            <div style={{ position: 'relative' }}>
-              <img
-                src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=800&auto=format&fit=crop"
-                alt="Testing Lab"
-                style={{ width: '100%', height: '420px', objectFit: 'cover', borderRadius: '20px' }}
-              />
-              <div style={{
-                position: 'absolute', bottom: '25px', left: '25px', right: '25px',
-                background: '#FFFFFF', padding: '1.5rem', borderRadius: '14px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.15)', borderLeft: '4px solid #ED1B34'
-              }}>
-                <h4 style={{ fontSize: '1.1rem', color: '#221F1F', marginBottom: '4px' }}>Fostering Excellence in Quality</h4>
-                <p style={{ fontSize: '0.85rem', color: '#475569' }}>Equipped under ISO/IEC 17025:2017 & ISO 9001 guidelines.</p>
-              </div>
-            </div>
+          <div style={{ marginBottom: '3.5rem', textAlign: 'center', maxWidth: '780px', margin: '0 auto 3.5rem' }}>
+            <span className="eyebrow" style={{ color: '#ED1B34' }}>QUALITY CONTROL LABORATORY</span>
+            <h2 style={{ fontSize: '2.2rem', marginBottom: '1rem' }}>Lube Oil Testing Equipment</h2>
+            <p style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.65 }}>
+              MJL/Mobil benchmarked analytical laboratory equipped with world-class testing and measuring equipment supplied by Koehler, Perkin-Elmer, Cannon, and Agilent Technologies.
+            </p>
+          </div>
 
-            <div>
-              <span className="eyebrow" style={{ color: '#ED1B34' }}>QUALITY CONTROL LABORATORY</span>
-              <h2 style={{ fontSize: '2.2rem', marginBottom: '1.25rem' }}>Lube Oil Testing Lab</h2>
-              <p style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                MJL/Mobil benchmarked analytical laboratory equipped with FTIR Spectrophotometer, Automatic Viscometer, TAN/TBN Analyzer, Pour Point Determiner, and Karl Fischer Coulometer.
-              </p>
-              <p style={{ color: '#475569', fontSize: '0.98rem', lineHeight: 1.65, marginBottom: '2rem' }}>
-                Every single production batch undergoes rigorous Quality Assurance (QA) testing before release, leaving zero margin for error.
-              </p>
-              <div className="dc-btn">
-                <button onClick={() => setActivePage('about')}>
-                  <span>View Lab Accreditation</span>
-                </button>
+          <div className="lab-equip-grid">
+            {labEquipments.map((eq, i) => (
+              <div key={i} className="lab-equip-card">
+                <div style={{ marginBottom: '1rem' }}>{eq.icon}</div>
+                <span className="equip-tag">{eq.tag}</span>
+                <h4 style={{ fontSize: '1.15rem', color: '#221F1F', fontWeight: 800, marginBottom: '0.45rem' }}>{eq.title}</h4>
+                <p style={{ fontSize: '0.88rem', color: '#475569', lineHeight: 1.55 }}>{eq.desc}</p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -435,4 +522,5 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     </div>
   );
 };
+
 
