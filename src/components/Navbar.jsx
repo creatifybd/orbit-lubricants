@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
-import { Menu, X, Sparkles, ChevronRight } from 'lucide-react';
+import { Menu, X, Sparkles, ChevronRight, Phone, ShoppingCart, Search } from 'lucide-react';
 
 export const Navbar = ({ activePage, setActivePage }) => {
   const { data } = useCms();
@@ -8,12 +8,14 @@ export const Navbar = ({ activePage, setActivePage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth < 869;
+      const mobile = window.innerWidth < 992;
       setIsMobile(mobile);
-      if (!mobile) setMobileOpen(false); // auto-close when resizing to desktop
+      if (!mobile) setMobileOpen(false);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -26,7 +28,6 @@ export const Navbar = ({ activePage, setActivePage }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile drawer is open
   useEffect(() => {
     document.body.style.overflow = (mobileOpen && isMobile) ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -34,10 +35,10 @@ export const Navbar = ({ activePage, setActivePage }) => {
 
   const navLinks = [
     { id: 'home', label: 'Home' },
-    { id: 'products', label: 'Products' },
-    { id: 'about', label: 'About Us' },
+    { id: 'products', label: 'Products & Technology' },
+    { id: 'about', label: 'About Orbit' },
     { id: 'finder', label: 'Lube Finder' },
-    { id: 'contact', label: 'Contact & Dealers' }
+    { id: 'contact', label: 'Dealer Network & Contact' }
   ];
 
   const handleNav = (id) => {
@@ -45,47 +46,118 @@ export const Navbar = ({ activePage, setActivePage }) => {
     setMobileOpen(false);
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setActivePage('products');
+      setSearchOpen(false);
+    }
+  };
+
   return (
     <>
-      {/* ── Announcement Banner ── */}
-      {settings?.showBanner && settings?.bannerText && (
-        <div style={{
-          background: 'linear-gradient(90deg, #0A2540 0%, #005AAB 50%, #0A2540 100%)',
-          color: '#FFFFFF',
-          fontSize: '0.78rem',
-          fontWeight: 500,
-          padding: '0.45rem 1rem',
-          textAlign: 'center',
+      {/* ── Top Utility Header Bar (MJL Style) ── */}
+      <div style={{
+        background: '#221F1F',
+        color: '#FFFFFF',
+        fontSize: '0.82rem',
+        padding: '0.4rem 0',
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
+        zIndex: 201,
+        position: 'relative'
+      }}>
+        <div className="container" style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
-          gap: '8px',
-          lineHeight: 1.4,
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '0.75rem'
         }}>
-          <Sparkles style={{ width: '13px', height: '13px', color: '#F7941D', flexShrink: 0 }} />
-          <span>{settings.bannerText}</span>
+          {/* Hotline & Customer Care */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <a href="tel:16669" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              color: '#FFFFFF', textDecoration: 'none', fontWeight: 700,
+              background: '#ED1B34', padding: '0.2rem 0.75rem', borderRadius: '12px',
+              fontSize: '0.78rem'
+            }}>
+              <Phone size={12} /> 16669 Hotline
+            </a>
+            <span style={{ color: 'rgba(255,255,255,0.6)', display: isMobile ? 'none' : 'inline' }}>
+              ✦ ISO 9001:2015 & 14001:2018 Certified Blending Plant
+            </span>
+          </div>
+
+          {/* Right utility links */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <button
+              onClick={() => handleNav('products')}
+              style={{
+                background: 'transparent', border: 'none', color: '#FFFFFF',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px',
+                fontSize: '0.8rem', fontWeight: 600
+              }}
+            >
+              <ShoppingCart size={13} style={{ color: '#ED1B34' }} /> Buy Orbit Lubricants
+            </button>
+            <span style={{ opacity: 0.3 }}>|</span>
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              style={{
+                background: 'transparent', border: 'none', color: '#FFFFFF',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px',
+                fontSize: '0.8rem', fontWeight: 600
+              }}
+            >
+              <Search size={13} /> Search
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Search Drawer Bar ── */}
+      {searchOpen && (
+        <div style={{
+          background: '#FFFFFF', borderBottom: '2px solid #ED1B34',
+          padding: '1rem 0', boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+          position: 'sticky', top: 0, zIndex: 200
+        }}>
+          <div className="container">
+            <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '10px' }}>
+              <input
+                type="text"
+                placeholder="Search engine oils, gear oils, hydraulic fluids..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  flex: 1, padding: '0.75rem 1.25rem', borderRadius: '19px',
+                  border: '1px solid #DEDEDE', fontSize: '0.95rem', outline: 'none'
+                }}
+              />
+              <div className="dc-btn">
+                <button type="submit"><span>Search</span></button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
 
-      {/* ── Main Sticky Header ── */}
+      {/* ── Main Sticky Corporate Navbar ── */}
       <header style={{
         position: 'sticky',
         top: 0,
-        zIndex: 200,
-        background: isScrolled ? 'rgba(255,255,255,0.98)' : 'rgba(255,255,255,0.92)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: `1px solid ${isScrolled ? 'var(--line)' : 'transparent'}`,
-        boxShadow: isScrolled ? '0 8px 24px -8px rgba(10,37,64,0.1)' : 'none',
+        zIndex: 190,
+        background: isScrolled ? 'rgba(255,255,255,0.98)' : '#FFFFFF',
+        boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.08)' : '0 1px 0 #DEDEDE',
         transition: 'all 0.3s ease',
       }}>
         <div className="container" style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          height: '64px',
+          height: '75px',
         }}>
-          {/* Logo */}
+          {/* Brand Logo */}
           <div
             onClick={() => handleNav('home')}
             style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', flexShrink: 0 }}
@@ -93,31 +165,32 @@ export const Navbar = ({ activePage, setActivePage }) => {
             <img
               src={settings?.logoUrl || '/logo.png'}
               alt="Orbit Lubricants"
-              style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
+              style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
             />
           </div>
 
-          {/* Desktop Nav — only rendered when NOT mobile */}
+          {/* Desktop Navigation */}
           {!isMobile && (
-            <nav style={{ display: 'flex', alignItems: 'center', gap: '1.75rem' }}>
+            <nav style={{ display: 'flex', alignItems: 'center', gap: '2.2rem', height: '100%' }}>
               {navLinks.map(link => (
                 <button
                   key={link.id}
                   onClick={() => handleNav(link.id)}
                   style={{
                     background: 'none', border: 'none',
-                    fontFamily: 'var(--font-body)', fontWeight: 600,
+                    fontFamily: 'var(--font-display)', fontWeight: 700,
                     fontSize: '0.92rem',
-                    color: activePage === link.id ? 'var(--orange-deep)' : 'var(--navy)',
-                    cursor: 'pointer', padding: '0.5rem 0',
-                    position: 'relative', transition: 'color 0.2s ease', whiteSpace: 'nowrap',
+                    color: activePage === link.id ? '#ED1B34' : '#221F1F',
+                    cursor: 'pointer', height: '100%',
+                    position: 'relative', transition: 'color 0.25s ease', whiteSpace: 'nowrap',
+                    display: 'flex', alignItems: 'center'
                   }}
                 >
                   {link.label}
                   {activePage === link.id && (
                     <div style={{
-                      position: 'absolute', bottom: '-4px', left: 0, right: 0,
-                      height: '2.5px', borderRadius: '2px', background: 'var(--orange)'
+                      position: 'absolute', top: 0, left: 0, right: 0,
+                      height: '3px', background: '#ED1B34'
                     }} />
                   )}
                 </button>
@@ -125,30 +198,30 @@ export const Navbar = ({ activePage, setActivePage }) => {
             </nav>
           )}
 
-          {/* Right side */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            {/* Desktop CTA — hidden on mobile */}
+          {/* Right Action CTA */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             {!isMobile && (
-              <button onClick={() => handleNav('contact')} className="btn btn-primary btn-sm">
-                Get a Quote
-              </button>
+              <div className="dc-btn">
+                <button onClick={() => handleNav('contact')}>
+                  <span>Get a Quote</span>
+                </button>
+              </div>
             )}
 
-            {/* Mobile Hamburger — only shown on mobile */}
+            {/* Mobile Hamburger Button */}
             {isMobile && (
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label="Toggle menu"
                 style={{
-                  background: mobileOpen ? 'var(--mist)' : 'none',
-                  border: '1.5px solid var(--line)',
+                  background: mobileOpen ? '#221F1F' : 'transparent',
+                  border: '1px solid #DEDEDE',
                   borderRadius: '10px',
-                  color: 'var(--navy)',
-                  cursor: 'pointer',
-                  padding: '8px',
+                  color: mobileOpen ? '#FFFFFF' : '#221F1F',
+                  cursor: 'pointer', padding: '8px',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  transition: 'all 0.2s ease',
-                  width: '42px', height: '42px',
+                  width: '44px', height: '44px',
+                  transition: 'all 0.25s ease'
                 }}
               >
                 {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -158,59 +231,54 @@ export const Navbar = ({ activePage, setActivePage }) => {
         </div>
       </header>
 
-      {/* ── Mobile Overlay + Drawer — only rendered on mobile ── */}
+      {/* ── Mobile Navigation Drawer ── */}
       {isMobile && (
         <>
-          {/* Backdrop */}
           <div
             onClick={() => setMobileOpen(false)}
             style={{
-              position: 'fixed', inset: 0, zIndex: 199,
-              background: 'rgba(5,21,38,0.5)',
-              backdropFilter: 'blur(4px)',
+              position: 'fixed', inset: 0, zIndex: 299,
+              background: 'rgba(34,31,31,0.65)',
               opacity: mobileOpen ? 1 : 0,
               pointerEvents: mobileOpen ? 'auto' : 'none',
-              transition: 'opacity 0.28s ease',
+              transition: 'opacity 0.3s ease',
             }}
           />
 
-          {/* Slide-in Drawer */}
           <div style={{
             position: 'fixed', top: 0, right: 0, bottom: 0,
-            width: '80vw', maxWidth: '300px',
+            width: '85vw', maxWidth: '340px',
             background: '#FFFFFF', zIndex: 300,
-            boxShadow: '-8px 0 40px rgba(10,37,64,0.22)',
+            boxShadow: '-10px 0 30px rgba(0,0,0,0.2)',
             transform: mobileOpen ? 'translateX(0)' : 'translateX(105%)',
-            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
             display: 'flex', flexDirection: 'column',
             overflowY: 'auto',
           }}>
-            {/* Drawer Header */}
             <div style={{
-              padding: '1.1rem 1.1rem 0.9rem',
-              borderBottom: '1px solid var(--line)',
+              padding: '1.25rem',
+              borderBottom: '1px solid #DEDEDE',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
               <img
                 src={settings?.logoUrl || '/logo.png'}
                 alt="Orbit Lubricants"
-                style={{ height: '34px', objectFit: 'contain' }}
+                style={{ height: '36px', objectFit: 'contain' }}
               />
               <button
                 onClick={() => setMobileOpen(false)}
                 style={{
-                  background: 'var(--mist)', border: '1px solid var(--line)',
-                  borderRadius: '50%', width: '34px', height: '34px',
+                  background: '#F9F9F9', border: '1px solid #DEDEDE',
+                  borderRadius: '50%', width: '36px', height: '36px',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer', color: 'var(--navy)',
+                  cursor: 'pointer', color: '#221F1F',
                 }}
               >
-                <X size={17} />
+                <X size={18} />
               </button>
             </div>
 
-            {/* Nav Links */}
-            <nav style={{ padding: '0.75rem', flex: 1 }}>
+            <nav style={{ padding: '1rem', flex: 1 }}>
               {navLinks.map(link => (
                 <button
                   key={link.id}
@@ -218,41 +286,31 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     width: '100%', textAlign: 'left',
-                    background: activePage === link.id
-                      ? 'rgba(247,148,29,0.08)'
-                      : 'transparent',
-                    border: 'none', borderRadius: '10px',
-                    padding: '0.9rem 0.85rem',
-                    fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '1rem',
-                    color: activePage === link.id ? 'var(--orange-deep)' : 'var(--navy)',
-                    cursor: 'pointer', marginBottom: '2px',
-                    borderLeft: activePage === link.id
-                      ? '3px solid var(--orange)'
-                      : '3px solid transparent',
+                    background: activePage === link.id ? 'rgba(237,27,52,0.06)' : 'transparent',
+                    border: 'none', borderBottom: '1px solid #E1E4E6',
+                    padding: '1rem 0.5rem',
+                    fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem',
+                    color: activePage === link.id ? '#ED1B34' : '#221F1F',
+                    cursor: 'pointer',
                   }}
                 >
                   {link.label}
-                  <ChevronRight size={16} style={{ opacity: 0.35, flexShrink: 0 }} />
+                  <ChevronRight size={18} style={{ color: '#ED1B34', opacity: 0.7 }} />
                 </button>
               ))}
             </nav>
 
-            {/* Drawer Footer CTA */}
-            <div style={{ padding: '0.85rem 1rem 2rem' }}>
-              <button
-                onClick={() => handleNav('contact')}
-                className="btn btn-primary"
-                style={{ width: '100%', justifyContent: 'center' }}
-              >
-                Get a Quote
-              </button>
+            <div style={{ padding: '1.5rem 1rem' }}>
+              <div className="dc-btn" style={{ width: '100%' }}>
+                <button onClick={() => handleNav('contact')} style={{ width: '100%' }}>
+                  <span>Get a Quote / Contact</span>
+                </button>
+              </div>
               <div style={{
-                marginTop: '0.85rem', padding: '0.75rem',
-                background: 'var(--mist)', borderRadius: '8px',
-                fontSize: '0.72rem', color: 'var(--steel)',
-                textAlign: 'center', fontFamily: 'var(--font-mono)',
+                marginTop: '1rem', textAlign: 'center',
+                fontSize: '0.8rem', color: '#475569', fontWeight: 600
               }}>
-                ⚡ API CI-4 · JASO MA2 · ACEA E7
+                📞 Hotline: <a href="tel:16669" style={{ color: '#ED1B34', fontWeight: 800 }}>16669</a>
               </div>
             </div>
           </div>
@@ -261,3 +319,4 @@ export const Navbar = ({ activePage, setActivePage }) => {
     </>
   );
 };
+

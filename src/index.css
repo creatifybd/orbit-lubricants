@@ -12,17 +12,24 @@
   --orange: #F7941D;
   --orange-deep: #D97706;
   --orange-glow: rgba(247, 148, 29, 0.45);
-  --ink: #0F172A;
+  --ink: #221F1F;
   --steel: #475569;
-  --mist: #F8FAFC;
+  --mist: #F9F9F9;
   --paper: #FFFFFF;
   --line: #E2E8F0;
   --line-dark: rgba(255, 255, 255, 0.12);
   
+  /* MJL Specific Branding Tokens */
+  --mjl-dark: #221F1F;
+  --mjl-red: #ED1B34;
+  --mjl-blue: #006CB7;
+  --mjl-gray: #E1E4E6;
+  --mjl-border: #DEDEDE;
+
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 24px;
-  --radius-full: 9999px;
+  --radius-full: 19px;
 
   --shadow-sm: 0 2px 8px rgba(10, 37, 64, 0.06);
   --shadow-md: 0 14px 36px -8px rgba(10, 37, 64, 0.14);
@@ -317,31 +324,210 @@ p { color: var(--steel); font-weight: 500; }
   box-shadow: 0 0 0 3px var(--blue-glow);
 }
 
-/* ── Modal ── */
-.modal-overlay {
-  position: fixed;
+/* ── Signature MJL Expanding Pill Button (.dc-btn) ── */
+.dc-btn {
+  display: inline-flex;
+  height: 38px;
+  min-width: 106px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 19px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.dc-btn button, .dc-btn a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  width: 100%;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  color: #FFFFFF !important;
+  text-transform: capitalize;
+  border: none;
+  background-color: var(--mjl-dark);
+  position: relative;
+  border-radius: 19px;
+  overflow: hidden;
+  text-decoration: none !important;
+  transition: color 0.3s ease;
+  font-family: var(--font-display);
+}
+.dc-btn button:after, .dc-btn a:after {
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  background-color: var(--mjl-red);
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.55, 1);
+  border-radius: 19px;
+  z-index: 1;
+}
+.dc-btn button span, .dc-btn a span {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dc-btn button:hover:after, .dc-btn a:hover:after {
+  height: 100%;
+  width: 100%;
+}
+
+/* ── MJL 4-Card Hover Showcase Grid ── */
+.mjl-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--mjl-border);
+}
+.mjl-showcase-card {
+  position: relative;
+  height: 380px;
+  background: var(--mjl-dark);
+  overflow: hidden;
+  cursor: pointer;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.mjl-showcase-card:last-child {
+  border-right: none;
+}
+.mjl-showcase-card .card-img-bg {
+  position: absolute;
   inset: 0;
-  background: rgba(5, 21, 38, 0.8);
-  backdrop-filter: blur(8px);
-  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+  transition: transform 0.6s cubic-bezier(0.25, 0.74, 0.22, 0.99), opacity 0.5s ease;
+}
+.mjl-showcase-card:hover .card-img-bg {
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+.mjl-showcase-card .card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(34,31,31,0.3) 0%, rgba(34,31,31,0.9) 100%);
+  padding: 2.2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #FFFFFF;
+  z-index: 2;
+  transition: background 0.4s ease;
+}
+.mjl-showcase-card:hover .card-overlay {
+  background: linear-gradient(180deg, rgba(237,27,52,0.4) 0%, rgba(34,31,31,0.95) 100%);
+}
+.mjl-showcase-card .circle-plus {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  color: #FFFFFF;
+}
+.mjl-showcase-card:hover .circle-plus {
+  background: var(--mjl-red);
+  border-color: var(--mjl-red);
+  transform: scale(1.1) rotate(90deg);
 }
 
-.modal-card {
-  background: #FFFFFF;
-  border-radius: var(--radius-lg);
-  max-width: 680px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow-lg);
+@media (max-width: 1023px) {
+  .mjl-showcase-grid { grid-template-columns: repeat(2, 1fr); }
+  .mjl-showcase-card { height: 320px; }
+}
+@media (max-width: 639px) {
+  .mjl-showcase-grid { grid-template-columns: 1fr; }
+  .mjl-showcase-card { height: 280px; }
+}
+
+/* ── MJL Product Line Vertical Accordion ── */
+.mjl-accordion-wrap {
+  background: #111827;
+  color: #FFFFFF;
+  border-radius: 0;
   position: relative;
+  overflow: hidden;
+}
+.mjl-accordion-item {
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.3s ease;
+}
+.mjl-accordion-item.active {
+  background: rgba(255, 255, 255, 0.04);
+}
+.mjl-accordion-header {
+  width: 100%;
+  padding: 1.6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+.mjl-accordion-header:hover {
+  color: var(--mjl-red);
+}
+.mjl-accordion-body {
+  padding: 0 2rem 1.8rem 2rem;
+  color: rgba(255,255,255,0.78);
+  font-size: 0.98rem;
+  line-height: 1.65;
 }
 
-@media (max-width: 767px) {
-  .modal-overlay { align-items: flex-end; padding: 0; }
-  .modal-card { border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 92vh; }
+/* ── Floating Mobile Hotline Button ── */
+.mobile-call-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 25px;
+  z-index: 999;
+  width: 54px;
+  height: 54px;
+  background-color: var(--mjl-red);
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(237, 27, 52, 0.5);
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
+.mobile-call-btn:hover {
+  background-color: var(--mjl-dark);
+  transform: scale(1.08);
+}
+@media (max-width: 768px) {
+  .mobile-call-btn { display: flex; }
+}
+
+/* ── Utility Spacing ── */
+.pt-160 { padding-top: clamp(4rem, 9vw, 9rem); }
+.pb-160 { padding-bottom: clamp(4rem, 9vw, 9rem); }
+.pt-120 { padding-top: clamp(3rem, 7vw, 7.5rem); }
+.pb-120 { padding-bottom: clamp(3rem, 7vw, 7.5rem); }
+
