@@ -88,40 +88,46 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
 
   const labEquipments = [
     {
-      icon: <FlaskConical size={24} style={{ color: '#ED1B34' }} />,
+      icon: <FlaskConical size={24} />,
       tag: 'SPECTROPHOTOMETER',
       title: 'FTIR & ICP Spectrometer',
-      desc: 'Analyzes additive elemental concentration and molecular contamination with precision accuracy.'
+      desc: 'Analyzes additive elemental concentration and molecular contamination with precision accuracy.',
+      img: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=800&auto=format&fit=crop'
     },
     {
-      icon: <Gauge size={24} style={{ color: '#ED1B34' }} />,
+      icon: <Gauge size={24} />,
       tag: 'VISCOSITY LAB',
       title: 'Automatic Viscometer',
-      desc: 'Measures exact kinematic viscosity at 40°C & 100°C according to ASTM D445 standards.'
+      desc: 'Measures exact kinematic viscosity at 40°C & 100°C according to ASTM D445 standards.',
+      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop'
     },
     {
-      icon: <Activity size={24} style={{ color: '#ED1B34' }} />,
+      icon: <Activity size={24} />,
       tag: 'CHEMICAL ANALYSIS',
       title: 'TAN & TBN Analyzer',
-      desc: 'Determines Total Acid & Base Numbers to guarantee thermal oxidation resistance.'
+      desc: 'Determines Total Acid & Base Numbers to guarantee thermal oxidation resistance.',
+      img: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=800&auto=format&fit=crop'
     },
     {
-      icon: <Beaker size={24} style={{ color: '#ED1B34' }} />,
+      icon: <Beaker size={24} />,
       tag: 'FLUID TESTING',
       title: 'Pour Point & Flash Point',
-      desc: 'Ensures cold-cranking fluid flow down to -35°C and extreme temperature safety.'
+      desc: 'Ensures cold-cranking fluid flow down to -35°C and extreme temperature safety.',
+      img: 'https://images.unsplash.com/photo-1507668077129-56e32842fceb?q=80&w=800&auto=format&fit=crop'
     },
     {
-      icon: <FileCheck size={24} style={{ color: '#ED1B34' }} />,
+      icon: <FileCheck size={24} />,
       tag: 'WATER ANALYSIS',
       title: 'Karl Fischer Coulometer',
-      desc: 'Detects micro-trace moisture levels ensuring zero water contamination in hydraulic fluids.'
+      desc: 'Detects micro-trace moisture levels ensuring zero water contamination in hydraulic fluids.',
+      img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'
     },
     {
-      icon: <Layers3 size={24} style={{ color: '#ED1B34' }} />,
+      icon: <Layers3 size={24} />,
       tag: 'ACCREDITATION',
       title: 'ISO 17025 Compliant',
-      desc: 'Operated under ExxonMobil QP&G and ISO/IEC 17025:2017 international quality guidelines.'
+      desc: 'Operated under ExxonMobil QP&G and ISO/IEC 17025:2017 international quality guidelines.',
+      img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=800&auto=format&fit=crop'
     }
   ];
 
@@ -465,23 +471,58 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       </section>
 
       {/* ==================== INTERACTIVE LAB EQUIPMENT SHOWCASE GRID ==================== */}
-      <section className="section pt-120 pb-160" style={{ background: '#F9F9F9', borderTop: '1px solid #DEDEDE' }}>
+      <section className="section pt-120 pb-160" style={{ background: '#111827', color: '#FFFFFF' }}>
         <div className="container">
-          <div style={{ marginBottom: '3.5rem', textAlign: 'center', maxWidth: '780px', margin: '0 auto 3.5rem' }}>
-            <span className="eyebrow" style={{ color: '#ED1B34' }}>QUALITY CONTROL LABORATORY</span>
-            <h2 style={{ fontSize: '2.2rem', marginBottom: '1rem' }}>Lube Oil Testing Equipment</h2>
-            <p style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.65 }}>
+          <div style={{ marginBottom: '3.5rem', textAlign: 'center', maxWidth: '820px', margin: '0 auto 3.5rem' }}>
+            <span className="eyebrow on-dark" style={{ color: '#ED1B34' }}>QUALITY CONTROL LABORATORY</span>
+            <h2 style={{ color: '#FFFFFF', fontSize: '2.5rem', marginBottom: '1rem' }}>Lube Oil Testing Equipment</h2>
+            <p style={{ color: 'rgba(255, 255, 255, 0.78)', fontSize: '1.08rem', lineHeight: 1.65 }}>
               MJL/Mobil benchmarked analytical laboratory equipped with world-class testing and measuring equipment supplied by Koehler, Perkin-Elmer, Cannon, and Agilent Technologies.
             </p>
           </div>
 
           <div className="lab-equip-grid">
             {labEquipments.map((eq, i) => (
-              <div key={i} className="lab-equip-card">
-                <div style={{ marginBottom: '1rem' }}>{eq.icon}</div>
-                <span className="equip-tag">{eq.tag}</span>
-                <h4 style={{ fontSize: '1.15rem', color: '#221F1F', fontWeight: 800, marginBottom: '0.45rem' }}>{eq.title}</h4>
-                <p style={{ fontSize: '0.88rem', color: '#475569', lineHeight: 1.55 }}>{eq.desc}</p>
+              <div key={i} className="lab-equip-card-premium" onClick={() => setActivePage('about')}>
+                {/* Background Photography Image */}
+                <img src={eq.img} alt={eq.title} className="card-bg-img" />
+
+                {/* Gradient Reveal Overlay */}
+                <div className="card-grad-overlay">
+                  {/* Top Badge & Icon */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div className="icon-badge-box">
+                      {eq.icon}
+                    </div>
+                    <span style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.68rem',
+                      fontWeight: 800,
+                      color: '#ED1B34',
+                      background: 'rgba(255, 255, 255, 0.12)',
+                      backdropFilter: 'blur(8px)',
+                      padding: '4px 10px',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(255,255,255,0.2)'
+                    }}>
+                      {eq.tag}
+                    </span>
+                  </div>
+
+                  {/* Card Title & Content */}
+                  <div>
+                    <h4 style={{ fontSize: '1.25rem', color: '#FFFFFF', fontWeight: 800, marginBottom: '0.45rem', lineHeight: 1.25 }}>
+                      {eq.title}
+                    </h4>
+                    <p style={{ fontSize: '0.86rem', color: 'rgba(255, 255, 255, 0.82)', lineHeight: 1.55 }}>
+                      {eq.desc}
+                    </p>
+                    <div className="card-action-link">
+                      <span>Learn Tech Specs</span>
+                      <ArrowRight size={14} />
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

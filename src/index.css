@@ -612,42 +612,101 @@ p { color: var(--steel); font-weight: 500; }
   opacity: 1;
 }
 
-/* ── LOBP Laboratory Equipment Card Grid ── */
+/* ── LOBP Laboratory Equipment Card Grid (High-Impact Card System) ── */
 .lab-equip-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
-.lab-equip-card {
-  background: #FFFFFF;
-  border: 1px solid #DEDEDE;
-  border-radius: 14px;
-  padding: 1.6rem 1.4rem;
-  transition: all 0.3s ease;
+.lab-equip-card-premium {
   position: relative;
+  height: 340px;
+  background: #111827;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.25, 0.74, 0.22, 0.99), border-color 0.35s ease, box-shadow 0.35s ease;
 }
-.lab-equip-card:hover {
+.lab-equip-card-premium:hover {
+  transform: translateY(-8px);
   border-color: var(--mjl-red);
-  box-shadow: 0 12px 30px rgba(237, 27, 52, 0.12);
-  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(237, 27, 52, 0.28);
 }
-.lab-equip-card .equip-tag {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
+.lab-equip-card-premium .card-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  filter: saturate(0.85);
+  transition: transform 0.6s cubic-bezier(0.25, 0.74, 0.22, 0.99), opacity 0.5s ease;
+}
+.lab-equip-card-premium:hover .card-bg-img {
+  transform: scale(1.1);
+  opacity: 0.85;
+  filter: saturate(1.1);
+}
+.lab-equip-card-premium .card-grad-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.4) 0%, rgba(17, 24, 39, 0.95) 100%);
+  padding: 1.8rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 2;
+  transition: background 0.45s ease;
+}
+.lab-equip-card-premium:hover .card-grad-overlay {
+  background: linear-gradient(180deg, rgba(237, 27, 52, 0.45) 0%, rgba(17, 24, 39, 0.96) 100%);
+}
+.lab-equip-card-premium .icon-badge-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  transition: all 0.35s ease;
+}
+.lab-equip-card-premium:hover .icon-badge-box {
+  background: var(--mjl-red);
+  border-color: var(--mjl-red);
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 0 20px rgba(237, 27, 52, 0.6);
+}
+.lab-equip-card-premium .card-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 800;
   color: var(--mjl-red);
-  background: rgba(237, 27, 52, 0.08);
-  padding: 3px 10px;
-  border-radius: 10px;
-  display: inline-block;
-  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: transform 0.3s ease, color 0.3s ease;
+  margin-top: 0.75rem;
+}
+.lab-equip-card-premium:hover .card-action-link {
+  color: #FFFFFF;
+  transform: translateX(6px);
 }
 
 @media (max-width: 1023px) {
   .lab-equip-grid { grid-template-columns: repeat(2, 1fr); }
+  .lab-equip-card-premium { height: 310px; }
 }
 @media (max-width: 639px) {
   .lab-equip-grid { grid-template-columns: 1fr; }
+  .lab-equip-card-premium { height: 290px; }
 }
 
 /* ── Utility Spacing ── */
