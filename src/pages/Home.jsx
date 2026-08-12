@@ -185,7 +185,15 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                 {currentSlide.tag}
               </span>
 
-              <h1 className="fade-in-up" style={{ color: '#FFFFFF', marginBottom: '1.25rem', fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.15, fontWeight: 900 }}>
+              <h1 className="fade-in-up" style={{
+                color: '#FFFFFF',
+                marginBottom: '1.25rem',
+                fontSize: 'clamp(3.4rem, 6.5vw, 5.6rem)',
+                lineHeight: 1.05,
+                fontWeight: 900,
+                letterSpacing: '-0.03em',
+                filter: 'drop-shadow(0 4px 20px rgba(0,0,0,0.65))'
+              }}>
                 {currentSlide.title}
               </h1>
 
