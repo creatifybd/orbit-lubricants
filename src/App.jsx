@@ -67,7 +67,7 @@ export function AppContent() {
         )}
         {activePage === 'about' && <About />}
         {activePage === 'finder' && (
-          <section className="section">
+          <section className="section" style={{ paddingTop: '8.5rem' }}>
             <div className="container">
               <LubricantFinder
                 onSelectProduct={(p) => {

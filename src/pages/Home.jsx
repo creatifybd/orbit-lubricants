@@ -20,18 +20,21 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
   const heroSlides = [
     {
       img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop',
-      title: 'Ultra-Modern Lube Oil Blending Plant',
+      title: 'Power in Every Drop',
+      desc: 'Orbit Lubricant Industries is an ultra-modern lubricant blending company engineered for maximum engine protection, thermal efficiency, and peak performance.',
       tag: 'STATE-OF-THE-ART MANUFACTURING'
     },
     {
       img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1600&auto=format&fit=crop',
-      title: 'Advanced Lubrication Technology',
-      tag: 'AUTOMOTIVE & INDUSTRIAL EXCELLENCE'
+      title: 'Advanced Engine Protection',
+      desc: 'Formulated with 100% virgin Group II & Group III base stocks and advanced additives for superior anti-wear defense under extreme driving conditions.',
+      tag: 'AUTOMOTIVE & SYNTHETIC EXCELLENCE'
     },
     {
       img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1600&auto=format&fit=crop',
-      title: 'Commercial Heavy-Duty Fleet Protection',
-      tag: 'API CK-4 / ACEA E7 CERTIFIED'
+      title: 'Maximum Equipment Uptime',
+      desc: 'API CK-4 & JASO MA2 certified heavy-duty diesel oils and industrial gear lubricants designed for extended drain intervals and commercial fleet reliability.',
+      tag: 'COMMERCIAL FLEET & INDUSTRIAL'
     }
   ];
 
@@ -129,16 +132,14 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     setActivePage('contact');
   };
 
+  const currentSlide = heroSlides[heroSlide];
+
   return (
     <div>
-      {/* ==================== HERO SECTION (MJL DYNAMIC SLIDER STYLE) ==================== */}
-      <section style={{
+      {/* ==================== 100VH RESPONSIVE FULLSCREEN HERO SECTION ==================== */}
+      <section className="hero-fullscreen" style={{
         background: 'radial-gradient(120% 100% at 85% 15%, #0F3560 0%, #0A2540 50%, #051526 100%)',
         color: '#FFFFFF',
-        paddingTop: 'clamp(3.5rem, 8vw, 6rem)',
-        paddingBottom: 'clamp(3rem, 7vw, 5.5rem)',
-        position: 'relative',
-        overflow: 'hidden'
       }}>
         {/* Auto Cross-Fade Background Images */}
         {heroSlides.map((slide, idx) => (
@@ -153,16 +154,16 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         {/* Dark Overlay Gradient */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(90deg, rgba(5,21,38,0.92) 0%, rgba(10,37,64,0.78) 50%, rgba(5,21,38,0.92) 100%)',
+          background: 'linear-gradient(90deg, rgba(5,21,38,0.92) 0%, rgba(10,37,64,0.76) 50%, rgba(5,21,38,0.90) 100%)',
           zIndex: 1
         }} />
 
-        {/* Verification Seal Badge (D&B / Quality Seal Style) */}
+        {/* Verification Seal Badge */}
         <div style={{
-          position: 'absolute', top: '25px', right: '30px', zIndex: 10,
+          position: 'absolute', top: '115px', right: '30px', zIndex: 10,
           background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.2)',
           borderRadius: '12px', padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '10px',
-          backdropFilter: 'blur(10px)'
+          backdropFilter: 'blur(12px)'
         }}>
           <Award style={{ color: '#ED1B34', width: '22px', height: '22px' }} />
           <div style={{ fontSize: '0.72rem', color: '#FFFFFF', fontFamily: 'var(--font-mono)', lineHeight: 1.3 }}>
@@ -170,42 +171,42 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
           </div>
         </div>
 
-        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+        <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
             gap: 'clamp(2rem, 5vw, 3rem)',
             alignItems: 'center'
           }}>
-            {/* Hero Text */}
-            <div className="fade-in-left">
-              <span className="eyebrow on-dark fade-in-up delay-100" style={{ color: '#ED1B34' }}>
+            {/* Hero Text Content */}
+            <div key={heroSlide} className="fade-in-left">
+              <span className="eyebrow on-dark fade-in-up" style={{ color: '#ED1B34', letterSpacing: '0.08em', fontWeight: 800 }}>
                 <Sparkles size={14} style={{ display: 'inline', marginRight: '6px' }} />
-                {heroSlides[heroSlide].tag}
+                {currentSlide.tag}
               </span>
 
-              <h1 className="fade-in-up delay-200" style={{ color: '#FFFFFF', marginBottom: '1.25rem', fontSize: 'clamp(2.4rem, 4.8vw, 3.8rem)' }}>
-                {hero.title || "Power in Every Drop"}
+              <h1 className="fade-in-up" style={{ color: '#FFFFFF', marginBottom: '1.25rem', fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.15, fontWeight: 900 }}>
+                {currentSlide.title}
               </h1>
 
-              <p className="fade-in-up delay-300" style={{
-                color: 'rgba(255, 255, 255, 0.85)',
-                fontSize: '1.12rem',
+              <p className="fade-in-up" style={{
+                color: 'rgba(255, 255, 255, 0.88)',
+                fontSize: '1.15rem',
                 lineHeight: 1.65,
                 marginBottom: '2.25rem',
-                maxWidth: '540px'
+                maxWidth: '560px'
               }}>
-                Orbit Lubricant Industries is a modern lubricant manufacturing company committed to delivering premium automotive and industrial lubrication solutions for local & international markets.
+                {currentSlide.desc}
               </p>
 
               {/* Action Buttons (MJL Signature .dc-btn) */}
-              <div className="fade-in-up delay-400" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
-                <div className="dc-btn" style={{ height: '46px' }}>
+              <div className="fade-in-up" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+                <div className="dc-btn" style={{ height: '48px' }}>
                   <button onClick={() => setActivePage('products')} style={{ padding: '0 28px', fontSize: '15px' }}>
                     <span>Explore Product Range <ArrowRight size={16} /></span>
                   </button>
                 </div>
-                <div className="dc-btn" style={{ height: '46px' }}>
+                <div className="dc-btn" style={{ height: '48px' }}>
                   <button onClick={() => setActivePage('contact')} style={{ background: '#006CB7', padding: '0 28px', fontSize: '15px' }}>
                     <span>Become a Distributor</span>
                   </button>
@@ -213,19 +214,20 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               </div>
 
               {/* Slide Indicators */}
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                {heroSlides.map((_, i) => (
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                {heroSlides.map((s, i) => (
                   <button
                     key={i}
                     onClick={() => setHeroSlide(i)}
+                    aria-label={`Go to slide ${i + 1}`}
                     style={{
-                      width: heroSlide === i ? '28px' : '8px',
+                      width: heroSlide === i ? '32px' : '10px',
                       height: '8px',
                       borderRadius: '4px',
                       background: heroSlide === i ? '#ED1B34' : 'rgba(255,255,255,0.3)',
                       border: 'none',
                       cursor: 'pointer',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.35s ease'
                     }}
                   />
                 ))}
@@ -233,7 +235,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             </div>
 
             {/* 3D Orbit Drop Visual */}
-            <div className="fade-in-right delay-200">
+            <div className="fade-in-right">
               <OrbitRing />
             </div>
           </div>

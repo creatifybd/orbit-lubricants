@@ -12,7 +12,7 @@ export const About = () => {
       <section style={{
         background: 'radial-gradient(120% 100% at 85% 15%, #0F3560 0%, #0A2540 50%, #051526 100%)',
         color: '#FFFFFF',
-        padding: '5.5rem 0 4.5rem',
+        padding: '8.5rem 0 4.5rem',
         borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         position: 'relative',
         overflow: 'hidden'

@@ -37,7 +37,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
       <section style={{
         background: 'linear-gradient(135deg, #0A2540 0%, #051526 100%)',
         color: '#FFFFFF',
-        padding: '5rem 0 4rem',
+        padding: '8.5rem 0 4.5rem',
         borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
       }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '780px' }}>
