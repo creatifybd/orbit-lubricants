@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
 import { Menu, X, ChevronRight, Phone, ShoppingCart, Search } from 'lucide-react';
 
@@ -89,8 +89,8 @@ export const Navbar = ({ activePage, setActivePage }) => {
               <a href="tel:16669" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '6px',
                 color: '#FFFFFF', textDecoration: 'none', fontWeight: 800,
-                background: '#ED1B34', padding: '0.2rem 0.85rem', borderRadius: '14px',
-                fontSize: '0.78rem', boxShadow: '0 4px 12px rgba(237,27,52,0.4)'
+                background: '#F7931E', padding: '0.2rem 0.85rem', borderRadius: '14px',
+                fontSize: '0.78rem', boxShadow: '0 4px 12px rgba(247, 147, 30, 0.5)'
               }}>
                 <Phone size={12} /> 16669 Hotline
               </a>
@@ -108,10 +108,10 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px',
                   fontSize: '0.82rem', fontWeight: 600, transition: 'color 0.25s ease'
                 }}
-                onMouseEnter={e => e.currentTarget.style.color = '#ED1B34'}
+                onMouseEnter={e => e.currentTarget.style.color = '#F7931E'}
                 onMouseLeave={e => e.currentTarget.style.color = '#FFFFFF'}
               >
-                <ShoppingCart size={13} style={{ color: '#ED1B34' }} /> Buy Orbit Lubricants
+                <ShoppingCart size={13} style={{ color: '#F7931E' }} /> Buy Orbit Lubricants
               </button>
               <span style={{ opacity: 0.3, color: '#FFFFFF' }}>|</span>
               <button
@@ -121,7 +121,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px',
                   fontSize: '0.82rem', fontWeight: 600, transition: 'color 0.25s ease'
                 }}
-                onMouseEnter={e => e.currentTarget.style.color = '#ED1B34'}
+                onMouseEnter={e => e.currentTarget.style.color = '#F7931E'}
                 onMouseLeave={e => e.currentTarget.style.color = '#FFFFFF'}
               >
                 <Search size={13} /> Search
@@ -134,7 +134,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
         {searchOpen && (
           <div style={{
             background: 'rgba(15, 23, 42, 0.98)',
-            borderBottom: '2px solid #ED1B34',
+            borderBottom: '2px solid #F7931E',
             padding: '1rem 0',
             boxShadow: '0 15px 35px rgba(0,0,0,0.3)',
             backdropFilter: 'blur(20px)'
@@ -213,8 +213,8 @@ export const Navbar = ({ activePage, setActivePage }) => {
                         fontFamily: 'var(--font-display)',
                         fontWeight: 700,
                         fontSize: '0.94rem',
-                        color: (isActive || isHovered) ? '#ED1B34' : '#FFFFFF',
-                        textShadow: (isActive || isHovered) ? '0 0 14px rgba(237, 27, 52, 0.6)' : '0 1px 4px rgba(0,0,0,0.4)',
+                        color: (isActive || isHovered) ? '#F7931E' : '#FFFFFF',
+                        textShadow: (isActive || isHovered) ? '0 0 14px rgba(247, 147, 30, 0.7)' : '0 1px 4px rgba(0,0,0,0.4)',
                         cursor: 'pointer',
                         height: '42px',
                         padding: '0 14px',
@@ -234,9 +234,9 @@ export const Navbar = ({ activePage, setActivePage }) => {
                           left: '14px',
                           right: '14px',
                           height: '3px',
-                          background: '#ED1B34',
+                          background: '#F7931E',
                           borderRadius: '2px',
-                          boxShadow: '0 0 10px #ED1B34',
+                          boxShadow: '0 0 10px #F7931E',
                           transition: 'all 0.25s ease'
                         }} />
                       )}
@@ -263,7 +263,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   onClick={() => setMobileOpen(!mobileOpen)}
                   aria-label="Toggle menu"
                   style={{
-                    background: mobileOpen ? '#ED1B34' : 'rgba(255,255,255,0.12)',
+                    background: mobileOpen ? '#F7931E' : 'rgba(255,255,255,0.12)',
                     border: '1px solid rgba(255,255,255,0.25)',
                     borderRadius: '10px',
                     color: '#FFFFFF',
@@ -336,16 +336,16 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     width: '100%', textAlign: 'left',
-                    background: activePage === link.id ? 'rgba(237,27,52,0.15)' : 'transparent',
+                    background: activePage === link.id ? 'rgba(247, 147, 30, 0.15)' : 'transparent',
                     border: 'none', borderBottom: '1px solid rgba(255,255,255,0.08)',
                     padding: '1rem 0.5rem',
                     fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem',
-                    color: activePage === link.id ? '#ED1B34' : '#FFFFFF',
+                    color: activePage === link.id ? '#F7931E' : '#FFFFFF',
                     cursor: 'pointer',
                   }}
                 >
                   {link.label}
-                  <ChevronRight size={18} style={{ color: '#ED1B34', opacity: 0.8 }} />
+                  <ChevronRight size={18} style={{ color: '#F7931E', opacity: 0.8 }} />
                 </button>
               ))}
             </nav>
@@ -360,7 +360,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                 marginTop: '1rem', textAlign: 'center',
                 fontSize: '0.82rem', color: '#94A3B8', fontWeight: 600
               }}>
-                📞 Hotline: <a href="tel:16669" style={{ color: '#ED1B34', fontWeight: 800 }}>16669</a>
+                📞 Hotline: <a href="tel:16669" style={{ color: '#F7931E', fontWeight: 800 }}>16669</a>
               </div>
             </div>
           </div>

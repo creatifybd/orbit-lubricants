@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useCms } from '../context/CmsContext';
 import { Phone, Mail, MapPin, Clock, ArrowUpRight, Facebook, Linkedin, Youtube, Instagram } from 'lucide-react';
 
@@ -75,10 +75,10 @@ export const Footer = ({ setActivePage }) => {
                         alignItems: 'center', gap: '6px', padding: 0,
                         transition: 'color 0.2s ease'
                       }}
-                      onMouseEnter={e => e.currentTarget.style.color = '#ED1B34'}
+                      onMouseEnter={e => e.currentTarget.style.color = '#F7931E'}
                       onMouseLeave={e => e.currentTarget.style.color = '#221F1F'}
                     >
-                      <ArrowUpRight size={14} style={{ color: '#ED1B34' }} />
+                      <ArrowUpRight size={14} style={{ color: '#F7931E' }} />
                       {link.label}
                     </button>
                   </li>
@@ -93,19 +93,19 @@ export const Footer = ({ setActivePage }) => {
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.88rem', color: '#221F1F', fontWeight: 600 }}>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                  <MapPin size={16} style={{ color: '#ED1B34', flexShrink: 0, marginTop: '2px' }} />
+                  <MapPin size={16} style={{ color: '#F7931E', flexShrink: 0, marginTop: '2px' }} />
                   <span>{contactInfo.address}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                  <Phone size={16} style={{ color: '#ED1B34', flexShrink: 0 }} />
+                  <Phone size={16} style={{ color: '#F7931E', flexShrink: 0 }} />
                   <span>{contactInfo.phone}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                  <Mail size={16} style={{ color: '#ED1B34', flexShrink: 0 }} />
+                  <Mail size={16} style={{ color: '#F7931E', flexShrink: 0 }} />
                   <span>{contactInfo.email}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                  <Clock size={16} style={{ color: '#ED1B34', flexShrink: 0 }} />
+                  <Clock size={16} style={{ color: '#F7931E', flexShrink: 0 }} />
                   <span>{contactInfo.hours}</span>
                 </div>
               </div>
@@ -119,9 +119,9 @@ export const Footer = ({ setActivePage }) => {
               <div style={{ marginBottom: '1.25rem' }}>
                 <a href="tel:16669" style={{
                   display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  background: '#ED1B34', color: '#FFFFFF', padding: '0.5rem 1.2rem',
+                  background: '#F7931E', color: '#FFFFFF', padding: '0.5rem 1.2rem',
                   borderRadius: '19px', textDecoration: 'none', fontWeight: 800,
-                  fontSize: '0.92rem', boxShadow: '0 4px 14px rgba(237, 27, 52, 0.3)'
+                  fontSize: '0.92rem', boxShadow: '0 4px 14px rgba(247, 147, 30, 0.3)'
                 }}>
                   <Phone size={14} /> Call Hotline 16669
                 </a>
@@ -138,7 +138,7 @@ export const Footer = ({ setActivePage }) => {
                     background: '#221F1F', color: '#FFFFFF', display: 'flex',
                     alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s ease'
                   }}
-                  onMouseEnter={e => e.currentTarget.style.backgroundColor = '#ED1B34'}
+                  onMouseEnter={e => e.currentTarget.style.backgroundColor = '#F7931E'}
                   onMouseLeave={e => e.currentTarget.style.backgroundColor = '#221F1F'}
                   >
                     {s.icon}

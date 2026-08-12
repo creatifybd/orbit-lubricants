@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
 import { OrbitRing } from '../components/OrbitRing';
 import { ProductCard } from '../components/ProductCard';
@@ -182,7 +182,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
           borderRadius: '12px', padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '10px',
           backdropFilter: 'blur(12px)'
         }}>
-          <Award style={{ color: '#ED1B34', width: '22px', height: '22px' }} />
+          <Award style={{ color: '#F7931E', width: '22px', height: '22px' }} />
           <div style={{ fontSize: '0.72rem', color: '#FFFFFF', fontFamily: 'var(--font-mono)', lineHeight: 1.3 }}>
             <b>ISO 9001:2015</b><br />Certified Blending Facility
           </div>
@@ -197,7 +197,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
           }}>
             {/* Hero Text Content */}
             <div key={heroSlide} className="fade-in-left">
-              <span className="eyebrow on-dark fade-in-up" style={{ color: '#ED1B34', letterSpacing: '0.08em', fontWeight: 800 }}>
+              <span className="eyebrow on-dark fade-in-up" style={{ color: '#F7931E', letterSpacing: '0.08em', fontWeight: 800 }}>
                 <Sparkles size={14} style={{ display: 'inline', marginRight: '6px' }} />
                 {currentSlide.tag}
               </span>
@@ -249,7 +249,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                       width: heroSlide === i ? '32px' : '10px',
                       height: '8px',
                       borderRadius: '4px',
-                      background: heroSlide === i ? '#ED1B34' : 'rgba(255,255,255,0.3)',
+                      background: heroSlide === i ? '#F7931E' : 'rgba(255,255,255,0.3)',
                       border: 'none',
                       cursor: 'pointer',
                       transition: 'all 0.35s ease'
@@ -271,7 +271,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       <section className="section pt-160 pb-120" style={{ background: '#FFFFFF' }}>
         <div className="container">
           <div style={{ marginBottom: '3.5rem' }}>
-            <span className="eyebrow" style={{ color: '#ED1B34' }}>ORBIT LUBRICANT INDUSTRIES PLC</span>
+            <span className="eyebrow" style={{ color: '#F7931E' }}>ORBIT LUBRICANT INDUSTRIES PLC</span>
             <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.7rem)', color: '#221F1F', maxWidth: '920px', lineHeight: 1.25 }}>
               An embodiment of trust when it comes to providing excellence in petroleum products and retaining optimum engine performance.
             </h2>
@@ -280,7 +280,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', alignItems: 'center', marginBottom: '4rem' }}>
             <div>
               <img src="/logo.png" alt="Orbit Logo" style={{ maxWidth: '240px', height: 'auto', marginBottom: '1.5rem' }} />
-              <div style={{ borderLeft: '3px solid #ED1B34', paddingLeft: '1.25rem', color: '#475569', fontSize: '0.95rem' }}>
+              <div style={{ borderLeft: '3px solid #F7931E', paddingLeft: '1.25rem', color: '#475569', fontSize: '0.95rem' }}>
                 State-of-the-art Lube Oil Blending Plant (LOBP) with world-class testing and measuring laboratory equipment.
               </div>
             </div>
@@ -302,7 +302,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             borderRadius: '16px', padding: '2rem 1.5rem', textAlign: 'center'
           }}>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2.5rem', color: '#ED1B34' }}>No. 1</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2.5rem', color: '#F7931E' }}>No. 1</div>
               <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#221F1F', marginTop: '4px' }}>Choice of Engineers</div>
             </div>
             <div>
@@ -310,7 +310,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#221F1F', marginTop: '4px' }}>High-Performance SKUs</div>
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2.5rem', color: '#ED1B34' }}>15+</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2.5rem', color: '#F7931E' }}>15+</div>
               <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#221F1F', marginTop: '4px' }}>Years of Excellence</div>
             </div>
             <div>
@@ -331,7 +331,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
-                <p style={{ fontSize: '0.82rem', color: '#ED1B34', fontWeight: 700, textTransform: 'uppercase' }}>Leadership</p>
+                <p style={{ fontSize: '0.82rem', color: '#F7931E', fontWeight: 700, textTransform: 'uppercase' }}>Leadership</p>
                 <h4 style={{ color: '#FFFFFF', fontSize: '1.4rem', marginTop: '4px' }}>Board of Directors</h4>
                 <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', marginTop: '6px' }}>Take a look at the leaders of innovation at the helm of Orbit Lubricants.</p>
               </div>
@@ -345,7 +345,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
-                <p style={{ fontSize: '0.82rem', color: '#ED1B34', fontWeight: 700, textTransform: 'uppercase' }}>Portfolio</p>
+                <p style={{ fontSize: '0.82rem', color: '#F7931E', fontWeight: 700, textTransform: 'uppercase' }}>Portfolio</p>
                 <h4 style={{ color: '#FFFFFF', fontSize: '1.4rem', marginTop: '4px' }}>Product Range</h4>
                 <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', marginTop: '6px' }}>Engineered for modern passenger cars, heavy trucks & industrial plant machinery.</p>
               </div>
@@ -359,7 +359,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
-                <p style={{ fontSize: '0.82rem', color: '#ED1B34', fontWeight: 700, textTransform: 'uppercase' }}>Corporate</p>
+                <p style={{ fontSize: '0.82rem', color: '#F7931E', fontWeight: 700, textTransform: 'uppercase' }}>Corporate</p>
                 <h4 style={{ color: '#FFFFFF', fontSize: '1.4rem', marginTop: '4px' }}>Investor Relations</h4>
                 <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', marginTop: '6px' }}>Our unrivaled attitude towards excellence is a big reason behind our growth.</p>
               </div>
@@ -373,7 +373,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
-                <p style={{ fontSize: '0.82rem', color: '#ED1B34', fontWeight: 700, textTransform: 'uppercase' }}>Certification</p>
+                <p style={{ fontSize: '0.82rem', color: '#F7931E', fontWeight: 700, textTransform: 'uppercase' }}>Certification</p>
                 <h4 style={{ color: '#FFFFFF', fontSize: '1.4rem', marginTop: '4px' }}>Quality Assurance</h4>
                 <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', marginTop: '6px' }}>Each product goes through acute QA measures to ensure uncompromised quality.</p>
               </div>
@@ -386,7 +386,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       <section className="mjl-accordion-wrap pt-120 pb-120">
         <div className="container">
           <div style={{ marginBottom: '3rem' }}>
-            <span className="eyebrow" style={{ color: '#ED1B34' }}>VERSATILE APPLICATIONS</span>
+            <span className="eyebrow" style={{ color: '#F7931E' }}>VERSATILE APPLICATIONS</span>
             <h2 style={{ color: '#FFFFFF', fontSize: '2.4rem' }}>Orbit for Every Machine</h2>
           </div>
 
@@ -402,7 +402,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                       onClick={() => setActiveAccordion(isOpen ? '' : cat.id)}
                     >
                       <span>{cat.title}</span>
-                      {isOpen ? <ChevronUp size={20} style={{ color: '#ED1B34' }} /> : <ChevronDown size={20} style={{ opacity: 0.5 }} />}
+                      {isOpen ? <ChevronUp size={20} style={{ color: '#F7931E' }} /> : <ChevronDown size={20} style={{ opacity: 0.5 }} />}
                     </button>
                     {isOpen && (
                       <div className="mjl-accordion-body">
@@ -431,7 +431,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                 background: 'linear-gradient(180deg, rgba(34,31,31,0.2) 0%, rgba(34,31,31,0.85) 100%)',
                 padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'
               }}>
-                <span style={{ color: '#ED1B34', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>FEATURED RANGE</span>
+                <span style={{ color: '#F7931E', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>FEATURED RANGE</span>
                 <h3 style={{ color: '#FFFFFF', fontSize: '1.8rem', marginTop: '4px' }}>
                   {productCategories.find(c => c.id === activeAccordion)?.title || 'Car Engine Oils'}
                 </h3>
@@ -446,20 +446,20 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3.5rem', alignItems: 'center' }}>
             <div>
-              <span className="eyebrow" style={{ color: '#ED1B34' }}>WORLD-CLASS MANUFACTURING</span>
+              <span className="eyebrow" style={{ color: '#F7931E' }}>WORLD-CLASS MANUFACTURING</span>
               <h2 style={{ fontSize: '2.2rem', marginBottom: '1.25rem' }}>Lube Oil Blending Plant (LOBP)</h2>
               <p style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
                 Orbit Lubricant Industries ensures the authenticity of lube oils with an extensive touch of perfection. Our state-of-the-art Lube Oil Blending Plant is engineered as an ultra-modern and technologically enhanced in-line blending facility in South East Asia.
               </p>
               <ul style={{ listStyle: 'none', padding: 0, marginBottom: '2rem' }}>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', color: '#221F1F', fontWeight: 600 }}>
-                  <CheckCircle2 size={18} style={{ color: '#ED1B34' }} /> Fully automated batch blending & dosage control
+                  <CheckCircle2 size={18} style={{ color: '#F7931E' }} /> Fully automated batch blending & dosage control
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', color: '#221F1F', fontWeight: 600 }}>
-                  <CheckCircle2 size={18} style={{ color: '#ED1B34' }} /> 100% Virgin Group II & Group III base stocks
+                  <CheckCircle2 size={18} style={{ color: '#F7931E' }} /> 100% Virgin Group II & Group III base stocks
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', color: '#221F1F', fontWeight: 600 }}>
-                  <CheckCircle2 size={18} style={{ color: '#ED1B34' }} /> Advanced additive technology from Infineum & Afton
+                  <CheckCircle2 size={18} style={{ color: '#F7931E' }} /> Advanced additive technology from Infineum & Afton
                 </li>
               </ul>
               <div className="dc-btn">
@@ -485,7 +485,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       <section className="section pt-120 pb-160" style={{ background: '#111827', color: '#FFFFFF' }}>
         <div className="container">
           <div style={{ marginBottom: '3.5rem', textAlign: 'center', maxWidth: '820px', margin: '0 auto 3.5rem' }}>
-            <span className="eyebrow on-dark" style={{ color: '#ED1B34' }}>QUALITY CONTROL LABORATORY</span>
+            <span className="eyebrow on-dark" style={{ color: '#F7931E' }}>QUALITY CONTROL LABORATORY</span>
             <h2 style={{ color: '#FFFFFF', fontSize: '2.5rem', marginBottom: '1rem' }}>Lube Oil Testing Equipment</h2>
             <p style={{ color: 'rgba(255, 255, 255, 0.78)', fontSize: '1.08rem', lineHeight: 1.65 }}>
               MJL/Mobil benchmarked analytical laboratory equipped with world-class testing and measuring equipment supplied by Koehler, Perkin-Elmer, Cannon, and Agilent Technologies.
@@ -509,7 +509,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                       fontFamily: 'var(--font-mono)',
                       fontSize: '0.68rem',
                       fontWeight: 800,
-                      color: '#ED1B34',
+                      color: '#F7931E',
                       background: 'rgba(255, 255, 255, 0.12)',
                       backdropFilter: 'blur(8px)',
                       padding: '4px 10px',
@@ -546,7 +546,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
           {/* Section Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <span className="eyebrow" style={{ color: '#ED1B34' }}>PREMIUM PRODUCT RANGE</span>
+              <span className="eyebrow" style={{ color: '#F7931E' }}>PREMIUM PRODUCT RANGE</span>
               <h2 style={{ marginBottom: '0.25rem' }}>Featured Lubricant Products</h2>
               <p style={{ color: '#536275', fontSize: '1rem', marginTop: '0.3rem' }}>Orbit-certified oils engineered for peak performance across every vehicle type.</p>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { ChevronRight, Shield, Zap, ArrowUpRight, MessageSquare } from 'lucide-react';
 
 export const ProductCard = ({ product, onSelect, onInquire }) => {
@@ -6,7 +6,7 @@ export const ProductCard = ({ product, onSelect, onInquire }) => {
   const [imgLoaded, setImgLoaded] = useState(false);
   const [hovered, setHovered] = useState(false);
 
-  const accentColor = product.imageColor || '#ED1B34';
+  const accentColor = product.imageColor || '#F7931E';
 
   // Parse spec tags from apiGrade (e.g. "API SP / ACEA A3" → ["API SP", "ACEA A3"])
   const specTags = product.apiGrade
@@ -105,7 +105,7 @@ export const ProductCard = ({ product, onSelect, onInquire }) => {
         {/* Bottom CTA Row */}
         <div className="product-card-actions">
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Zap size={13} color="#ED1B34" />
+            <Zap size={13} color="#F7931E" />
             <span style={{ fontSize: '0.78rem', color: '#221F1F', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
               {product.packing}
             </span>
