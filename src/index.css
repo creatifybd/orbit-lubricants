@@ -581,7 +581,238 @@ p { color: var(--steel); font-weight: 500; }
   transform: scale(1.06);
 }
 
-/* ── Premium Glassmorphic Card (.glass-card-premium) ── */
+/* ── Advanced Product Card System (.product-card-advanced) ── */
+.product-card-advanced {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #FFFFFF;
+  border: 1px solid #E8EAED;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.38s cubic-bezier(0.25, 0.74, 0.22, 0.99), box-shadow 0.38s ease, border-color 0.3s ease;
+  height: 100%;
+}
+.product-card-advanced:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.13);
+  border-color: rgba(237, 27, 52, 0.25);
+}
+.product-card-top-border {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 20px 20px 0 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.product-card-advanced:hover .product-card-top-border {
+  opacity: 1;
+}
+
+/* Stage: Product Image Area */
+.product-stage-advanced {
+  position: relative;
+  background: linear-gradient(150deg, #F3F5F8 0%, #E8ECF0 100%);
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.product-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.product-card-advanced:hover .product-ambient-glow {
+  opacity: 1.4;
+}
+.product-stage-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.product-canister-img {
+  height: 218px;
+  width: auto;
+  max-width: 82%;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.45s cubic-bezier(0.25, 0.74, 0.22, 0.99), filter 0.45s ease;
+}
+.product-stage-shimmer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.product-card-advanced:hover .product-stage-shimmer {
+  opacity: 1;
+}
+
+/* Viscosity Pill Badge */
+.product-viscosity-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  padding: 5px 13px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+  z-index: 3;
+}
+
+/* Category Pill Badge */
+.product-category-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  font-weight: 700;
+  color: #221F1F;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1px solid rgba(222, 222, 222, 0.85);
+  letter-spacing: 0.03em;
+  z-index: 3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Card Body */
+.product-card-body {
+  padding: 1.4rem 1.5rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Spec Chip Tags */
+.product-spec-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 0.7rem;
+}
+.product-spec-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--mjl-red);
+  background: rgba(237, 27, 52, 0.07);
+  border: 1px solid rgba(237, 27, 52, 0.15);
+  padding: 3px 9px;
+  border-radius: 10px;
+  letter-spacing: 0.04em;
+}
+
+/* Product Title */
+.product-card-title {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #221F1F;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+/* Product Description */
+.product-card-desc {
+  font-size: 0.865rem;
+  color: #536275;
+  line-height: 1.58;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+/* Action Row */
+.product-card-actions {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid #E8EAED;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+/* Quick Inquire Icon Button */
+.product-inquire-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1.5px solid #DEDEDE;
+  background: #F9F9F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #536275;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+.product-inquire-btn:hover {
+  background: var(--mjl-red);
+  border-color: var(--mjl-red);
+  color: #FFFFFF;
+  transform: scale(1.08);
+}
+
+/* ── Gallery Filter Pills ── */
+.gallery-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.gallery-filter-pill {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #536275;
+  background: #F3F5F8;
+  border: 1.5px solid #E4E7EB;
+  padding: 7px 18px;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+.gallery-filter-pill:hover {
+  border-color: var(--mjl-red);
+  color: var(--mjl-red);
+  background: rgba(237, 27, 52, 0.05);
+}
+.gallery-filter-pill.active {
+  background: var(--mjl-red);
+  border-color: var(--mjl-red);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(237, 27, 52, 0.32);
+}
+
+/* ── Glass Card (kept for backwards compat) ── */
 .glass-card-premium {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(18px);
@@ -592,25 +823,12 @@ p { color: var(--steel); font-weight: 500; }
   position: relative;
   overflow: hidden;
 }
-.glass-card-premium:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--mjl-red), transparent);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
 .glass-card-premium:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
   border-color: rgba(237, 27, 52, 0.3);
 }
-.glass-card-premium:hover:before {
-  opacity: 1;
-}
+
 
 /* ── LOBP Laboratory Equipment Card Grid (High-Impact Card System) ── */
 .lab-equip-grid {

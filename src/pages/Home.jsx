@@ -16,6 +16,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeAccordion, setActiveAccordion] = useState('car');
   const [heroSlide, setHeroSlide] = useState(0);
+  const [galleryFilter, setGalleryFilter] = useState('all');
 
   const heroSlides = [
     {
@@ -45,7 +46,17 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     return () => clearInterval(timer);
   }, []);
 
-  const featuredProducts = products.filter(p => p.featured).slice(0, 3);
+  const galleryFilterDefs = [
+    { id: 'all', label: 'All Range' },
+    { id: 'car', label: 'Car Engine Oils' },
+    { id: 'bike', label: 'Motorcycle 4T' },
+    { id: 'truck', label: 'Bus & Truck' },
+    { id: 'industrial', label: 'Industrial' },
+    { id: 'cng', label: 'CNG Special' },
+  ];
+  const featuredProducts = galleryFilter === 'all'
+    ? products.filter(p => p.featured).slice(0, 6)
+    : products.filter(p => p.category === galleryFilter || p.featured).slice(0, 6);
 
   const productCategories = [
     {
@@ -530,25 +541,45 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       </section>
 
       {/* ==================== FEATURED PRODUCTS CATALOG ==================== */}
-      <section className="section pt-120 pb-120" style={{ background: '#FFFFFF' }}>
+      <section className="section pt-120 pb-120" style={{ background: '#FAFBFC' }}>
         <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem' }}>
+          {/* Section Header */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <span className="eyebrow" style={{ color: '#ED1B34' }}>PREMIUM PRODUCTS</span>
-              <h2>Featured Lubricant Products</h2>
+              <span className="eyebrow" style={{ color: '#ED1B34' }}>PREMIUM PRODUCT RANGE</span>
+              <h2 style={{ marginBottom: '0.25rem' }}>Featured Lubricant Products</h2>
+              <p style={{ color: '#536275', fontSize: '1rem', marginTop: '0.3rem' }}>Orbit-certified oils engineered for peak performance across every vehicle type.</p>
             </div>
-            <button onClick={() => setActivePage('products')} className="btn btn-outline" style={{ borderRadius: '19px' }}>
-              <span>View Full Catalog ({products.length})</span>
+            <button onClick={() => setActivePage('products')} className="btn btn-outline" style={{ borderRadius: '19px', flexShrink: 0 }}>
+              <span>Full Catalog ({products.length})</span>
               <ChevronRight size={16} />
             </button>
           </div>
 
+          {/* Category Filter Bar */}
+          <div className="gallery-filter-bar" style={{ marginBottom: '2.5rem' }}>
+            {galleryFilterDefs.map(f => (
+              <button
+                key={f.id}
+                className={`gallery-filter-pill${galleryFilter === f.id ? ' active' : ''}`}
+                onClick={() => setGalleryFilter(f.id)}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Product Grid — 3 columns */}
           <div className="grid-responsive-3">
             {featuredProducts.map(product => (
               <ProductCard
                 key={product.id}
                 product={product}
                 onSelect={(p) => setSelectedProduct(p)}
+                onInquire={(p) => {
+                  if (setSelectedProductForInquiry) setSelectedProductForInquiry(p.name);
+                  setActivePage('contact');
+                }}
               />
             ))}
           </div>
