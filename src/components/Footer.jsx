@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useCms } from '../context/CmsContext';
 import { Phone, Mail, MapPin, Clock, ArrowUpRight, Facebook, Linkedin, Youtube, Instagram } from 'lucide-react';
 
@@ -32,7 +32,7 @@ export const Footer = ({ setActivePage }) => {
                 style={{ height: '44px', width: 'auto', objectFit: 'contain', marginBottom: '1.5rem' }}
               />
               <p style={{ color: '#475569', fontSize: '0.88rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                Orbit Lubricant Industries PLC is a modern lubricant manufacturing company delivering premium automotive and industrial lubrication solutions for local and international markets.
+                Orbit Lubricant Industries OPC is a modern lubricant manufacturing company delivering premium automotive and industrial lubrication solutions for local and international markets.
               </p>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {standards.slice(0, 3).map((std, idx) => (
@@ -117,13 +117,13 @@ export const Footer = ({ setActivePage }) => {
                 Customer Care & Hotline
               </h4>
               <div style={{ marginBottom: '1.25rem' }}>
-                <a href="tel:16669" style={{
+                <a href="tel:01709643307" style={{
                   display: 'inline-flex', alignItems: 'center', gap: '8px',
                   background: '#F7931E', color: '#FFFFFF', padding: '0.5rem 1.2rem',
                   borderRadius: '19px', textDecoration: 'none', fontWeight: 800,
                   fontSize: '0.92rem', boxShadow: '0 4px 14px rgba(247, 147, 30, 0.3)'
                 }}>
-                  <Phone size={14} /> Call Hotline 16669
+                  <Phone size={14} /> Call Hotline 01709643307
                 </a>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
@@ -161,7 +161,7 @@ export const Footer = ({ setActivePage }) => {
             fontWeight: 600
           }}>
             <div>
-              © {new Date().getFullYear()} Orbit Lubricant Industries. All Rights Reserved.
+              © {new Date().getFullYear()} Orbit Lubricant Industries OPC. All Rights Reserved.
             </div>
             <div>
               Power in Every Drop™
@@ -171,7 +171,7 @@ export const Footer = ({ setActivePage }) => {
       </footer>
 
       {/* Floating Mobile Call Button (MJL Style) */}
-      <a href="tel:16669" className="mobile-call-btn" aria-label="Call Hotline">
+      <a href="tel:01709643307" className="mobile-call-btn" aria-label="Call Hotline">
         <Phone size={24} />
       </a>
     </>

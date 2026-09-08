@@ -49,25 +49,64 @@ export const OrbitRing = () => {
         }}
       />
 
-      {/* Primary Orbiting Droplet */}
+      {/* Primary Orbiting Droplet with Counter-Rotation to keep drop strictly upright */}
       <div
         className="animate-spin-slow"
         style={{
           position: 'absolute',
-          inset: 0
+          inset: 0,
+          pointerEvents: 'none'
         }}
       >
         <div style={{
           position: 'absolute',
-          top: '-12px',
+          top: '-16px',
           left: '50%',
           transform: 'translateX(-50%)',
-          width: '24px',
-          height: '24px',
-          borderRadius: '70% 70% 70% 5%',
-          background: 'linear-gradient(135deg, #F7941D 0%, #D97706 100%)',
-          boxShadow: '0 0 24px 6px rgba(247, 148, 29, 0.85)'
-        }} />
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          {/* Counter-rotation matches spinSlow 20s exactly so orientation remains upright all 360 degrees */}
+          <div style={{
+            animation: 'spinReverse 20s linear infinite',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <svg
+              viewBox="0 0 24 32"
+              width="26"
+              height="32"
+              style={{
+                filter: 'drop-shadow(0 0 10px rgba(247, 147, 30, 0.95)) drop-shadow(0 0 22px rgba(247, 147, 30, 0.65))',
+                overflow: 'visible'
+              }}
+            >
+              <defs>
+                <linearGradient id="orbitDropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#FFAE34" />
+                  <stop offset="45%" stopColor="#F7931E" />
+                  <stop offset="100%" stopColor="#D97706" />
+                </linearGradient>
+              </defs>
+              {/* Teardrop path pointing upright */}
+              <path
+                d="M12 2 C12 2, 2.5 14, 2.5 20.5 C2.5 25.7 6.8 30 12 30 C17.2 30 21.5 25.7 21.5 20.5 C21.5 14, 12 2, 12 2 Z"
+                fill="url(#orbitDropGrad)"
+              />
+              {/* Glossy light reflection */}
+              <ellipse
+                cx="8"
+                cy="18"
+                rx="2.2"
+                ry="4.5"
+                transform="rotate(-25 8 18)"
+                fill="rgba(255,255,255,0.6)"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
 
       {/* Secondary Orbiting Blue Particle */}

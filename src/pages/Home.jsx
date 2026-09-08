@@ -1,7 +1,6 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
 import { OrbitRing } from '../components/OrbitRing';
-import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
 import { LubricantFinder } from '../components/LubricantFinder';
 import { 
@@ -16,7 +15,6 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeAccordion, setActiveAccordion] = useState('car');
   const [heroSlide, setHeroSlide] = useState(0);
-  const [galleryFilter, setGalleryFilter] = useState('all');
 
   const heroSlides = [
     {
@@ -45,18 +43,6 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     }, 5500);
     return () => clearInterval(timer);
   }, []);
-
-  const galleryFilterDefs = [
-    { id: 'all', label: 'All Range' },
-    { id: 'car', label: 'Car Engine Oils' },
-    { id: 'bike', label: 'Motorcycle 4T' },
-    { id: 'truck', label: 'Bus & Truck' },
-    { id: 'industrial', label: 'Industrial' },
-    { id: 'cng', label: 'CNG Special' },
-  ];
-  const featuredProducts = galleryFilter === 'all'
-    ? products.filter(p => p.featured).slice(0, 6)
-    : products.filter(p => p.category === galleryFilter || p.featured).slice(0, 6);
 
   const productCategories = [
     {
@@ -136,8 +122,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     {
       icon: <Layers3 size={24} />,
       tag: 'ACCREDITATION',
-      title: 'ISO 17025 Compliant',
-      desc: 'Operated under ExxonMobil QP&G and ISO/IEC 17025:2017 international quality guidelines.',
+      title: 'ISO 9001:2015 Compliant',
+      desc: 'Operated under ExxonMobil QP&G and ISO 9001:2015 international quality guidelines.',
       img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=800&auto=format&fit=crop'
     }
   ];
@@ -271,7 +257,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       <section className="section pt-160 pb-120" style={{ background: '#FFFFFF' }}>
         <div className="container">
           <div style={{ marginBottom: '3.5rem' }}>
-            <span className="eyebrow" style={{ color: '#F7931E' }}>ORBIT LUBRICANT INDUSTRIES PLC</span>
+            <span className="eyebrow" style={{ color: '#F7931E' }}>ORBIT LUBRICANT INDUSTRIES OPC</span>
             <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.7rem)', color: '#221F1F', maxWidth: '920px', lineHeight: 1.25 }}>
               An embodiment of trust when it comes to providing excellence in petroleum products and retaining optimum engine performance.
             </h2>
@@ -306,7 +292,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#221F1F', marginTop: '4px' }}>Choice of Engineers</div>
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2.5rem', color: '#221F1F' }}>50+</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2.5rem', color: '#221F1F' }}>100+</div>
               <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#221F1F', marginTop: '4px' }}>High-Performance SKUs</div>
             </div>
             <div>
@@ -355,13 +341,13 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             <div className="mjl-showcase-card" onClick={() => setActivePage('about')}>
               <img
                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop"
-                alt="Financial Reports" className="card-img-bg"
+                alt="Corporate Client Relations" className="card-img-bg"
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
                 <p style={{ fontSize: '0.82rem', color: '#F7931E', fontWeight: 700, textTransform: 'uppercase' }}>Corporate</p>
-                <h4 style={{ color: '#FFFFFF', fontSize: '1.4rem', marginTop: '4px' }}>Investor Relations</h4>
-                <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', marginTop: '6px' }}>Our unrivaled attitude towards excellence is a big reason behind our growth.</p>
+                <h4 style={{ color: '#FFFFFF', fontSize: '1.4rem', marginTop: '4px' }}>Corporate Client Relations</h4>
+                <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', marginTop: '6px' }}>Our unrivaled attitude towards excellence is a big reason behind our client trust and growth.</p>
               </div>
             </div>
 
@@ -387,26 +373,42 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         <div className="container">
           <div style={{ marginBottom: '3rem' }}>
             <span className="eyebrow" style={{ color: '#F7931E' }}>VERSATILE APPLICATIONS</span>
-            <h2 style={{ color: '#FFFFFF', fontSize: '2.4rem' }}>Orbit for Every Machine</h2>
+            <h2 style={{ color: '#FFFFFF', fontSize: '2.4rem' }}>Orbit for Every Engine</h2>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'flex-start' }}>
-            {/* Category Accordion Toggles */}
+            {/* Category Accordion Toggles with Interactive Hover Effect */}
             <div>
               {productCategories.map((cat) => {
                 const isOpen = activeAccordion === cat.id;
                 return (
-                  <div key={cat.id} className={`mjl-accordion-item ${isOpen ? 'active' : ''}`}>
+                  <div
+                    key={cat.id}
+                    className={`mjl-accordion-item ${isOpen ? 'active' : ''}`}
+                    onMouseEnter={() => setActiveAccordion(cat.id)}
+                    style={{
+                      borderLeft: isOpen ? '3px solid #F7931E' : '3px solid transparent',
+                      paddingLeft: isOpen ? '8px' : '0px',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      borderRadius: '8px',
+                      cursor: 'pointer'
+                    }}
+                  >
                     <button
                       className="mjl-accordion-header"
                       onClick={() => setActiveAccordion(isOpen ? '' : cat.id)}
+                      onMouseEnter={() => setActiveAccordion(cat.id)}
+                      style={{
+                        color: isOpen ? '#F7931E' : '#FFFFFF',
+                        transition: 'color 0.25s ease'
+                      }}
                     >
                       <span>{cat.title}</span>
                       {isOpen ? <ChevronUp size={20} style={{ color: '#F7931E' }} /> : <ChevronDown size={20} style={{ opacity: 0.5 }} />}
                     </button>
                     {isOpen && (
                       <div className="mjl-accordion-body">
-                        <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '1.25rem' }}>{cat.desc}</p>
+                        <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: '1.25rem', lineHeight: 1.65 }}>{cat.desc}</p>
                         <div className="dc-btn">
                           <button onClick={() => setActivePage('products')}>
                             <span>Explore Category <ArrowRight size={14} /></span>
@@ -459,7 +461,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                   <CheckCircle2 size={18} style={{ color: '#F7931E' }} /> 100% Virgin Group II & Group III base stocks
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', color: '#221F1F', fontWeight: 600 }}>
-                  <CheckCircle2 size={18} style={{ color: '#F7931E' }} /> Advanced additive technology from Infineum & Afton
+                  <CheckCircle2 size={18} style={{ color: '#F7931E' }} /> Advanced additive technology from Lubrizol & Afton
                 </li>
               </ul>
               <div className="dc-btn">
@@ -535,52 +537,6 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ==================== FEATURED PRODUCTS CATALOG ==================== */}
-      <section className="section pt-120 pb-120" style={{ background: '#FAFBFC' }}>
-        <div className="container">
-          {/* Section Header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <span className="eyebrow" style={{ color: '#F7931E' }}>PREMIUM PRODUCT RANGE</span>
-              <h2 style={{ marginBottom: '0.25rem' }}>Featured Lubricant Products</h2>
-              <p style={{ color: '#536275', fontSize: '1rem', marginTop: '0.3rem' }}>Orbit-certified oils engineered for peak performance across every vehicle type.</p>
-            </div>
-            <button onClick={() => setActivePage('products')} className="btn btn-outline" style={{ borderRadius: '19px', flexShrink: 0 }}>
-              <span>Full Catalog ({products.length})</span>
-              <ChevronRight size={16} />
-            </button>
-          </div>
-
-          {/* Category Filter Bar */}
-          <div className="gallery-filter-bar" style={{ marginBottom: '2.5rem' }}>
-            {galleryFilterDefs.map(f => (
-              <button
-                key={f.id}
-                className={`gallery-filter-pill${galleryFilter === f.id ? ' active' : ''}`}
-                onClick={() => setGalleryFilter(f.id)}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Product Grid — 3 columns */}
-          <div className="grid-responsive-3">
-            {featuredProducts.map(product => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onSelect={(p) => setSelectedProduct(p)}
-                onInquire={(p) => {
-                  if (setSelectedProductForInquiry) setSelectedProductForInquiry(p.name);
-                  setActivePage('contact');
-                }}
-              />
             ))}
           </div>
         </div>

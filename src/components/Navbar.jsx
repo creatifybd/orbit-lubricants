@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
 import { Menu, X, ChevronRight, Phone, ShoppingCart, Search } from 'lucide-react';
 
@@ -86,17 +86,14 @@ export const Navbar = ({ activePage, setActivePage }) => {
           }}>
             {/* Hotline & Customer Care */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-              <a href="tel:16669" style={{
+              <a href="tel:01709643307" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '6px',
                 color: '#FFFFFF', textDecoration: 'none', fontWeight: 800,
                 background: '#F7931E', padding: '0.2rem 0.85rem', borderRadius: '14px',
                 fontSize: '0.78rem', boxShadow: '0 4px 12px rgba(247, 147, 30, 0.5)'
               }}>
-                <Phone size={12} /> 16669 Hotline
+                <Phone size={12} /> 01709643307 Hotline
               </a>
-              <span style={{ color: 'rgba(255,255,255,0.75)', display: isMobile ? 'none' : 'inline', fontWeight: 500 }}>
-                ✦ ISO 9001:2015 & 14001:2018 Certified Blending Facility
-              </span>
             </div>
 
             {/* Right Utility Links */}
@@ -360,7 +357,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                 marginTop: '1rem', textAlign: 'center',
                 fontSize: '0.82rem', color: '#94A3B8', fontWeight: 600
               }}>
-                📞 Hotline: <a href="tel:16669" style={{ color: '#F7931E', fontWeight: 800 }}>16669</a>
+                📞 Hotline: <a href="tel:01709643307" style={{ color: '#F7931E', fontWeight: 800 }}>01709643307</a>
               </div>
             </div>
           </div>

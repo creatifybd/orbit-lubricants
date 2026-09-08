@@ -4,7 +4,7 @@ export const initialData = {
     subtitle: "Orbit Lubricant Industries is a performance-driven lubricant company specializing in premium automotive and industrial oils. We combine advanced technology, high-quality raw materials, and strict quality control to deliver lubricants that provide superior engine protection, reliability, and efficiency for modern vehicles and machinery.",
     ctaPrimary: "Explore Product Range",
     ctaSecondary: "Become a Distributor",
-    stat1: { number: "50+", label: "Formulated Lubricants" },
+    stat1: { number: "100+", label: "Formulated Lubricants" },
     stat2: { number: "100%", label: "ISO & API Certified" },
     stat3: { number: "250+", label: "Distributors & Dealers" }
   },
@@ -226,7 +226,7 @@ export const initialData = {
 
   contactInfo: {
     address: "Orbit Lubricant Industries, Industrial Zone, Dhaka, Bangladesh",
-    phone: "+880 1700-000000 / +880 1800-000000",
+    phone: "01709643307",
     email: "info@orbit-lubricants.com",
     salesEmail: "sales@orbit-lubricants.com",
     hours: "Saturday – Thursday: 9:00 AM – 6:00 PM"
