@@ -18,19 +18,19 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
 
   const heroSlides = [
     {
-      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop',
+      img: '/images/custom/home-hero-manufacturing.webp',
       title: 'Power in Every Drop',
       desc: 'Orbit Lubricant Industries is an ultra-modern lubricant blending company engineered for maximum engine protection, thermal efficiency, and peak performance.',
       tag: 'STATE-OF-THE-ART MANUFACTURING'
     },
     {
-      img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1600&auto=format&fit=crop',
+      img: '/images/custom/home-hero-automotive.webp',
       title: 'Advanced Engine Protection',
       desc: 'Formulated with 100% virgin Group II & Group III base stocks and advanced additives for superior anti-wear defense under extreme driving conditions.',
       tag: 'AUTOMOTIVE & SYNTHETIC EXCELLENCE'
     },
     {
-      img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1600&auto=format&fit=crop',
+      img: '/images/custom/home-hero-heavy-duty.webp',
       title: 'Maximum Equipment Uptime',
       desc: 'API CK-4 & JASO MA2 certified heavy-duty diesel oils and industrial gear lubricants designed for extended drain intervals and commercial fleet reliability.',
       tag: 'COMMERCIAL FLEET & INDUSTRIAL'
@@ -49,37 +49,37 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       id: 'car',
       title: 'Car Engine Oils',
       desc: 'Delivers outstanding performance and maximum engine protection under extreme tropical and high-heat driving conditions.',
-      img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-category-car.webp'
     },
     {
       id: 'bike',
       title: 'Motorcycle Engine Oils (4T)',
       desc: 'Engineered with JASO MA2 synthetic technology for high-revving 4T motorcycle engines and wet-clutch acceleration.',
-      img: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-category-motorcycle.webp'
     },
     {
       id: 'truck',
       title: 'Bus & Truck Heavy Duty Oils',
       desc: 'Heavy-duty formulated diesel engine oils designed for long drain intervals, extended engine life, and commercial fleet efficiency.',
-      img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-category-heavy-duty.webp'
     },
     {
       id: 'industrial',
       title: 'Industrial & Specialty Lubricants',
       desc: 'High-performance hydraulic oils, industrial gear lubricants, and turbine fluids for manufacturing plants and heavy machinery.',
-      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-category-industrial.webp'
     },
     {
       id: 'cng',
       title: 'CNG Special Vehicle Oils',
       desc: 'Specially formulated low-ash engine oils engineered for CNG auto-rickshaws, CNG cars, and commercial gas vehicles.',
-      img: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-category-cng.webp'
     },
     {
       id: 'grease',
       title: 'Greases & Fluid Products',
       desc: 'High-temperature lithium complex greases, transmission fluids, and brake fluids designed for anti-rust & zero water washout.',
-      img: 'https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-category-grease.webp'
     }
   ];
 
@@ -89,42 +89,42 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
       tag: 'SPECTROPHOTOMETER',
       title: 'FTIR & ICP Spectrometer',
       desc: 'Analyzes additive elemental concentration and molecular contamination with precision accuracy.',
-      img: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-lab-ftir-icp.webp'
     },
     {
       icon: <Gauge size={24} />,
       tag: 'VISCOSITY LAB',
       title: 'Automatic Viscometer',
       desc: 'Measures exact kinematic viscosity at 40°C & 100°C according to ASTM D445 standards.',
-      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-lab-viscometer.webp'
     },
     {
       icon: <Activity size={24} />,
       tag: 'CHEMICAL ANALYSIS',
       title: 'TAN & TBN Analyzer',
       desc: 'Determines Total Acid & Base Numbers to guarantee thermal oxidation resistance.',
-      img: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-lab-tan-tbn.webp'
     },
     {
       icon: <Beaker size={24} />,
       tag: 'FLUID TESTING',
       title: 'Pour Point & Flash Point',
       desc: 'Ensures cold-cranking fluid flow down to -35°C and extreme temperature safety.',
-      img: 'https://images.unsplash.com/photo-1507668077129-56e32842fceb?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-lab-pour-flash.webp'
     },
     {
       icon: <FileCheck size={24} />,
       tag: 'WATER ANALYSIS',
       title: 'Karl Fischer Coulometer',
       desc: 'Detects micro-trace moisture levels ensuring zero water contamination in hydraulic fluids.',
-      img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-lab-karl-fischer.webp'
     },
     {
       icon: <Layers3 size={24} />,
       tag: 'ACCREDITATION',
       title: 'ISO 9001:2015 Compliant',
       desc: 'Operated under ExxonMobil QP&G and ISO 9001:2015 international quality guidelines.',
-      img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=800&auto=format&fit=crop'
+      img: '/images/custom/home-lab-compliance.webp'
     }
   ];
 
@@ -150,6 +150,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             key={idx}
             src={slide.img}
             alt={slide.title}
+            fetchPriority={idx === 0 ? 'high' : 'auto'}
+            decoding="async"
             className={`hero-slider-img ${heroSlide === idx ? 'active' : ''}`}
           />
         ))}
@@ -312,8 +314,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             {/* Card 1: Board of Directors */}
             <div className="mjl-showcase-card" onClick={() => setActivePage('about')}>
               <img
-                src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop"
-                alt="Leadership" className="card-img-bg"
+                src="/images/custom/home-showcase-leadership.webp"
+                alt="Leadership" className="card-img-bg" loading="lazy" decoding="async"
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
@@ -326,8 +328,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             {/* Card 2: Product Line */}
             <div className="mjl-showcase-card" onClick={() => setActivePage('products')}>
               <img
-                src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=800&auto=format&fit=crop"
-                alt="Products" className="card-img-bg"
+                src="/images/custom/home-showcase-product-range.webp"
+                alt="Products" className="card-img-bg" loading="lazy" decoding="async"
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
@@ -340,8 +342,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             {/* Card 3: Financial & Corporate */}
             <div className="mjl-showcase-card" onClick={() => setActivePage('about')}>
               <img
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop"
-                alt="Corporate Client Relations" className="card-img-bg"
+                src="/images/custom/home-showcase-client-relations.webp"
+                alt="Corporate Client Relations" className="card-img-bg" loading="lazy" decoding="async"
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
@@ -354,8 +356,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             {/* Card 4: Quality Assurance */}
             <div className="mjl-showcase-card" onClick={() => setActivePage('about')}>
               <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
-                alt="Quality Assurance" className="card-img-bg"
+                src="/images/custom/home-showcase-quality.webp"
+                alt="Quality Assurance" className="card-img-bg" loading="lazy" decoding="async"
               />
               <div className="card-overlay">
                 <div className="circle-plus"><Plus size={20} /></div>
@@ -426,6 +428,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               <img
                 src={productCategories.find(c => c.id === activeAccordion)?.img || productCategories[0].img}
                 alt="Category Banner"
+                loading="lazy"
+                decoding="async"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.5s ease' }}
               />
               <div style={{
@@ -474,8 +478,10 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             {/* Plant Photography Card */}
             <div style={{ borderRadius: '20px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.12)' }}>
               <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
+                src="/images/custom/home-lobp-plant.webp"
                 alt="Lube Oil Blending Plant"
+                loading="lazy"
+                decoding="async"
                 style={{ width: '100%', height: '420px', objectFit: 'cover' }}
               />
             </div>
@@ -498,7 +504,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             {labEquipments.map((eq, i) => (
               <div key={i} className="lab-equip-card-premium" onClick={() => setActivePage('about')}>
                 {/* Background Photography Image */}
-                <img src={eq.img} alt={eq.title} className="card-bg-img" />
+                <img src={eq.img} alt={eq.title} className="card-bg-img" loading="lazy" decoding="async" />
 
                 {/* Gradient Reveal Overlay */}
                 <div className="card-grad-overlay">
@@ -560,5 +566,3 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     </div>
   );
 };
-
-
