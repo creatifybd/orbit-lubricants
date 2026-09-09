@@ -1,8 +1,21 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { copyFileSync, mkdirSync } from 'node:fs';
+
+const legacyEntrypointCompatibility = () => ({
+  name: 'legacy-entrypoint-compatibility',
+  apply: 'build',
+  closeBundle() {
+    mkdirSync(new URL('./dist/src/', import.meta.url), { recursive: true });
+    copyFileSync(
+      new URL('./public/legacy-entry.js', import.meta.url),
+      new URL('./dist/src/main.jsx', import.meta.url)
+    );
+  }
+});
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), legacyEntrypointCompatibility()],
   server: {
     port: 3000,
     open: false
