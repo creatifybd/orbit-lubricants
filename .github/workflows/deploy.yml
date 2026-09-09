@@ -46,3 +46,32 @@ jobs:
             **/.git*/**
             **/node_modules/**
 
+      - name: ✅ Verify Live Production Build
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          sleep 45
+
+          for attempt in 1 2 3 4 5 6; do
+            live_html="$(curl --fail --silent --show-error --location \
+              --header 'Cache-Control: no-cache' \
+              "https://orbit-lubricants.com/?deploy=${GITHUB_SHA}&attempt=${attempt}")"
+
+            if printf '%s' "$live_html" | grep -q '/src/main.jsx'; then
+              echo "Live site is still serving the development entrypoint."
+            elif printf '%s' "$live_html" | grep -Eq 'src="/assets/[^"]+\.js"'; then
+              curl --fail --silent --show-error \
+                --output /dev/null \
+                "https://orbit-lubricants.com/images/custom/home-hero-manufacturing.webp?deploy=${GITHUB_SHA}"
+              echo "Live production bundle and custom images verified."
+              exit 0
+            else
+              echo "Live production entrypoint is not ready yet."
+            fi
+
+            sleep 10
+          done
+
+          echo "Live deployment verification failed."
+          exit 1
