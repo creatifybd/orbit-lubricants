@@ -50,8 +50,10 @@ export const Navbar = ({ activePage, setActivePage }) => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      sessionStorage.setItem('orbit_catalog_search', searchQuery.trim());
       setActivePage('products');
       setSearchOpen(false);
+      setSearchQuery('');
     }
   };
 
@@ -366,5 +368,4 @@ export const Navbar = ({ activePage, setActivePage }) => {
     </>
   );
 };
-
 

@@ -19,16 +19,9 @@ export const Contact = ({ selectedProductForInquiry }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-
     addInquiry(formData);
     setSubmitted(true);
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      type: 'Becoming a Distributor',
-      message: ''
-    });
+    setFormData({ name: '', email: '', phone: '', type: 'Becoming a Distributor', message: '' });
   };
 
   return (
@@ -140,7 +133,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
                       Inquiry Received!
                     </h3>
                     <p style={{ color: 'var(--steel)', fontSize: '0.96rem', lineHeight: 1.6, marginBottom: '2rem' }}>
-                      Thank you for contacting Orbit Lubricant Industries. Your message has been routed to our sales and technical engineering team.
+                      Your inquiry has been saved in the website dashboard. For an immediate response, email info@orbit-lubricants.com.
                     </p>
                     <button onClick={() => setSubmitted(false)} className="btn btn-outline">
                       Send Another Message
@@ -164,7 +157,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
                       />
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="contact-form-row">
                       <div className="form-group">
                         <label>Email Address *</label>
                         <input
@@ -217,7 +210,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
                     </div>
 
                     <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
-                      <span>Send Inquiry</span>
+                      <span>Save Inquiry</span>
                       <Send size={18} />
                     </button>
                   </form>

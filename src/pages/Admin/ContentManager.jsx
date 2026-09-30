@@ -128,6 +128,21 @@ export const ContentManager = () => {
               ))}
             </div>
 
+            <h4 style={{ color: '#FFFFFF', margin: '1.5rem 0 1rem', fontFamily: 'var(--font-display)', fontSize: '1rem' }}>Hero Slideshow</h4>
+            <div style={{ display: 'grid', gap: '1rem' }}>
+              {(heroForm.slides || []).map((slide, index) => (
+                <div key={index} style={{ padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,.1)', background: 'rgba(255,255,255,.03)' }}>
+                  <ImageUploader label={`Slide ${index + 1} Background`} value={slide.image} onChange={image => setHeroForm({ ...heroForm, slides: heroForm.slides.map((item, itemIndex) => itemIndex === index ? { ...item, image } : item) })} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.75rem' }}>
+                    <div className="form-group"><label>Eyebrow</label><input className="form-control" value={slide.eyebrow || ''} onChange={e => setHeroForm({ ...heroForm, slides: heroForm.slides.map((item, itemIndex) => itemIndex === index ? { ...item, eyebrow: e.target.value } : item) })} /></div>
+                    <div className="form-group"><label>Featured Product</label><select className="form-control" value={slide.productId || ''} onChange={e => setHeroForm({ ...heroForm, slides: heroForm.slides.map((item, itemIndex) => itemIndex === index ? { ...item, productId: e.target.value } : item) })}>{data.products.map(product => <option value={product.id} key={product.id}>{product.name}</option>)}</select></div>
+                  </div>
+                  <div className="form-group"><label>Headline</label><input className="form-control" value={slide.title || ''} onChange={e => setHeroForm({ ...heroForm, slides: heroForm.slides.map((item, itemIndex) => itemIndex === index ? { ...item, title: e.target.value } : item) })} /></div>
+                  <div className="form-group"><label>Description</label><textarea className="form-control" rows={2} value={slide.description || ''} onChange={e => setHeroForm({ ...heroForm, slides: heroForm.slides.map((item, itemIndex) => itemIndex === index ? { ...item, description: e.target.value } : item) })} /></div>
+                </div>
+              ))}
+            </div>
+
             <button type="submit" className="btn btn-primary" style={{ marginTop: '1.5rem' }}>
               <Save size={16} /> Save Hero Changes
             </button>

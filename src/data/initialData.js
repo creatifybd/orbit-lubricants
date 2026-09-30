@@ -27,6 +27,11 @@ export const initialData = {
     stat1: { number: '14', label: 'Current products' },
     stat2: { number: '6', label: 'Application groups' },
     stat3: { number: '1L–5L', label: 'Pack sizes' },
+    slides: [
+      { image: '/images/custom/home-hero-automotive.webp', productId: 'supreme-20w50-4l', eyebrow: 'Passenger vehicle lubricants', title: 'Protection designed for the road ahead.', description: 'Explore Orbit passenger-vehicle oils by viscosity grade and label-stated performance classification.' },
+      { image: '/images/custom/home-hero-heavy-duty.webp', productId: 'elite-hde-15w40-5l', eyebrow: 'Commercial & heavy-duty', title: 'A focused range for demanding operations.', description: 'Heavy-duty and monograde diesel oils for compatible trucks, fleets and equipment.' },
+      { image: '/images/custom/home-hero-manufacturing.webp', productId: 'xpower-10w30-1l', eyebrow: 'Motorcycle & transmission fluids', title: 'The right product starts with the right specification.', description: 'Browse motorcycle oils, CNG engine oil and automatic transmission fluid in one clear catalog.' },
+    ],
   },
   about: {
     heroTitle: 'Lubrication solutions built around real applications',

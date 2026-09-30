@@ -36,7 +36,7 @@ export const About = () => {
         <div className="container" style={{ maxWidth: '920px' }}>
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <span className="eyebrow">COMPANY OVERVIEW</span>
-            <h2>Protecting Engines, Powering the Future</h2>
+            <h2>Company overview</h2>
           </div>
 
           <div className="glass-card" style={{ padding: '2.5rem', lineHeight: 1.85, fontSize: '1.02rem', color: 'var(--steel)' }}>
@@ -50,7 +50,7 @@ export const About = () => {
       {/* ── Mission & Vision ── */}
       <section className="section" style={{ background: '#F8FAFC' }}>
         <div className="container">
-          <div className="grid-responsive-3" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+          <div className="about-two-column">
             {/* Mission Card */}
             <div className="glass-card fade-in-up" style={{ padding: '2.5rem' }}>
               <div style={{
@@ -104,9 +104,9 @@ export const About = () => {
       <section className="section">
         <div className="container">
           <div className="section-head center">
-            <span className="eyebrow">UNMATCHED ADVANTAGE</span>
+            <span className="eyebrow">PRODUCT & SERVICE</span>
             <h2>Why Choose Orbit Lubricant Industries</h2>
-            <p>Formulated to deliver peak performance, reliability, and maximum thermal stability.</p>
+            <p>Key information about the Orbit product range and customer support.</p>
           </div>
 
           <div className="grid-responsive-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
@@ -184,7 +184,7 @@ export const About = () => {
       {/* ── Quality Commitment & Partnership ── */}
       <section className="section">
         <div className="container">
-          <div className="grid-responsive-3" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+          <div className="about-two-column">
             {/* Quality Commitment */}
             <div className="glass-card" style={{ padding: '2.5rem' }}>
               <div style={{

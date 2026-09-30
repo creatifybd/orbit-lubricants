@@ -3,11 +3,17 @@ import { useCms } from '../../context/CmsContext';
 import { Lock, ShieldCheck, Key, ArrowRight } from 'lucide-react';
 
 export const AdminLogin = ({ onReturnHome }) => {
-  const { loginAdmin } = useCms();
+  const { loginAdmin, setupAdminPasscode, hasAdminPasscode } = useCms();
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!hasAdminPasscode) {
+      if (password !== confirmPassword) return;
+      await setupAdminPasscode(password);
+      return;
+    }
     await loginAdmin(password);
   };
 
@@ -45,10 +51,10 @@ export const AdminLogin = ({ onReturnHome }) => {
           </div>
 
           <h2 style={{ color: '#FFFFFF', fontSize: '1.6rem', marginBottom: '0.4rem', fontFamily: 'var(--font-display)' }}>
-            Admin CMS Login
+            {hasAdminPasscode ? 'Admin CMS Login' : 'Create Owner Access'}
           </h2>
           <p style={{ color: '#94A3B8', fontSize: '0.9rem' }}>
-            Orbit Lubricants Management System
+            {hasAdminPasscode ? 'Orbit Lubricants Management System' : 'Set a private passcode for this browser'}
           </p>
         </div>
 
@@ -57,20 +63,40 @@ export const AdminLogin = ({ onReturnHome }) => {
           <div className="form-group">
             <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <Key size={14} />
-              <span>Enter Admin Passcode</span>
+              <span>{hasAdminPasscode ? 'Enter Admin Passcode' : 'Create Admin Passcode'}</span>
             </label>
             <input
               type="password"
               className="form-control"
-              placeholder="Administrator passcode"
+              placeholder={hasAdminPasscode ? 'Administrator passcode' : 'At least 10 characters'}
+              minLength={hasAdminPasscode ? undefined : 10}
+              required
               autoFocus
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
           </div>
 
+          {!hasAdminPasscode && (
+            <div className="form-group">
+              <label>Confirm Admin Passcode</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Repeat the new passcode"
+                minLength={10}
+                required
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+              />
+              {confirmPassword && password !== confirmPassword && (
+                <small style={{ color: '#FCA5A5' }}>Passcodes do not match.</small>
+              )}
+            </div>
+          )}
+
           <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: '1rem' }}>
-            <span>Authenticate to Dashboard</span>
+            <span>{hasAdminPasscode ? 'Authenticate to Dashboard' : 'Create Passcode & Continue'}</span>
             <ArrowRight size={18} />
           </button>
         </form>

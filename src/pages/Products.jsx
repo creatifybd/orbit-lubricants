@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
@@ -8,9 +8,14 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
   const { data } = useCms();
   const { products, categories } = data;
 
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(() => sessionStorage.getItem('orbit_catalog_category') || 'all');
+  const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem('orbit_catalog_search') || '');
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    sessionStorage.removeItem('orbit_catalog_search');
+    sessionStorage.removeItem('orbit_catalog_category');
+  }, []);
 
   // Filter products based on category & search
   const filteredProducts = products.filter(product => {
@@ -126,6 +131,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
                   key={product.id}
                   product={product}
                   onSelect={(p) => setSelectedProduct(p)}
+                  onInquire={handleInquireFromModal}
                 />
               ))}
             </div>

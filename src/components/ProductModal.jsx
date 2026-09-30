@@ -1,183 +1,53 @@
-import React, { useEffect } from 'react';
-import { X, Package, ArrowRight, Shield } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { ArrowRight, CheckCircle2, Info, Package, X } from 'lucide-react';
 
 export const ProductModal = ({ product, onClose, onInquire }) => {
-  // Lock body scroll
+  const dialogRef = useRef(null);
+
   useEffect(() => {
     if (!product) return undefined;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
-  }, [product]);
+    const previous = document.activeElement;
+    document.body.classList.add('modal-open');
+    window.requestAnimationFrame(() => dialogRef.current?.focus());
+    const keydown = (event) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key === 'Tab' && dialogRef.current) {
+        const focusable = [...dialogRef.current.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')];
+        if (!focusable.length) return;
+        const first = focusable[0]; const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener('keydown', keydown);
+    return () => { document.body.classList.remove('modal-open'); document.removeEventListener('keydown', keydown); previous?.focus?.(); };
+  }, [product, onClose]);
 
   if (!product) return null;
+  const specs = Object.entries(product.specs || {});
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div
-        className="modal-card"
-        onClick={e => e.stopPropagation()}
-        style={{ padding: 0, overflow: 'hidden' }}
-      >
-        {/* Drag handle (mobile UX) */}
-        <div style={{
-          width: '40px', height: '4px', borderRadius: '2px',
-          background: 'rgba(0,0,0,0.15)', margin: '10px auto 0',
-        }} className="mobile-drag-handle" />
-
-        {/* Header with image */}
-        <div style={{
-          background: `linear-gradient(135deg, ${product.imageColor || '#005AAB'} 0%, #0A2540 100%)`,
-          padding: '1.5rem 1.5rem 1.25rem',
-          color: '#FFFFFF',
-          position: 'relative',
-        }}>
-          <button
-            onClick={onClose}
-            style={{
-              position: 'absolute', top: '1rem', right: '1rem',
-              background: 'rgba(0,0,0,0.3)', border: 'none', borderRadius: '50%',
-              width: '38px', height: '38px', color: '#FFFFFF',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', flexShrink: 0,
-            }}
-          >
-            <X size={20} />
-          </button>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1rem', flexWrap: 'wrap' }}>
-            {product.badge && (
-              <span style={{
-                fontFamily: 'var(--font-mono)', fontSize: '0.7rem', fontWeight: 600,
-                padding: '0.3rem 0.7rem', borderRadius: '999px',
-                background: 'rgba(255,255,255,0.2)', color: '#FFFFFF',
-              }}>
-                {product.badge}
-              </span>
-            )}
-            <span style={{
-              fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 700,
-              color: '#F7941D', background: 'rgba(5,21,38,0.7)',
-              padding: '0.3rem 0.7rem', borderRadius: '6px',
-            }}>
-              {product.viscosity}
-            </span>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            {product.image && (
-              <div style={{
-                flexShrink: 0,
-                background: 'rgba(255,255,255,0.95)',
-                borderRadius: '12px',
-                padding: '8px',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                width: '88px', height: '88px',
-              }}>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{ width: '72px', height: '72px', objectFit: 'contain' }}
-                />
-              </div>
-            )}
-            <div style={{ minWidth: 0 }}>
-              <h2 style={{
-                color: '#FFFFFF', fontSize: 'clamp(1.1rem, 4vw, 1.65rem)',
-                marginBottom: '0.35rem', fontFamily: 'var(--font-display)', lineHeight: 1.2,
-              }}>
-                {product.name}
-              </h2>
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: '5px',
-                fontSize: '0.82rem', color: 'rgba(255,255,255,0.85)',
-                background: 'rgba(255,255,255,0.12)', padding: '4px 10px',
-                borderRadius: '999px',
-              }}>
-                <Shield size={12} />
-                {product.apiGrade}
-              </div>
-            </div>
-          </div>
+    <div className="product-dialog-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+      <div className="product-dialog" role="dialog" aria-modal="true" aria-labelledby="product-dialog-title" ref={dialogRef} tabIndex={-1}>
+        <button className="product-dialog-close" onClick={onClose} aria-label="Close product specifications"><X size={20} /></button>
+        <div className="product-dialog-visual">
+          <div className="product-dialog-watermark">{product.viscosity}</div>
+          <img src={product.image} alt={product.name} />
+          <div className="product-dialog-pack"><Package size={16} /><span>Pack size</span><strong>{product.packing}</strong></div>
         </div>
-
-        {/* Modal Body */}
-        <div style={{ padding: '1.5rem' }}>
-          <h4 style={{ fontSize: '0.95rem', fontFamily: 'var(--font-display)', marginBottom: '0.5rem', color: 'var(--navy)' }}>
-            Product Overview
-          </h4>
-          <p style={{ color: 'var(--steel)', fontSize: '0.92rem', lineHeight: 1.65, marginBottom: '1.5rem' }}>
-            {product.description}
-          </p>
-
-          {/* Specs Table */}
-          {product.specs && (
-            <div style={{ marginBottom: '1.5rem' }}>
-              <h4 style={{ fontSize: '0.95rem', fontFamily: 'var(--font-display)', marginBottom: '0.65rem', color: 'var(--navy)' }}>
-                Technical Data Sheet
-              </h4>
-              <div style={{ background: 'var(--mist)', borderRadius: '10px', border: '1px solid var(--line)', overflow: 'hidden' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
-                  <tbody>
-                    {Object.entries(product.specs).map(([key, val], idx) => (
-                      <tr key={idx} style={{ borderBottom: idx < Object.keys(product.specs).length - 1 ? '1px solid var(--line)' : 'none' }}>
-                        <td style={{ padding: '0.7rem 0.9rem', fontWeight: 600, color: 'var(--navy)', width: '42%', fontSize: '0.82rem' }}>
-                          {key}
-                        </td>
-                        <td style={{ padding: '0.7rem 0.9rem', color: 'var(--steel)', fontFamily: 'var(--font-mono)', fontSize: '0.82rem' }}>
-                          {val}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* Packaging */}
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem',
-            padding: '0.85rem 1rem', background: '#F1F5F9', borderRadius: '10px',
-          }}>
-            <Package style={{ color: 'var(--orange-deep)', flexShrink: 0 }} size={18} />
-            <div>
-              <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--navy)' }}>Available Packaging: </span>
-              <span style={{ fontSize: '0.85rem', color: 'var(--steel)', fontFamily: 'var(--font-mono)' }}>{product.packing}</span>
-            </div>
+        <div className="product-dialog-content">
+          <span className="premium-kicker dark">{product.badge}</span>
+          <h2 id="product-dialog-title">{product.name}</h2>
+          <p className="product-dialog-intro">{product.description}</p>
+          <div className="product-dialog-specs">
+            <div className="product-dialog-specs-head"><h3>Product specifications</h3><span>Label-verified data</span></div>
+            <dl>{specs.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
           </div>
-
-          {/* Actions */}
-          <div style={{ display: 'flex', gap: '0.75rem', flexDirection: 'column' }}>
-            <button
-              onClick={() => { onClose(); onInquire(product); }}
-              className="btn btn-primary"
-              style={{ width: '100%', justifyContent: 'center', fontSize: '0.95rem' }}
-            >
-              <span>Request Bulk Quotation</span>
-              <ArrowRight size={16} />
-            </button>
-            <button
-              onClick={onClose}
-              className="btn btn-outline"
-              style={{ width: '100%', justifyContent: 'center', fontSize: '0.9rem' }}
-            >
-              Close
-            </button>
-          </div>
+          {product.benefits?.length > 0 && <div className="product-dialog-benefits">{product.benefits.map((benefit) => <span key={benefit}><CheckCircle2 size={15} />{benefit}</span>)}</div>}
+          <div className="product-dialog-note"><Info size={16} /><p>Confirm viscosity and fluid compatibility in the vehicle or equipment manufacturer’s manual before use.</p></div>
+          <div className="product-dialog-actions"><button className="btn btn-primary" onClick={() => onInquire(product)}>Request product information <ArrowRight size={17} /></button><button className="btn btn-outline" onClick={onClose}>Continue browsing</button></div>
         </div>
       </div>
-
-      <style>{`
-        @media (min-width: 869px) {
-          .modal-drag-handle { display: none; }
-          .modal-card .btn { flex-direction: row; width: auto !important; }
-          .modal-card > div:last-child > div:last-child {
-            flex-direction: row !important;
-            justify-content: flex-end;
-          }
-        }
-      `}</style>
     </div>
   );
 };

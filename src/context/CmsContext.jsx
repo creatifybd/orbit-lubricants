@@ -3,10 +3,9 @@ import { initialData } from '../data/initialData';
 
 const CmsContext = createContext();
 
-const STORAGE_KEY = 'orbit_lubricants_cms_v10';
+const STORAGE_KEY = 'orbit_lubricants_cms_v11';
 const AUTH_KEY = 'orbit_admin_authenticated';
-const ADMIN_SALT = 'orbit-2026-admin';
-const ADMIN_PASSCODE_DIGEST = '4d74544b17d607f1131ddc45a0d0745c2ba362a73a6499a2b4b00e1447eff588';
+const ADMIN_CREDENTIAL_KEY = 'orbit_admin_credential_v1';
 
 const sha256 = async (value) => {
   const bytes = new TextEncoder().encode(value);
@@ -28,7 +27,11 @@ export const CmsProvider = ({ children }) => {
   });
 
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
-    return localStorage.getItem(AUTH_KEY) === 'true';
+    return sessionStorage.getItem(AUTH_KEY) === 'true';
+  });
+
+  const [hasAdminPasscode, setHasAdminPasscode] = useState(() => {
+    return Boolean(localStorage.getItem(ADMIN_CREDENTIAL_KEY));
   });
 
   const [toastMessage, setToastMessage] = useState(null);
@@ -50,10 +53,15 @@ export const CmsProvider = ({ children }) => {
   }, [data.settings]);
 
   const loginAdmin = async (password) => {
-    const digest = await sha256(`${ADMIN_SALT}:${password}`);
-    if (digest === ADMIN_PASSCODE_DIGEST) {
+    const savedCredential = JSON.parse(localStorage.getItem(ADMIN_CREDENTIAL_KEY) || 'null');
+    if (!savedCredential?.salt || !savedCredential?.digest) {
+      showToast('Set an owner passcode before signing in.', 'error');
+      return false;
+    }
+    const digest = await sha256(`${savedCredential.salt}:${password}`);
+    if (digest === savedCredential.digest) {
       setIsAdminLoggedIn(true);
-      localStorage.setItem(AUTH_KEY, 'true');
+      sessionStorage.setItem(AUTH_KEY, 'true');
       showToast('Successfully logged into Admin CMS!', 'success');
       return true;
     } else {
@@ -62,9 +70,25 @@ export const CmsProvider = ({ children }) => {
     }
   };
 
+  const setupAdminPasscode = async (password) => {
+    if (hasAdminPasscode || password.length < 10) {
+      showToast('Use a passcode with at least 10 characters.', 'error');
+      return false;
+    }
+    const randomBytes = window.crypto.getRandomValues(new Uint8Array(24));
+    const salt = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('');
+    const digest = await sha256(`${salt}:${password}`);
+    localStorage.setItem(ADMIN_CREDENTIAL_KEY, JSON.stringify({ salt, digest }));
+    setHasAdminPasscode(true);
+    setIsAdminLoggedIn(true);
+    sessionStorage.setItem(AUTH_KEY, 'true');
+    showToast('Owner passcode created for this browser.', 'success');
+    return true;
+  };
+
   const logoutAdmin = () => {
     setIsAdminLoggedIn(false);
-    localStorage.removeItem(AUTH_KEY);
+    sessionStorage.removeItem(AUTH_KEY);
     showToast('Logged out from Admin Dashboard', 'info');
   };
 
@@ -268,7 +292,9 @@ export const CmsProvider = ({ children }) => {
       value={{
         data,
         isAdminLoggedIn,
+        hasAdminPasscode,
         loginAdmin,
+        setupAdminPasscode,
         logoutAdmin,
         toastMessage,
         showToast,
