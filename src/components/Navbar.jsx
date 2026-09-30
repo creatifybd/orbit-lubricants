@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
-import { Menu, X, ChevronRight, Phone, ShoppingCart, Search } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
 
 export const Navbar = ({ activePage, setActivePage }) => {
   const { data } = useCms();
@@ -8,8 +8,6 @@ export const Navbar = ({ activePage, setActivePage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [hoveredNav, setHoveredNav] = useState(null);
 
   useEffect(() => {
@@ -47,16 +45,6 @@ export const Navbar = ({ activePage, setActivePage }) => {
     setMobileOpen(false);
   };
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      sessionStorage.setItem('orbit_catalog_search', searchQuery.trim());
-      setActivePage('products');
-      setSearchOpen(false);
-      setSearchQuery('');
-    }
-  };
-
   return (
     <>
       {/* ── Transparent Header Wrapper (Fixed Overlay Over Hero) ── */}
@@ -68,97 +56,6 @@ export const Navbar = ({ activePage, setActivePage }) => {
         zIndex: 200,
         transition: 'all 0.35s ease',
       }}>
-        {/* Top Utility Header Bar */}
-        <div style={{
-          background: isScrolled ? 'rgba(10, 25, 45, 0.95)' : 'rgba(0, 0, 0, 0.35)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          color: '#FFFFFF',
-          fontSize: '0.82rem',
-          padding: '0.45rem 0',
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
-          transition: 'all 0.35s ease'
-        }}>
-          <div className="container" style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '0.75rem'
-          }}>
-            {/* Hotline & Customer Care */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-              <a href="tel:01709643307" style={{
-                display: 'inline-flex', alignItems: 'center', gap: '6px',
-                color: '#FFFFFF', textDecoration: 'none', fontWeight: 800,
-                background: '#F7931E', padding: '0.2rem 0.85rem', borderRadius: '14px',
-                fontSize: '0.78rem', boxShadow: '0 4px 12px rgba(247, 147, 30, 0.5)'
-              }}>
-                <Phone size={12} /> 01709643307 Hotline
-              </a>
-            </div>
-
-            {/* Right Utility Links */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-              <button
-                onClick={() => handleNav('products')}
-                style={{
-                  background: 'transparent', border: 'none', color: '#FFFFFF',
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px',
-                  fontSize: '0.82rem', fontWeight: 600, transition: 'color 0.25s ease'
-                }}
-                onMouseEnter={e => e.currentTarget.style.color = '#F7931E'}
-                onMouseLeave={e => e.currentTarget.style.color = '#FFFFFF'}
-              >
-                <ShoppingCart size={13} style={{ color: '#F7931E' }} /> Buy Orbit Lubricants
-              </button>
-              <span style={{ opacity: 0.3, color: '#FFFFFF' }}>|</span>
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                style={{
-                  background: 'transparent', border: 'none', color: '#FFFFFF',
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px',
-                  fontSize: '0.82rem', fontWeight: 600, transition: 'color 0.25s ease'
-                }}
-                onMouseEnter={e => e.currentTarget.style.color = '#F7931E'}
-                onMouseLeave={e => e.currentTarget.style.color = '#FFFFFF'}
-              >
-                <Search size={13} /> Search
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Search Bar Drawer */}
-        {searchOpen && (
-          <div style={{
-            background: 'rgba(15, 23, 42, 0.98)',
-            borderBottom: '2px solid #F7931E',
-            padding: '1rem 0',
-            boxShadow: '0 15px 35px rgba(0,0,0,0.3)',
-            backdropFilter: 'blur(20px)'
-          }}>
-            <div className="container">
-              <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '10px' }}>
-                <input
-                  type="text"
-                  placeholder="Search engine oils, gear oils, hydraulic fluids..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{
-                    flex: 1, padding: '0.75rem 1.25rem', borderRadius: '19px',
-                    border: '1px solid rgba(255,255,255,0.2)', fontSize: '0.95rem', outline: 'none',
-                    background: 'rgba(255,255,255,0.08)', color: '#FFFFFF'
-                  }}
-                />
-                <div className="dc-btn">
-                  <button type="submit"><span>Search</span></button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
         {/* Main Header */}
         <header style={{
           background: isScrolled
@@ -368,4 +265,3 @@ export const Navbar = ({ activePage, setActivePage }) => {
     </>
   );
 };
-

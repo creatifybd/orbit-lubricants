@@ -13,7 +13,6 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
   const featured = products.filter((item) => item.featured).slice(0, 6);
   const heroSlides = hero.slides || [];
   const activeHero = heroSlides[heroSlide];
-  const activeHeroProduct = products.find((item) => item.id === activeHero.productId);
 
   useEffect(() => {
     if (!heroPlaying) return undefined;
@@ -49,7 +48,6 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             </div>
             <div className="hero-trust-line"><ShieldCheck size={18} /> Product specifications shown exactly as stated on pack labels.</div>
           </div>
-          {activeHeroProduct && <button className="hero-featured-product" onClick={() => setSelectedProduct(activeHeroProduct)} aria-label={`Open specifications for ${activeHeroProduct.name}`}><span>Featured product</span><img src={activeHeroProduct.image} alt={activeHeroProduct.name} /><strong>{activeHeroProduct.name}</strong><small>{activeHeroProduct.viscosity} · {activeHeroProduct.packing}</small><em>View specifications <ArrowRight size={14} /></em></button>}
         </div>
         <div className="container hero-carousel-footer">
           <div className="hero-carousel-controls"><button onClick={() => setHeroSlide((heroSlide - 1 + heroSlides.length) % heroSlides.length)} aria-label="Previous slide"><ArrowLeft size={18} /></button>{heroSlides.map((slide, index) => <button key={slide.image} className={`hero-dot ${index === heroSlide ? 'active' : ''}`} onClick={() => setHeroSlide(index)} aria-label={`Show slide ${index + 1}`} aria-current={index === heroSlide ? 'true' : undefined}><span /></button>)}<button onClick={() => setHeroSlide((heroSlide + 1) % heroSlides.length)} aria-label="Next slide"><ArrowRight size={18} /></button><button onClick={() => setHeroPlaying(!heroPlaying)} aria-label={heroPlaying ? 'Pause slideshow' : 'Play slideshow'}>{heroPlaying ? <Pause size={16} /> : <Play size={16} />}</button></div>
