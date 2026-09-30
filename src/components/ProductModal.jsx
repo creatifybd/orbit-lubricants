@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import { X, Package, ArrowRight, Shield } from 'lucide-react';
 
 export const ProductModal = ({ product, onClose, onInquire }) => {
-  if (!product) return null;
-
   // Lock body scroll
   useEffect(() => {
+    if (!product) return undefined;
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
-  }, []);
+  }, [product]);
+
+  if (!product) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>

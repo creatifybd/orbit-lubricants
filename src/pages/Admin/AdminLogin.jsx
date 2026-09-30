@@ -6,9 +6,9 @@ export const AdminLogin = ({ onReturnHome }) => {
   const { loginAdmin } = useCms();
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    loginAdmin(password);
+    await loginAdmin(password);
   };
 
   return (
@@ -62,14 +62,11 @@ export const AdminLogin = ({ onReturnHome }) => {
             <input
               type="password"
               className="form-control"
-              placeholder="e.g. admin"
+              placeholder="Administrator passcode"
               autoFocus
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
-            <div style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '0.4rem' }}>
-              Demo Password: <strong style={{ color: '#F7941D' }}>admin</strong>
-            </div>
           </div>
 
           <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: '1rem' }}>

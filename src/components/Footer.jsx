@@ -32,7 +32,7 @@ export const Footer = ({ setActivePage }) => {
                 style={{ height: '44px', width: 'auto', objectFit: 'contain', marginBottom: '1.5rem' }}
               />
               <p style={{ color: '#475569', fontSize: '0.88rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                Orbit Lubricant Industries OPC is a modern lubricant manufacturing company delivering premium automotive and industrial lubrication solutions for local and international markets.
+                Orbit Lubricant Industries supplies automotive and heavy-duty lubricant products for riders, drivers, workshops, fleets and distributors.
               </p>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {standards.slice(0, 3).map((std, idx) => (
@@ -128,11 +128,11 @@ export const Footer = ({ setActivePage }) => {
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
                 {[
-                  { icon: <Facebook size={14} />, href: '#' },
-                  { icon: <Linkedin size={14} />, href: '#' },
-                  { icon: <Youtube size={14} />, href: '#' },
-                  { icon: <Instagram size={14} />, href: '#' }
-                ].map((s, i) => (
+                  { icon: <Facebook size={14} />, href: settings?.socialLinks?.facebook },
+                  { icon: <Linkedin size={14} />, href: settings?.socialLinks?.linkedin },
+                  { icon: <Youtube size={14} />, href: settings?.socialLinks?.youtube },
+                  { icon: <Instagram size={14} />, href: settings?.socialLinks?.instagram }
+                ].filter(s => s.href).map((s, i) => (
                   <a key={i} href={s.href} style={{
                     width: '32px', height: '32px', borderRadius: '50%',
                     background: '#221F1F', color: '#FFFFFF', display: 'flex',
@@ -164,7 +164,7 @@ export const Footer = ({ setActivePage }) => {
               © {new Date().getFullYear()} Orbit Lubricant Industries OPC. All Rights Reserved.
             </div>
             <div>
-              Power in Every Drop™
+              Automotive & heavy-duty lubricant solutions
             </div>
           </div>
         </div>
@@ -177,4 +177,3 @@ export const Footer = ({ setActivePage }) => {
     </>
   );
 };
-

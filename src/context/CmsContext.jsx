@@ -3,8 +3,16 @@ import { initialData } from '../data/initialData';
 
 const CmsContext = createContext();
 
-const STORAGE_KEY = 'orbit_lubricants_cms_v9';
+const STORAGE_KEY = 'orbit_lubricants_cms_v10';
 const AUTH_KEY = 'orbit_admin_authenticated';
+const ADMIN_SALT = 'orbit-2026-admin';
+const ADMIN_PASSCODE_DIGEST = '4d74544b17d607f1131ddc45a0d0745c2ba362a73a6499a2b4b00e1447eff588';
+
+const sha256 = async (value) => {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await window.crypto.subtle.digest('SHA-256', bytes);
+  return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+};
 
 export const CmsProvider = ({ children }) => {
   const [data, setData] = useState(() => {
@@ -33,14 +41,23 @@ export const CmsProvider = ({ children }) => {
     }
   }, [data]);
 
-  const loginAdmin = (password) => {
-    if (password === 'admin' || password === 'orbit123') {
+  useEffect(() => {
+    document.title = data.settings?.siteTitle || 'Orbit Lubricants';
+    const description = document.querySelector('meta[name="description"]');
+    if (description && data.settings?.siteDescription) description.setAttribute('content', data.settings.siteDescription);
+    document.documentElement.style.setProperty('--orbit-orange', data.settings?.primaryColor || '#F7931E');
+    document.documentElement.style.setProperty('--orbit-blue', data.settings?.secondaryColor || '#1A6CB4');
+  }, [data.settings]);
+
+  const loginAdmin = async (password) => {
+    const digest = await sha256(`${ADMIN_SALT}:${password}`);
+    if (digest === ADMIN_PASSCODE_DIGEST) {
       setIsAdminLoggedIn(true);
       localStorage.setItem(AUTH_KEY, 'true');
       showToast('Successfully logged into Admin CMS!', 'success');
       return true;
     } else {
-      showToast('Invalid password! (Try: admin)', 'error');
+      showToast('Invalid administrator passcode.', 'error');
       return false;
     }
   };

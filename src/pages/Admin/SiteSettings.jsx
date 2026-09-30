@@ -69,6 +69,16 @@ export const SiteSettings = () => {
             </div>
 
             <div className="form-group">
+              <label>Search Description</label>
+              <textarea className="form-control" rows={3} value={settingsForm.siteDescription || ''} onChange={e => setSettingsForm({ ...settingsForm, siteDescription: e.target.value })} />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="form-group"><label>Primary Brand Color</label><input type="color" className="form-control" value={settingsForm.primaryColor || '#f7931e'} onChange={e => setSettingsForm({ ...settingsForm, primaryColor: e.target.value })} /></div>
+              <div className="form-group"><label>Secondary Brand Color</label><input type="color" className="form-control" value={settingsForm.secondaryColor || '#1167b1'} onChange={e => setSettingsForm({ ...settingsForm, secondaryColor: e.target.value })} /></div>
+            </div>
+
+            <div className="form-group">
               <label>Top Announcement Banner Text</label>
               <textarea
                 className="form-control"
@@ -90,6 +100,14 @@ export const SiteSettings = () => {
                 Show Top Announcement Banner
               </label>
             </div>
+
+            <h4 style={{ color: '#FFFFFF', margin: '1.3rem 0 .8rem' }}>Social Channels</h4>
+            {['facebook', 'linkedin', 'youtube', 'instagram'].map(channel => (
+              <div className="form-group" key={channel}>
+                <label style={{ textTransform: 'capitalize' }}>{channel} URL</label>
+                <input type="url" className="form-control" placeholder={`https://${channel}.com/...`} value={settingsForm.socialLinks?.[channel] || ''} onChange={e => setSettingsForm({ ...settingsForm, socialLinks: { ...(settingsForm.socialLinks || {}), [channel]: e.target.value } })} />
+              </div>
+            ))}
 
             <button type="submit" className="btn btn-primary" style={{ marginTop: '1rem' }}>
               <Save size={18} />

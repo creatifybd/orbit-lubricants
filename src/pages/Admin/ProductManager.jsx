@@ -19,7 +19,8 @@ export const ProductManager = () => {
     featured: false,
     badge: 'Premium',
     image: '',
-    description: ''
+    description: '',
+    specsText: ''
   };
 
   const [formData, setFormData] = useState(emptyForm);
@@ -39,17 +40,20 @@ export const ProductManager = () => {
 
   const handleOpenEdit = (prod) => {
     setEditingId(prod.id);
-    setFormData({ ...emptyForm, ...prod });
+    setFormData({ ...emptyForm, ...prod, specsText: Object.entries(prod.specs || {}).map(([key, value]) => `${key}: ${value}`).join('\n') });
     setModalOpen(true);
   };
 
   const handleSave = (e) => {
     e.preventDefault();
     if (!formData.name || !formData.viscosity) return;
+    const specs = Object.fromEntries((formData.specsText || '').split('\n').map(line => line.split(':')).filter(parts => parts.length > 1).map(([key, ...value]) => [key.trim(), value.join(':').trim()]));
+    const productData = { ...formData, specs };
+    delete productData.specsText;
     if (editingId) {
-      updateProduct(editingId, formData);
+      updateProduct(editingId, productData);
     } else {
-      addProduct(formData);
+      addProduct(productData);
     }
     setModalOpen(false);
   };
@@ -181,6 +185,11 @@ export const ProductManager = () => {
               <div className="form-group">
                 <label>Product Description</label>
                 <textarea className="form-control" rows={3} value={formData.description} onChange={e => set('description', e.target.value)} />
+              </div>
+
+              <div className="form-group">
+                <label>Technical Specifications (one “Label: Value” per line)</label>
+                <textarea className="form-control" rows={7} placeholder={'Viscosity grade: SAE 15W-40\nPerformance classification: API CI-4'} value={formData.specsText || ''} onChange={e => set('specsText', e.target.value)} />
               </div>
 
               <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

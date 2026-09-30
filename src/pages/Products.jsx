@@ -43,13 +43,13 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
         <div className="container" style={{ textAlign: 'center', maxWidth: '780px' }}>
           <span className="eyebrow on-dark">
             <Sparkles size={14} style={{ display: 'inline', marginRight: '6px' }} />
-            COMPLETE FORMULATION CATALOG
+            CURRENT PRODUCT CATALOG
           </span>
           <h1 style={{ color: '#FFFFFF', marginBottom: '1rem' }}>
             Our Product Portfolio
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '1.1rem', lineHeight: 1.6 }}>
-            Explore our comprehensive range of high-performance engine oils, industrial gear fluids, hydraulic oils, and high-temperature greases.
+            Browse 14 updated Orbit packs for motorcycles, passenger cars, CNG vehicles, heavy-duty diesel engines and automatic transmissions.
           </p>
         </div>
       </section>
@@ -73,7 +73,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search by viscosity (e.g. 5W-30), API standard, or product name..."
+                placeholder="Search by product, viscosity or label-stated classification..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 style={{
