@@ -161,7 +161,7 @@ export const Footer = ({ setActivePage }) => {
             fontWeight: 600
           }}>
             <div>
-              © {new Date().getFullYear()} Orbit Lubricant Industries OPC. All Rights Reserved.
+              © {new Date().getFullYear()} Orbit Lubricant Industries. All Rights Reserved.
             </div>
             <div>
               Automotive & heavy-duty lubricant solutions

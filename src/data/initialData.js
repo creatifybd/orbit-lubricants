@@ -82,7 +82,7 @@ export const initialData = {
     { code: 'API CF-4', name: 'Stated on the Optima HDE product label', status: 'Label stated' },
   ],
   contactInfo: {
-    address: 'AHN Tower, 9th Floor, 13 Biponon Commercial Area, Bir Uttam C.R. Dutta Road, Bangla Motor, Dhaka-1215, Bangladesh',
+    address: 'KANCHPUR, SONARGAON, NARAYANGANJ, BANGLADESH',
     phone: '01709643307', email: 'info@orbit-lubricants.com', salesEmail: 'info@orbit-lubricants.com', hours: 'Saturday – Thursday: 9:00 AM – 6:00 PM',
   },
   inquiries: [],

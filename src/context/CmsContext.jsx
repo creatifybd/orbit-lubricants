@@ -6,6 +6,19 @@ const CmsContext = createContext();
 const STORAGE_KEY = 'orbit_lubricants_cms_v11';
 const AUTH_KEY = 'orbit_admin_authenticated';
 const ADMIN_CREDENTIAL_KEY = 'orbit_admin_credential_v1';
+const CURRENT_ADDRESS = 'KANCHPUR, SONARGAON, NARAYANGANJ, BANGLADESH';
+const LEGACY_ADDRESS = 'AHN Tower, 9th Floor, 13 Biponon Commercial Area, Bir Uttam C.R. Dutta Road, Bangla Motor, Dhaka-1215, Bangladesh';
+
+const migrateCmsData = (savedData) => {
+  if (!savedData || typeof savedData !== 'object') return initialData;
+  if (savedData.contactInfo?.address === LEGACY_ADDRESS) {
+    return {
+      ...savedData,
+      contactInfo: { ...savedData.contactInfo, address: CURRENT_ADDRESS }
+    };
+  }
+  return savedData;
+};
 
 const sha256 = async (value) => {
   const bytes = new TextEncoder().encode(value);
@@ -18,7 +31,7 @@ export const CmsProvider = ({ children }) => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        return migrateCmsData(JSON.parse(saved));
       }
     } catch (e) {
       console.error("Failed to load local storage CMS data", e);
