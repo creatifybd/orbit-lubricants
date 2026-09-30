@@ -364,7 +364,7 @@ input, textarea, select, button { max-width: 100%; }
 .premium-hero-copy h1 {
   max-width: 760px;
   font-family: var(--font-body);
-  font-size: clamp(2.85rem, 5.15vw, 4.85rem);
+  font-size: clamp(2.7rem, 4.55vw, 4.4rem);
   font-weight: 700;
   line-height: 1.06;
   letter-spacing: -.042em;
