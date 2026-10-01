@@ -39,7 +39,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
   return (
     <div>
       {/* Page Hero */}
-      <section style={{
+      <section className="page-hero" style={{
         background: 'linear-gradient(135deg, #0A2540 0%, #051526 100%)',
         color: '#FFFFFF',
         padding: '8.5rem 0 4.5rem',
@@ -121,11 +121,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
 
           {/* Product Grid */}
           {filteredProducts.length > 0 ? (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-              gap: '1.75rem'
-            }}>
+            <div className="catalog-grid">
               {filteredProducts.map(product => (
                 <ProductCard
                   key={product.id}

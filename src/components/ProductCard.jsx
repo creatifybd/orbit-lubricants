@@ -6,12 +6,10 @@ export const ProductCard = ({ product, onSelect, onInquire }) => {
   const standardVisible = product.apiGrade && !product.apiGrade.toLowerCase().includes('not stated');
 
   const open = () => onSelect?.(product);
-  const keyboardOpen = (event) => {
-    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); }
-  };
 
   return (
-    <article className="catalog-product-card" role="button" tabIndex={0} onClick={open} onKeyDown={keyboardOpen} aria-label={`View specifications for ${product.name}`}>
+    <article className="catalog-product-card">
+      <button className="catalog-card-open" onClick={open} aria-label={`View specifications for ${product.name}`} />
       <div className="catalog-product-visual">
         <div className="catalog-product-code">{product.viscosity}</div>
         <div className="catalog-product-lines" />
@@ -25,7 +23,7 @@ export const ProductCard = ({ product, onSelect, onInquire }) => {
         <p>{product.description}</p>
         <div className="catalog-product-actions">
           <span>View specifications <ArrowUpRight size={16} /></span>
-          {onInquire && <button onClick={(event) => { event.stopPropagation(); onInquire(product); }} aria-label={`Enquire about ${product.name}`}><MessageSquare size={16} /></button>}
+          {onInquire && <button className="catalog-inquire" onClick={() => onInquire(product)} aria-label={`Enquire about ${product.name}`}><MessageSquare size={16} /></button>}
         </div>
       </div>
     </article>

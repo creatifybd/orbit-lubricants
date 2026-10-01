@@ -12,7 +12,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth < 992;
+      const mobile = window.innerWidth < 1120;
       setIsMobile(mobile);
       if (!mobile) setMobileOpen(false);
     };

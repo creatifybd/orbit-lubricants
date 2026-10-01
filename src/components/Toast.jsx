@@ -28,7 +28,7 @@ export const Toast = () => {
   };
 
   return (
-    <div style={{
+    <div className="site-toast" role="status" aria-live="polite" style={{
       position: 'fixed',
       bottom: '24px',
       right: '24px',

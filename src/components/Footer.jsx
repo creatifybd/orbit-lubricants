@@ -8,7 +8,7 @@ export const Footer = ({ setActivePage }) => {
 
   return (
     <>
-      <footer style={{
+      <footer className="site-footer" style={{
         background: '#E1E4E6',
         color: '#221F1F',
         paddingTop: '4.5rem',
@@ -17,7 +17,7 @@ export const Footer = ({ setActivePage }) => {
         position: 'relative',
       }}>
         <div className="container">
-          <div style={{
+          <div className="footer-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: '2.5rem',
@@ -149,7 +149,7 @@ export const Footer = ({ setActivePage }) => {
           </div>
 
           {/* Bottom Bar */}
-          <div style={{
+          <div className="footer-bottom" style={{
             paddingTop: '2rem',
             display: 'flex',
             justifyContent: 'space-between',

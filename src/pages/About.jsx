@@ -9,7 +9,7 @@ export const About = () => {
   return (
     <div>
       {/* ── Hero Header ── */}
-      <section style={{
+      <section className="page-hero" style={{
         background: 'radial-gradient(120% 100% at 85% 15%, #0F3560 0%, #0A2540 50%, #051526 100%)',
         color: '#FFFFFF',
         padding: '8.5rem 0 4.5rem',
@@ -39,7 +39,7 @@ export const About = () => {
             <h2>Company overview</h2>
           </div>
 
-          <div className="glass-card" style={{ padding: '2.5rem', lineHeight: 1.85, fontSize: '1.02rem', color: 'var(--steel)' }}>
+          <div className="glass-card responsive-card" style={{ padding: '2.5rem', lineHeight: 1.85, fontSize: '1.02rem', color: 'var(--steel)' }}>
             <p style={{ marginBottom: '1.25rem' }}>
               {about?.story}
             </p>
@@ -52,7 +52,7 @@ export const About = () => {
         <div className="container">
           <div className="about-two-column">
             {/* Mission Card */}
-            <div className="glass-card fade-in-up" style={{ padding: '2.5rem' }}>
+            <div className="glass-card responsive-card fade-in-up" style={{ padding: '2.5rem' }}>
               <div style={{
                 width: '56px',
                 height: '56px',
@@ -75,7 +75,7 @@ export const About = () => {
             </div>
 
             {/* Vision Card */}
-            <div className="glass-card fade-in-up delay-100" style={{ padding: '2.5rem' }}>
+            <div className="glass-card responsive-card fade-in-up delay-100" style={{ padding: '2.5rem' }}>
               <div style={{
                 width: '56px',
                 height: '56px',
@@ -186,7 +186,7 @@ export const About = () => {
         <div className="container">
           <div className="about-two-column">
             {/* Quality Commitment */}
-            <div className="glass-card" style={{ padding: '2.5rem' }}>
+            <div className="glass-card responsive-card" style={{ padding: '2.5rem' }}>
               <div style={{
                 width: '48px', height: '48px', borderRadius: '12px',
                 background: 'rgba(0, 90, 171, 0.1)',
@@ -204,7 +204,7 @@ export const About = () => {
             </div>
 
             {/* Our Commitment */}
-            <div className="glass-card" style={{ padding: '2.5rem' }}>
+            <div className="glass-card responsive-card" style={{ padding: '2.5rem' }}>
               <div style={{
                 width: '48px', height: '48px', borderRadius: '12px',
                 background: 'rgba(247, 148, 29, 0.1)',

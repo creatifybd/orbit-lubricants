@@ -82,7 +82,7 @@ export const initialData = {
     { code: 'API CF-4', name: 'Stated on the Optima HDE product label', status: 'Label stated' },
   ],
   contactInfo: {
-    address: 'KANCHPUR, SONARGAON, NARAYANGANJ, BANGLADESH',
+    address: 'Kanchpur, Sonargaon, Narayanganj, Bangladesh',
     phone: '01709643307', email: 'info@orbit-lubricants.com', salesEmail: 'info@orbit-lubricants.com', hours: 'Saturday – Thursday: 9:00 AM – 6:00 PM',
   },
   inquiries: [],

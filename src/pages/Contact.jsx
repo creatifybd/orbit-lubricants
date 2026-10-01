@@ -27,7 +27,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
   return (
     <div>
       {/* Hero Header */}
-      <section style={{
+      <section className="page-hero" style={{
         background: 'linear-gradient(135deg, #0A2540 0%, #051526 100%)',
         color: '#FFFFFF',
         padding: '8.5rem 0 4.5rem',
@@ -50,7 +50,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
       {/* Main Content */}
       <section className="section">
         <div className="container">
-          <div style={{
+          <div className="contact-layout" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '3rem'
@@ -92,7 +92,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
                       Email Inquiries
                     </h4>
                     <p style={{ color: 'var(--steel)', fontSize: '0.92rem' }}>
-                      {contactInfo.email} / {contactInfo.salesEmail}
+                      {contactInfo.email}{contactInfo.salesEmail && contactInfo.salesEmail !== contactInfo.email ? ` / ${contactInfo.salesEmail}` : ''}
                     </p>
                   </div>
                 </div>
@@ -113,7 +113,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
 
             {/* Form Column */}
             <div>
-              <div className="glass-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)' }}>
+              <div className="glass-card contact-form-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)' }}>
                 {submitted ? (
                   <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
                     <div style={{

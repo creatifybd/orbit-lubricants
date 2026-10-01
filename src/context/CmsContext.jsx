@@ -6,12 +6,13 @@ const CmsContext = createContext();
 const STORAGE_KEY = 'orbit_lubricants_cms_v11';
 const AUTH_KEY = 'orbit_admin_authenticated';
 const ADMIN_CREDENTIAL_KEY = 'orbit_admin_credential_v1';
-const CURRENT_ADDRESS = 'KANCHPUR, SONARGAON, NARAYANGANJ, BANGLADESH';
+const CURRENT_ADDRESS = 'Kanchpur, Sonargaon, Narayanganj, Bangladesh';
+const UPPERCASE_ADDRESS = 'KANCHPUR, SONARGAON, NARAYANGANJ, BANGLADESH';
 const LEGACY_ADDRESS = 'AHN Tower, 9th Floor, 13 Biponon Commercial Area, Bir Uttam C.R. Dutta Road, Bangla Motor, Dhaka-1215, Bangladesh';
 
 const migrateCmsData = (savedData) => {
   if (!savedData || typeof savedData !== 'object') return initialData;
-  if (savedData.contactInfo?.address === LEGACY_ADDRESS) {
+  if ([LEGACY_ADDRESS, UPPERCASE_ADDRESS].includes(savedData.contactInfo?.address)) {
     return {
       ...savedData,
       contactInfo: { ...savedData.contactInfo, address: CURRENT_ADDRESS }
