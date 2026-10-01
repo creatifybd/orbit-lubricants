@@ -1423,6 +1423,97 @@ main, section, .container { min-width: 0; }
 .form-control { width: 100%; min-width: 0; }
 textarea.form-control { resize: vertical; }
 
+/* ============================================================
+   FINAL VIEWPORT & SMALL-SCREEN HARDENING
+   The desktop hero owns the full visual viewport. On compact
+   screens it may grow beyond one viewport so content is never
+   clipped or forced to overlap.
+   ============================================================ */
+img, svg, video, canvas { max-width: 100%; }
+h1, h2, h3, h4, p, a, button, label, span { min-width: 0; }
+.site-footer a, .site-footer p, .contact-layout a,
+.product-dialog-content, .finder-result { overflow-wrap: anywhere; }
+
+@media (min-width: 1120px) {
+  .premium-hero {
+    height: 100vh;
+    height: 100svh;
+    min-height: 720px;
+    padding-top: 75px;
+  }
+  .premium-hero-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    padding-block: clamp(2rem, 6vh, 4.5rem) clamp(1rem, 3vh, 2rem);
+  }
+  .hero-carousel-footer { flex: 0 0 auto; }
+}
+
+@media (max-width: 1119px) {
+  .premium-hero {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: 75px;
+  }
+  .premium-hero-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    padding-block: clamp(3rem, 9vh, 6rem) 2rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .premium-hero { padding-top: 75px; }
+  .premium-hero-grid { padding-block: clamp(2.25rem, 6vh, 4rem) 1.5rem; }
+  .premium-hero-copy { width: 100%; }
+  .premium-hero-copy h1 {
+    max-width: 15ch;
+    font-size: clamp(2rem, 9.5vw, 3.2rem);
+    overflow-wrap: normal;
+  }
+  .premium-actions { width: 100%; }
+  .premium-actions .btn { min-height: 48px; }
+  .hero-carousel-footer { width: 100%; }
+  .hero-carousel-footer .hero-metrics { width: 100%; }
+  .hero-metric { min-width: 0; }
+  .hero-metric span { overflow-wrap: normal; }
+  .application-card > div:not(.application-number) { max-width: 70%; }
+  .application-card h3 { overflow-wrap: anywhere; }
+  .catalog-product-content > p { min-height: 0; }
+  .catalog-cta-inner .btn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .premium-hero { min-height: 100svh; }
+  .premium-hero-grid { padding-block: clamp(1.8rem, 5vh, 3rem) 1.1rem; }
+  .premium-hero-copy h1 { max-width: 14ch; font-size: clamp(1.9rem, 9.4vw, 2.75rem); }
+  .premium-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: .65rem; }
+  .premium-actions .btn { width: 100%; justify-content: center; }
+  .hero-trust-line { line-height: 1.45; }
+  .hero-carousel-footer .hero-metrics { gap: .55rem; }
+  .hero-metric span { font-size: .53rem; }
+  .section-heading-row .text-link { align-self: flex-start; }
+  .application-card { grid-template-columns: minmax(0,1fr) auto; }
+  .confidence-item { grid-template-columns: auto minmax(0,1fr) auto; gap: .75rem; }
+  .confidence-item p { overflow-wrap: anywhere; }
+  .finder-categories { grid-template-columns: minmax(0,1fr); }
+  .finder-result { grid-template-columns: 58px minmax(0,1fr); padding: .8rem; }
+  .finder-result img { width: 56px; height: 74px; }
+}
+
+@media (max-width: 360px) {
+  .premium-hero-copy h1 { font-size: 1.85rem; }
+  .hero-carousel-controls button { flex-basis: 36px; width: 36px; height: 36px; }
+  .hero-carousel-controls .hero-dot { flex-basis: 18px; width: 18px; }
+  .hero-carousel-footer .hero-metrics { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .hero-metric strong { font-size: .9rem; }
+  .hero-metric span { font-size: .46rem; letter-spacing: .02em; }
+  .application-card > div:not(.application-number) { max-width: 76%; }
+}
+
 @media (max-width: 760px) {
   .modal-overlay { align-items: end; padding: .5rem; }
   .modal-card { border-radius: 18px 18px 8px 8px; }
