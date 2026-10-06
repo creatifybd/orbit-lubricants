@@ -89,10 +89,6 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
 
       <section className="section corporate-showcase-section">
         <div className="container">
-          <div className="section-head center">
-            <span className="premium-kicker dark">Inside Orbit</span>
-            <h2>Built on leadership, quality and trust</h2>
-          </div>
           <div className="mjl-showcase-grid">
             <button type="button" className="mjl-showcase-card" onClick={() => setActivePage('about')}>
               <img src="/images/custom/home-showcase-leadership.webp" alt="Orbit Lubricants leadership" className="card-img-bg" loading="lazy" decoding="async" />
