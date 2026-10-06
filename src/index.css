@@ -770,6 +770,9 @@ p { color: var(--steel); font-weight: 500; }
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
   border-top: 1px solid var(--mjl-border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(10, 37, 64, 0.16);
 }
 .mjl-showcase-card {
   position: relative;
@@ -778,6 +781,12 @@ p { color: var(--steel); font-weight: 500; }
   overflow: hidden;
   cursor: pointer;
   border-right: 1px solid rgba(255,255,255,0.1);
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 0;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
 }
 .mjl-showcase-card:last-child {
   border-right: none;
@@ -806,6 +815,31 @@ p { color: var(--steel); font-weight: 500; }
   color: #FFFFFF;
   z-index: 2;
   transition: background 0.4s ease;
+}
+.mjl-showcase-card .showcase-eyebrow {
+  color: #F7931E;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.mjl-showcase-card .card-overlay > strong {
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+  line-height: 1.25;
+  margin-top: 0.35rem;
+}
+.mjl-showcase-card .showcase-description {
+  color: rgba(255,255,255,0.78);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin-top: 0.55rem;
+}
+.mjl-showcase-card:focus-visible {
+  outline: 3px solid #F7931E;
+  outline-offset: -3px;
+  z-index: 3;
 }
 .mjl-showcase-card:hover .card-overlay {
   background: linear-gradient(180deg, rgba(247, 147, 30, 0.4) 0%, rgba(34,31,31,0.95) 100%);

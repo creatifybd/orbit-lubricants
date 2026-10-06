@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, ChevronRight, Gauge, Headphones, PackageCheck, Pause, Play, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, ChevronRight, Gauge, Headphones, PackageCheck, Pause, Play, Plus, ShieldCheck } from 'lucide-react';
 import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
@@ -83,6 +83,56 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
           <div className="section-head center"><span className="premium-kicker dark">Current lineup</span><h2>Featured products</h2><p>Fourteen updated packs, organized by application and label-stated performance classification.</p></div>
           <div className="premium-product-grid">
             {featured.map((item) => <ProductCard key={item.id} product={item} onSelect={setSelectedProduct} onInquire={inquire} />)}
+          </div>
+        </div>
+      </section>
+
+      <section className="section corporate-showcase-section">
+        <div className="container">
+          <div className="section-head center">
+            <span className="premium-kicker dark">Inside Orbit</span>
+            <h2>Built on leadership, quality and trust</h2>
+          </div>
+          <div className="mjl-showcase-grid">
+            <button type="button" className="mjl-showcase-card" onClick={() => setActivePage('about')}>
+              <img src="/images/custom/home-showcase-leadership.webp" alt="Orbit Lubricants leadership" className="card-img-bg" loading="lazy" decoding="async" />
+              <span className="card-overlay">
+                <span className="circle-plus"><Plus size={20} /></span>
+                <span className="showcase-eyebrow">Leadership</span>
+                <strong>Board of Directors</strong>
+                <span className="showcase-description">Take a look at the leaders of innovation at the helm of Orbit Lubricants.</span>
+              </span>
+            </button>
+
+            <button type="button" className="mjl-showcase-card" onClick={() => setActivePage('products')}>
+              <img src="/images/custom/home-showcase-product-range.webp" alt="Orbit Lubricants product range" className="card-img-bg" loading="lazy" decoding="async" />
+              <span className="card-overlay">
+                <span className="circle-plus"><Plus size={20} /></span>
+                <span className="showcase-eyebrow">Portfolio</span>
+                <strong>Product Range</strong>
+                <span className="showcase-description">Engineered for modern passenger cars, heavy trucks and industrial plant machinery.</span>
+              </span>
+            </button>
+
+            <button type="button" className="mjl-showcase-card" onClick={() => setActivePage('about')}>
+              <img src="/images/custom/home-showcase-client-relations.webp" alt="Orbit corporate client relations" className="card-img-bg" loading="lazy" decoding="async" />
+              <span className="card-overlay">
+                <span className="circle-plus"><Plus size={20} /></span>
+                <span className="showcase-eyebrow">Corporate</span>
+                <strong>Corporate Client Relations</strong>
+                <span className="showcase-description">Our unrivaled attitude towards excellence is a big reason behind our client trust and growth.</span>
+              </span>
+            </button>
+
+            <button type="button" className="mjl-showcase-card" onClick={() => setActivePage('about')}>
+              <img src="/images/custom/home-showcase-quality.webp" alt="Orbit quality assurance" className="card-img-bg" loading="lazy" decoding="async" />
+              <span className="card-overlay">
+                <span className="circle-plus"><Plus size={20} /></span>
+                <span className="showcase-eyebrow">Certification</span>
+                <strong>Quality Assurance</strong>
+                <span className="showcase-description">Each product goes through acute QA measures to ensure uncompromised quality.</span>
+              </span>
+            </button>
           </div>
         </div>
       </section>
