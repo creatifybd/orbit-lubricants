@@ -101,7 +101,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
             </button>
 
             <button type="button" className="mjl-showcase-card" onClick={() => setActivePage('products')}>
-              <img src="/images/custom/home-showcase-product-range.webp" alt="Orbit Lubricants product range" className="card-img-bg" loading="lazy" decoding="async" />
+              <img src="/images/custom/home-showcase-product-range-v2.webp" alt="Orbit Lubricants product range" className="card-img-bg" loading="lazy" decoding="async" />
               <span className="card-overlay">
                 <span className="circle-plus"><Plus size={20} /></span>
                 <span className="showcase-eyebrow">Portfolio</span>
