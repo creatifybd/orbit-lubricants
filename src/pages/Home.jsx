@@ -3,11 +3,12 @@ import { ArrowLeft, ArrowRight, Check, ChevronRight, Gauge, Headphones, PackageC
 import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
-import heroAutomotive from '../assets/hero/automotive.webp';
-import heroHeavyDuty from '../assets/hero/heavy-duty.webp';
-import heroManufacturing from '../assets/hero/manufacturing.webp';
-
-const bundledHeroImages = [heroAutomotive, heroHeavyDuty, heroManufacturing];
+const assetBase = 'https://cdn.jsdelivr.net/gh/creatifybd/orbit-lubricants@f85a4eb3d6b4c37e54749ed367c6bbc6f594282a/public/images/custom';
+const bundledHeroImages = [
+  `${assetBase}/home-hero-automotive.webp`,
+  `${assetBase}/home-hero-heavy-duty.webp`,
+  `${assetBase}/home-hero-manufacturing.webp`
+];
 
 export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
   const { data } = useCms();

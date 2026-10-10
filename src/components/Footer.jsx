@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCms } from '../context/CmsContext';
 import { Phone, Mail, MapPin, Clock, ArrowUpRight, Facebook, Linkedin, Youtube, Instagram } from 'lucide-react';
-import orbitLogo from '../assets/brand/orbit-logo.png';
+const orbitLogo = 'https://cdn.jsdelivr.net/gh/creatifybd/orbit-lubricants@f85a4eb3d6b4c37e54749ed367c6bbc6f594282a/public/logo.png';
 
 export const Footer = ({ setActivePage }) => {
   const { data } = useCms();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
 import { Menu, X, ChevronRight } from 'lucide-react';
-import orbitLogo from '../assets/brand/orbit-logo.png';
+const orbitLogo = 'https://cdn.jsdelivr.net/gh/creatifybd/orbit-lubricants@f85a4eb3d6b4c37e54749ed367c6bbc6f594282a/public/logo.png';
 
 export const Navbar = ({ activePage, setActivePage }) => {
   const { data } = useCms();
