@@ -77,7 +77,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
               style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', flexShrink: 0 }}
             >
               <img
-                src={settings?.logoUrl || '/logo.png'}
+                src="/images/custom/orbit-logo.png"
                 alt="Orbit Lubricants"
                 style={{
                   height: '48px',
@@ -205,7 +205,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
               <img
-                src={settings?.logoUrl || '/logo.png'}
+                src="/images/custom/orbit-logo.png"
                 alt="Orbit Lubricants"
                 style={{ height: '38px', objectFit: 'contain' }}
               />
