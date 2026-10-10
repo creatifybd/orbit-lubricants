@@ -10,10 +10,10 @@ export const About = () => {
     <div>
       {/* ── Hero Header ── */}
       <section className="page-hero" style={{
-        background: 'radial-gradient(120% 100% at 85% 15%, #0F3560 0%, #0A2540 50%, #051526 100%)',
-        color: '#FFFFFF',
+        background: 'radial-gradient(100% 140% at 88% 15%, #DCEEFF 0%, #F4F9FE 48%, #FFFFFF 100%)',
+        color: '#0A2540',
         padding: '8.5rem 0 4.5rem',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        borderBottom: '1px solid rgba(0, 90, 171, 0.12)',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -22,10 +22,10 @@ export const About = () => {
             <Sparkles size={14} style={{ display: 'inline', marginRight: '6px' }} />
             ORBIT LUBRICANT INDUSTRIES
           </span>
-          <h1 className="fade-in-up delay-100" style={{ color: '#FFFFFF', marginBottom: '1.25rem' }}>
+          <h1 className="fade-in-up delay-100" style={{ color: '#0A2540', marginBottom: '1.25rem' }}>
             {about?.heroTitle || "Driving Performance Through Advanced Lubrication Technology"}
           </h1>
-          <p className="fade-in-up delay-200" style={{ color: 'rgba(255, 255, 255, 0.82)', fontSize: '1.12rem', lineHeight: 1.65 }}>
+          <p className="fade-in-up delay-200" style={{ color: '#52677B', fontSize: '1.12rem', lineHeight: 1.65 }}>
             {about?.heroSubtitle}
           </p>
         </div>
@@ -142,12 +142,12 @@ export const About = () => {
 
       {/* ── Our Complete Product Range ── */}
       {productRangeList && (
-        <section className="section" style={{ background: '#0A2540', color: '#FFFFFF' }}>
+        <section className="section" style={{ background: 'linear-gradient(135deg, #EFF7FF 0%, #FFFFFF 100%)', color: '#0A2540' }}>
           <div className="container">
             <div className="section-head center">
               <span className="eyebrow on-dark">PORTFOLIO COVERAGE</span>
-              <h2 style={{ color: '#FFFFFF' }}>Our Complete Product Range</h2>
-              <p style={{ color: 'rgba(255,255,255,0.75)' }}>We produce a comprehensive range of automotive, motorcycle, industrial, and specialty fluids.</p>
+              <h2 style={{ color: '#0A2540' }}>Our Complete Product Range</h2>
+              <p style={{ color: '#52677B' }}>We produce a comprehensive range of automotive, motorcycle, industrial, and specialty fluids.</p>
             </div>
 
             <div style={{
@@ -162,9 +162,10 @@ export const About = () => {
                 <div key={idx} style={{
                   padding: '0.75rem 1.4rem',
                   borderRadius: '999px',
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  border: '1px solid rgba(255, 255, 255, 0.16)',
-                  color: '#F8FAFC',
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(0, 90, 171, 0.14)',
+                  color: '#0A2540',
+                  boxShadow: '0 8px 24px rgba(10,37,64,.06)',
                   fontSize: '0.95rem',
                   fontFamily: 'var(--font-display)',
                   fontWeight: 600,

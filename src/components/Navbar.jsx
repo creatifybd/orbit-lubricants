@@ -58,13 +58,11 @@ export const Navbar = ({ activePage, setActivePage }) => {
       }}>
         {/* Main Header */}
         <header style={{
-          background: isScrolled
-            ? 'rgba(10, 25, 45, 0.95)'
-            : 'transparent',
-          backdropFilter: isScrolled ? 'blur(16px)' : 'none',
-          WebkitBackdropFilter: isScrolled ? 'blur(16px)' : 'none',
-          boxShadow: isScrolled ? '0 8px 30px rgba(0,0,0,0.25)' : 'none',
-          borderBottom: isScrolled ? '1px solid rgba(255,255,255,0.1)' : 'none',
+          background: isScrolled ? 'rgba(255, 255, 255, 0.96)' : 'rgba(255, 255, 255, 0.9)',
+          backdropFilter: 'blur(18px)',
+          WebkitBackdropFilter: 'blur(18px)',
+          boxShadow: isScrolled ? '0 10px 35px rgba(10,37,64,0.10)' : '0 1px 0 rgba(10,37,64,0.08)',
+          borderBottom: '1px solid rgba(0,90,171,0.10)',
           transition: 'all 0.35s ease',
         }}>
           <div className="container" style={{
@@ -85,7 +83,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   height: '48px',
                   width: 'auto',
                   objectFit: 'contain',
-                  filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))'
+                  filter: 'drop-shadow(0 4px 10px rgba(10,37,64,0.12))'
                 }}
               />
             </div>
@@ -104,13 +102,13 @@ export const Navbar = ({ activePage, setActivePage }) => {
                       onMouseEnter={() => setHoveredNav(link.id)}
                       onMouseLeave={() => setHoveredNav(null)}
                       style={{
-                        background: isHovered ? 'rgba(255,255,255,0.08)' : 'transparent',
+                        background: isHovered ? 'rgba(0,90,171,0.07)' : 'transparent',
                         border: 'none',
                         fontFamily: 'var(--font-display)',
                         fontWeight: 700,
                         fontSize: '0.94rem',
-                        color: (isActive || isHovered) ? '#F7931E' : '#FFFFFF',
-                        textShadow: (isActive || isHovered) ? '0 0 14px rgba(247, 147, 30, 0.7)' : '0 1px 4px rgba(0,0,0,0.4)',
+                        color: (isActive || isHovered) ? '#F47C00' : '#0A2540',
+                        textShadow: 'none',
                         cursor: 'pointer',
                         height: '42px',
                         padding: '0 14px',
@@ -132,7 +130,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                           height: '3px',
                           background: '#F7931E',
                           borderRadius: '2px',
-                          boxShadow: '0 0 10px #F7931E',
+                          boxShadow: '0 3px 10px rgba(247,147,30,.28)',
                           transition: 'all 0.25s ease'
                         }} />
                       )}
@@ -159,10 +157,10 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   onClick={() => setMobileOpen(!mobileOpen)}
                   aria-label="Toggle menu"
                   style={{
-                    background: mobileOpen ? '#F7931E' : 'rgba(255,255,255,0.12)',
-                    border: '1px solid rgba(255,255,255,0.25)',
+                    background: mobileOpen ? '#F7931E' : '#EDF5FC',
+                    border: '1px solid rgba(0,90,171,0.16)',
                     borderRadius: '10px',
-                    color: '#FFFFFF',
+                    color: mobileOpen ? '#FFFFFF' : '#0A5AA5',
                     cursor: 'pointer', padding: '8px',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     width: '44px', height: '44px',
@@ -184,7 +182,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
             onClick={() => setMobileOpen(false)}
             style={{
               position: 'fixed', inset: 0, zIndex: 299,
-              background: 'rgba(5,15,30,0.75)',
+              background: 'rgba(10,37,64,0.28)',
               opacity: mobileOpen ? 1 : 0,
               pointerEvents: mobileOpen ? 'auto' : 'none',
               transition: 'opacity 0.3s ease',
@@ -194,8 +192,8 @@ export const Navbar = ({ activePage, setActivePage }) => {
           <div style={{
             position: 'fixed', top: 0, right: 0, bottom: 0,
             width: '85vw', maxWidth: '340px',
-            background: '#0F172A', color: '#FFFFFF', zIndex: 300,
-            boxShadow: '-10px 0 30px rgba(0,0,0,0.5)',
+            background: '#FFFFFF', color: '#0A2540', zIndex: 300,
+            boxShadow: '-18px 0 50px rgba(10,37,64,0.18)',
             transform: mobileOpen ? 'translateX(0)' : 'translateX(105%)',
             transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
             display: 'flex', flexDirection: 'column',
@@ -203,7 +201,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
           }}>
             <div style={{
               padding: '1.25rem',
-              borderBottom: '1px solid rgba(255,255,255,0.12)',
+              borderBottom: '1px solid rgba(0,90,171,0.10)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
               <img
@@ -214,10 +212,10 @@ export const Navbar = ({ activePage, setActivePage }) => {
               <button
                 onClick={() => setMobileOpen(false)}
                 style={{
-                  background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+                  background: '#EDF5FC', border: '1px solid rgba(0,90,171,0.14)',
                   borderRadius: '50%', width: '36px', height: '36px',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer', color: '#FFFFFF',
+                  cursor: 'pointer', color: '#0A5AA5',
                 }}
               >
                 <X size={18} />
@@ -232,11 +230,11 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     width: '100%', textAlign: 'left',
-                    background: activePage === link.id ? 'rgba(247, 147, 30, 0.15)' : 'transparent',
-                    border: 'none', borderBottom: '1px solid rgba(255,255,255,0.08)',
+                    background: activePage === link.id ? 'rgba(247, 147, 30, 0.10)' : 'transparent',
+                    border: 'none', borderBottom: '1px solid rgba(10,37,64,0.08)',
                     padding: '1rem 0.5rem',
                     fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem',
-                    color: activePage === link.id ? '#F7931E' : '#FFFFFF',
+                    color: activePage === link.id ? '#F47C00' : '#0A2540',
                     cursor: 'pointer',
                   }}
                 >

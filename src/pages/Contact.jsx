@@ -28,20 +28,20 @@ export const Contact = ({ selectedProductForInquiry }) => {
     <div>
       {/* Hero Header */}
       <section className="page-hero" style={{
-        background: 'linear-gradient(135deg, #0A2540 0%, #051526 100%)',
-        color: '#FFFFFF',
+        background: 'linear-gradient(135deg, #EEF7FF 0%, #FFFFFF 72%)',
+        color: '#0A2540',
         padding: '8.5rem 0 4.5rem',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+        borderBottom: '1px solid rgba(0, 90, 171, 0.12)'
       }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '760px' }}>
           <span className="eyebrow on-dark">
             <Sparkles size={14} style={{ display: 'inline', marginRight: '6px' }} />
             GET IN TOUCH WITH OUR TEAM
           </span>
-          <h1 style={{ color: '#FFFFFF', marginBottom: '1rem' }}>
+          <h1 style={{ color: '#0A2540', marginBottom: '1rem' }}>
             Let's Talk Lubrication
           </h1>
-          <p style={{ color: 'rgba(255, 255, 255, 0.78)', fontSize: '1.1rem', lineHeight: 1.6 }}>
+          <p style={{ color: '#52677B', fontSize: '1.1rem', lineHeight: 1.6 }}>
             Distributor, workshop operator, industrial buyer, or fleet manager — reach out and our technical team will respond promptly.
           </p>
         </div>

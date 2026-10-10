@@ -9,11 +9,11 @@ export const Footer = ({ setActivePage }) => {
   return (
     <>
       <footer className="site-footer" style={{
-        background: '#E1E4E6',
-        color: '#221F1F',
+        background: 'linear-gradient(180deg, #F4F8FC 0%, #FFFFFF 100%)',
+        color: '#0A2540',
         paddingTop: '4.5rem',
         paddingBottom: '2.5rem',
-        borderTop: '1px solid #DEDEDE',
+        borderTop: '1px solid rgba(0,90,171,.12)',
         position: 'relative',
       }}>
         <div className="container">
@@ -22,7 +22,7 @@ export const Footer = ({ setActivePage }) => {
             gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: '2.5rem',
             paddingBottom: '3rem',
-            borderBottom: '1px solid rgba(34,31,31,0.2)'
+            borderBottom: '1px solid rgba(0,90,171,0.12)'
           }}>
             {/* Col 1: Logo & Overview */}
             <div>

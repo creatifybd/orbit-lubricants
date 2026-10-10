@@ -40,20 +40,20 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
     <div>
       {/* Page Hero */}
       <section className="page-hero" style={{
-        background: 'linear-gradient(135deg, #0A2540 0%, #051526 100%)',
-        color: '#FFFFFF',
+        background: 'linear-gradient(135deg, #EEF7FF 0%, #FFFFFF 72%)',
+        color: '#0A2540',
         padding: '8.5rem 0 4.5rem',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+        borderBottom: '1px solid rgba(0, 90, 171, 0.12)'
       }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '780px' }}>
           <span className="eyebrow on-dark">
             <Sparkles size={14} style={{ display: 'inline', marginRight: '6px' }} />
             CURRENT PRODUCT CATALOG
           </span>
-          <h1 style={{ color: '#FFFFFF', marginBottom: '1rem' }}>
+          <h1 style={{ color: '#0A2540', marginBottom: '1rem' }}>
             Our Product Portfolio
           </h1>
-          <p style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '1.1rem', lineHeight: 1.6 }}>
+          <p style={{ color: '#52677B', fontSize: '1.1rem', lineHeight: 1.6 }}>
             Browse 14 updated Orbit packs for motorcycles, passenger cars, CNG vehicles, heavy-duty diesel engines and automatic transmissions.
           </p>
         </div>

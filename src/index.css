@@ -1555,3 +1555,52 @@ h1, h2, h3, h4, p, a, button, label, span { min-width: 0; }
   .dark-modal form > div:last-child { flex-direction: column-reverse; }
   .dark-modal form > div:last-child .btn { width: 100%; }
 }
+
+/* ============================================================
+   ORBIT PREMIUM LIGHT THEME
+   Brand-led white, cloud blue and warm orange visual system.
+   ============================================================ */
+body { color: #17324d; background: #f8fbfe; }
+.premium-hero { color: #0a2540; background: #eef6fd; }
+.premium-hero::after { opacity: .13; background-image: linear-gradient(rgba(0,90,171,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(0,90,171,.12) 1px,transparent 1px); }
+.hero-slide-image { filter: saturate(.9) contrast(.94) brightness(1.04); }
+.hero-slide-overlay { background: linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(247,251,255,.95) 42%,rgba(239,247,254,.52) 72%,rgba(255,255,255,.30) 100%),linear-gradient(0deg,rgba(238,247,255,.94),transparent 48%); }
+.premium-hero-copy { padding: clamp(1.25rem,3vw,2.25rem); margin-left: clamp(-2.25rem,-3vw,-1.25rem); border: 1px solid rgba(0,90,171,.10); border-radius: 28px; background: rgba(255,255,255,.70); box-shadow: 0 24px 70px rgba(10,37,64,.09); backdrop-filter: blur(14px); }
+.premium-hero-copy h1 { color: #0a2540; text-shadow: 0 1px 0 rgba(255,255,255,.8); }
+.premium-hero-copy > p { color: #4f6579; }
+.premium-kicker { color: #d96d00; }
+.hero-trust-line { color: #39546d; }
+.btn-ghost-dark { color: #0a4f8f; border-color: rgba(0,90,171,.25); background: rgba(255,255,255,.78); }
+.btn-ghost-dark:hover { color: #fff; border-color: #005aab; background: #005aab; }
+.hero-carousel-footer { border-top-color: rgba(0,90,171,.14); }
+.hero-carousel-controls button { color: #0a5aa5; border-color: rgba(0,90,171,.18); background: rgba(255,255,255,.75); box-shadow: 0 6px 18px rgba(10,37,64,.06); }
+.hero-dot span { background: rgba(0,90,171,.24); }
+.hero-metric strong { color: #0a2540; }
+.hero-metric span { color: #5c7185; }
+
+.confidence-section { color: #17324d; background: radial-gradient(circle at 82% 25%,rgba(0,90,171,.10),transparent 34%),linear-gradient(135deg,#eef7ff,#fff 68%); border-block: 1px solid rgba(0,90,171,.10); }
+.confidence-grid h2,.confidence-item h3 { color: #0a2540; }
+.confidence-grid > div > p,.confidence-item p { color: #5b7083; }
+.confidence-item { border-color: rgba(0,90,171,.12); background: rgba(255,255,255,.82); box-shadow: 0 12px 30px rgba(10,37,64,.06); }
+.confidence-item > span { color: #005aab; background: #e7f3fe; }
+
+.catalog-cta { background: linear-gradient(115deg,#fff2df 0%,#fffaf2 46%,#edf7ff 100%); border-block: 1px solid rgba(247,147,30,.18); }
+.catalog-cta .premium-kicker { color: #b95c00; }
+.catalog-cta h2 { color: #0a2540; }
+.catalog-cta .btn-primary { background: linear-gradient(135deg,#005aab,#1476c4); box-shadow: 0 14px 35px rgba(0,90,171,.22); }
+
+.product-dialog-backdrop { background: rgba(10,37,64,.34); }
+.product-dialog { border-color: rgba(0,90,171,.14); box-shadow: 0 40px 100px rgba(10,37,64,.25); }
+.product-dialog-visual { background: radial-gradient(circle at 50% 55%,rgba(0,90,171,.13),transparent 35%),linear-gradient(150deg,#f8fbfe,#e7f3fd 72%); }
+.product-dialog-visual::after { border-color: rgba(0,90,171,.10); box-shadow: inset 0 0 80px rgba(0,90,171,.08); }
+.product-dialog-watermark { color: rgba(0,90,171,.055); }
+.product-dialog-visual img { filter: drop-shadow(0 28px 24px rgba(10,37,64,.20)); }
+.product-dialog-pack { color: #0a2540; border-color: rgba(0,90,171,.14); background: rgba(255,255,255,.82); box-shadow: 0 12px 28px rgba(10,37,64,.08); }
+
+.page-hero .eyebrow.on-dark,.eyebrow.on-dark { color: #d96d00; background: rgba(247,147,30,.09); border-color: rgba(247,147,30,.20); }
+.site-footer { box-shadow: inset 0 1px 0 rgba(255,255,255,.75); }
+
+@media (max-width: 760px) {
+  .premium-hero-copy { margin-left: 0; padding: 1.2rem; border-radius: 20px; background: rgba(255,255,255,.78); }
+  .hero-slide-overlay { background: linear-gradient(90deg,rgba(255,255,255,.97),rgba(244,250,255,.80)),linear-gradient(0deg,rgba(238,247,255,.96),transparent 55%); }
+}
