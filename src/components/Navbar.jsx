@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCms } from '../context/CmsContext';
 import { Menu, X, ChevronRight } from 'lucide-react';
+import orbitLogo from '../assets/brand/orbit-logo.png';
 
 export const Navbar = ({ activePage, setActivePage }) => {
   const { data } = useCms();
@@ -77,7 +78,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
               style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', flexShrink: 0 }}
             >
               <img
-                src="/images/custom/orbit-logo.png"
+                src={orbitLogo}
                 alt="Orbit Lubricants"
                 style={{
                   height: '48px',
@@ -205,7 +206,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
               <img
-                src="/images/custom/orbit-logo.png"
+                src={orbitLogo}
                 alt="Orbit Lubricants"
                 style={{ height: '38px', objectFit: 'contain' }}
               />

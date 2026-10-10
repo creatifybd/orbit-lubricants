@@ -3,6 +3,11 @@ import { ArrowLeft, ArrowRight, Check, ChevronRight, Gauge, Headphones, PackageC
 import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
+import heroAutomotive from '../assets/hero/automotive.webp';
+import heroHeavyDuty from '../assets/hero/heavy-duty.webp';
+import heroManufacturing from '../assets/hero/manufacturing.webp';
+
+const bundledHeroImages = [heroAutomotive, heroHeavyDuty, heroManufacturing];
 
 export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
   const { data } = useCms();
@@ -30,7 +35,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     <div>
       <section className="premium-hero" aria-roledescription="carousel" aria-label="Orbit product applications">
         <div className="hero-slides" aria-live="polite">
-          {heroSlides.map((slide, index) => <img key={slide.image} className={`hero-slide-image ${index === heroSlide ? 'active' : ''}`} src={slide.image} alt="" fetchPriority={index === 0 ? 'high' : 'auto'} />)}
+          {heroSlides.map((slide, index) => <img key={slide.image} className={`hero-slide-image ${index === heroSlide ? 'active' : ''}`} src={bundledHeroImages[index] || slide.image} alt="" fetchPriority={index === 0 ? 'high' : 'auto'} />)}
         </div>
         <div className="hero-slide-overlay" />
         <div className="container premium-hero-grid" key={heroSlide}>
