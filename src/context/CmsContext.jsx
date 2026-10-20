@@ -12,13 +12,32 @@ const LEGACY_ADDRESS = 'AHN Tower, 9th Floor, 13 Biponon Commercial Area, Bir Ut
 
 const migrateCmsData = (savedData) => {
   if (!savedData || typeof savedData !== 'object') return initialData;
-  if ([LEGACY_ADDRESS, UPPERCASE_ADDRESS].includes(savedData.contactInfo?.address)) {
-    return {
-      ...savedData,
-      contactInfo: { ...savedData.contactInfo, address: CURRENT_ADDRESS }
-    };
-  }
-  return savedData;
+  const refreshCatalog = savedData.catalogVersion !== initialData.catalogVersion;
+  const savedAddress = savedData.contactInfo?.address;
+  const address = [LEGACY_ADDRESS, UPPERCASE_ADDRESS].includes(savedAddress) ? CURRENT_ADDRESS : (savedAddress || CURRENT_ADDRESS);
+
+  return {
+    ...initialData,
+    ...savedData,
+    catalogVersion: initialData.catalogVersion,
+    hero: {
+      ...initialData.hero,
+      ...(savedData.hero || {}),
+      ...(refreshCatalog ? {
+        stat1: initialData.hero.stat1,
+        stat2: initialData.hero.stat2,
+        stat3: initialData.hero.stat3,
+        slides: initialData.hero.slides,
+      } : {}),
+    },
+    about: { ...initialData.about, ...(savedData.about || {}) },
+    contactInfo: { ...initialData.contactInfo, ...(savedData.contactInfo || {}), address },
+    settings: { ...initialData.settings, ...(savedData.settings || {}) },
+    categories: refreshCatalog ? initialData.categories : (savedData.categories || initialData.categories),
+    products: refreshCatalog ? initialData.products : (savedData.products || initialData.products),
+    productRangeList: refreshCatalog ? initialData.productRangeList : (savedData.productRangeList || initialData.productRangeList),
+    standards: refreshCatalog ? initialData.standards : (savedData.standards || initialData.standards),
+  };
 };
 
 const sha256 = async (value) => {

@@ -30,8 +30,10 @@ const legacyEntrypointCompatibility = () => ({
     );
 
     mkdirSync(rootAssets, { recursive: true });
+    // Imported images are emitted beside the JS/CSS bundle. Copy every
+    // generated asset so repository-root hosting never ships broken logos or
+    // hero artwork.
     readdirSync(generatedAssets)
-      .filter((file) => /\.(js|css)$/.test(file))
       .forEach((file) => {
         copyFileSync(
           new URL(`./dist/assets/${file}`, import.meta.url),
@@ -45,7 +47,8 @@ export default defineConfig({
   plugins: [react(), legacyEntrypointCompatibility()],
   server: {
     port: 3000,
-    open: false
+    open: false,
+    allowedHosts: ['terminal.local']
   },
   build: {
     rollupOptions: {

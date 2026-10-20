@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, ChevronRight, Gauge, Headphones, PackageCheck, Pause, Play, Plus, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, ChevronRight, Gauge, Headphones, PackageCheck, Plus, ShieldCheck } from 'lucide-react';
 import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
-const assetBase = 'https://cdn.jsdelivr.net/gh/creatifybd/orbit-lubricants@f85a4eb3d6b4c37e54749ed367c6bbc6f594282a/public/images/custom';
-const bundledHeroImages = [
-  `${assetBase}/home-hero-automotive.webp`,
-  `${assetBase}/home-hero-heavy-duty.webp`,
-  `${assetBase}/home-hero-manufacturing.webp`
-];
+import heroAutomotive from '../assets/hero/automotive.webp';
+import heroHeavyDuty from '../assets/hero/heavy-duty.webp';
+import heroManufacturing from '../assets/hero/manufacturing.webp';
+
+const bundledHeroImages = [heroAutomotive, heroHeavyDuty, heroManufacturing];
 
 export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
   const { data } = useCms();
   const { hero, products, categories, whyUs } = data;
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [heroSlide, setHeroSlide] = useState(0);
-  const [heroPlaying, setHeroPlaying] = useState(true);
   const featured = products.filter((item) => item.featured).slice(0, 6);
   const heroSlides = hero.slides || [];
   const activeHero = heroSlides[heroSlide];
 
   useEffect(() => {
-    if (!heroPlaying) return undefined;
+    if (heroSlides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const timer = window.setInterval(() => setHeroSlide((current) => (current + 1) % heroSlides.length), 6500);
     return () => window.clearInterval(timer);
-  }, [heroPlaying, heroSlides.length]);
+  }, [heroSlides.length]);
 
   const inquire = (item) => {
     setSelectedProduct(null);
@@ -56,7 +54,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
           </div>
         </div>
         <div className="container hero-carousel-footer">
-          <div className="hero-carousel-controls"><button onClick={() => setHeroSlide((heroSlide - 1 + heroSlides.length) % heroSlides.length)} aria-label="Previous slide"><ArrowLeft size={18} /></button>{heroSlides.map((slide, index) => <button key={slide.image} className={`hero-dot ${index === heroSlide ? 'active' : ''}`} onClick={() => setHeroSlide(index)} aria-label={`Show slide ${index + 1}`} aria-current={index === heroSlide ? 'true' : undefined}><span /></button>)}<button onClick={() => setHeroSlide((heroSlide + 1) % heroSlides.length)} aria-label="Next slide"><ArrowRight size={18} /></button><button onClick={() => setHeroPlaying(!heroPlaying)} aria-label={heroPlaying ? 'Pause slideshow' : 'Play slideshow'}>{heroPlaying ? <Pause size={16} /> : <Play size={16} />}</button></div>
+          <div className="hero-carousel-controls"><button onClick={() => setHeroSlide((heroSlide - 1 + heroSlides.length) % heroSlides.length)} aria-label="Previous slide"><ArrowLeft size={18} /></button>{heroSlides.map((slide, index) => <button key={slide.image} className={`hero-dot ${index === heroSlide ? 'active' : ''}`} onClick={() => setHeroSlide(index)} aria-label={`Show slide ${index + 1}`} aria-current={index === heroSlide ? 'true' : undefined}><span /></button>)}<button onClick={() => setHeroSlide((heroSlide + 1) % heroSlides.length)} aria-label="Next slide"><ArrowRight size={18} /></button></div>
           <div className="hero-metrics">{[hero.stat1, hero.stat2, hero.stat3].map((stat, index) => <div className="hero-metric" key={index}><strong>{stat.number}</strong><span>{stat.label}</span></div>)}</div>
         </div>
       </section>
@@ -86,7 +84,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
 
       <section className="section featured-section">
         <div className="container">
-          <div className="section-head center"><span className="premium-kicker dark">Current lineup</span><h2>Featured products</h2><p>Fourteen updated packs, organized by application and label-stated performance classification.</p></div>
+          <div className="section-head center"><span className="premium-kicker dark">Current lineup</span><h2>Featured products</h2><p>{products.length} updated packs, organized by application and label-stated performance classification.</p></div>
           <div className="premium-product-grid">
             {featured.map((item) => <ProductCard key={item.id} product={item} onSelect={setSelectedProduct} onInquire={inquire} />)}
           </div>

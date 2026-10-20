@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
-import { Search, Filter, Sparkles, Layers } from 'lucide-react';
+import { Search, Sparkles, Layers, X } from 'lucide-react';
 
 export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
   const { data } = useCms();
@@ -20,11 +20,12 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
   // Filter products based on category & search
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    const matchesSearch = 
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.viscosity.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.apiGrade.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    const searchable = [product.name, product.viscosity, product.apiGrade, product.packing, product.badge, product.description]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+    const matchesSearch = !normalizedQuery || searchable.includes(normalizedQuery);
 
     return matchesCategory && matchesSearch;
   });
@@ -54,7 +55,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
             Our Product Portfolio
           </h1>
           <p style={{ color: '#52677B', fontSize: '1.1rem', lineHeight: 1.6 }}>
-            Browse 14 updated Orbit packs for motorcycles, passenger cars, CNG vehicles, heavy-duty diesel engines and automatic transmissions.
+            Browse all {products.length} Orbit packs across engine oils, transmission fluids, gear oils, brake fluids and bulk formats.
           </p>
         </div>
       </section>
@@ -63,14 +64,9 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
       <section className="section">
         <div className="container">
           {/* Search & Filter Bar */}
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.5rem',
-            marginBottom: '3rem'
-          }}>
+          <div className="catalog-toolbar">
             {/* Search Input */}
-            <div style={{ position: 'relative', maxWidth: '540px', width: '100%', margin: '0 auto' }}>
+            <div className="catalog-search">
               <Search 
                 size={20} 
                 style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--steel)' }} 
@@ -83,23 +79,17 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
                 onChange={e => setSearchQuery(e.target.value)}
                 style={{
                   paddingLeft: '48px',
-                  paddingRight: '16px',
+                  paddingRight: searchQuery ? '48px' : '16px',
                   height: '52px',
                   borderRadius: 'var(--radius-full)',
                   boxShadow: 'var(--shadow-sm)'
                 }}
               />
+              {searchQuery && <button type="button" className="catalog-search-clear" onClick={() => setSearchQuery('')} aria-label="Clear product search"><X size={18} /></button>}
             </div>
 
             {/* Category Buttons — horizontal scroll on mobile */}
-            <div style={{
-              display: 'flex',
-              gap: '0.5rem',
-              overflowX: 'auto',
-              paddingBottom: '4px',
-              scrollbarWidth: 'none',
-              WebkitOverflowScrolling: 'touch',
-            }}>
+            <div className="catalog-filter-scroll" role="group" aria-label="Filter products by application">
               <button
                 onClick={() => setSelectedCategory('all')}
                 className={`btn btn-sm ${selectedCategory === 'all' ? 'btn-primary' : 'btn-outline'}`}
@@ -117,6 +107,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
                 </button>
               ))}
             </div>
+            <p className="catalog-results-count" aria-live="polite">Showing {filteredProducts.length} of {products.length} products</p>
           </div>
 
           {/* Product Grid */}
