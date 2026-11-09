@@ -1743,3 +1743,8 @@ body { color: #17324d; background: #f8fbfe; }
 @media (prefers-reduced-motion: reduce) {
   .catalog-product-card, .catalog-product-visual img, .catalog-search-clear { transition: none !important; }
 }
+
+/* Product detail deep links are visible to customers and search crawlers. */
+.catalog-product-actions .catalog-product-deep-link { position: relative; z-index: 6; font-size: .73rem; font-weight: 750; color: #075b98; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.catalog-product-actions .catalog-product-deep-link:focus-visible { outline: 3px solid #f7931e; outline-offset: 4px; border-radius: 3px; }
+@media (max-width: 380px) { .catalog-product-actions { flex-wrap: wrap; } }
