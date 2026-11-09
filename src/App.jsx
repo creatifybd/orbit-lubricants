@@ -16,11 +16,10 @@ import { AdminLayout } from './pages/Admin/AdminLayout';
 function getInitialPage() {
   const hash = window.location.hash.slice(1).split('/').filter(Boolean).join('/').toLowerCase();
   const path = window.location.pathname.split('/').filter(Boolean).join('/').toLowerCase();
-  if (hash === 'admin' || path === 'admin') return 'admin';
-  if (hash === 'products' || path === 'products') return 'products';
-  if (hash === 'about' || path === 'about') return 'about';
-  if (hash === 'contact' || path === 'contact') return 'contact';
-  if (hash === 'finder' || path === 'finder') return 'finder';
+  const routes = ['admin', 'products', 'about', 'contact', 'finder'];
+  // Legacy hash selection takes precedence over the underlying document URL.
+  if (routes.includes(hash)) return hash;
+  if (routes.includes(path)) return path;
   return 'home';
 }
 
