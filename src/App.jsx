@@ -14,8 +14,8 @@ import { AdminLayout } from './pages/Admin/AdminLayout';
 // Support old hash links and new crawlable paths, including trailing slashes.
 // Product detail pages are generated separately at /products/:slug/.
 function getInitialPage() {
-  const hash = window.location.hash.replace(/^#\\/?/, '').replace(/\\/+$/, '').toLowerCase();
-  const path = window.location.pathname.replace(/^\\/+|\\/+$/g, '').toLowerCase();
+  const hash = window.location.hash.slice(1).split('/').filter(Boolean).join('/').toLowerCase();
+  const path = window.location.pathname.split('/').filter(Boolean).join('/').toLowerCase();
   if (hash === 'admin' || path === 'admin') return 'admin';
   if (hash === 'products' || path === 'products') return 'products';
   if (hash === 'about' || path === 'about') return 'about';
