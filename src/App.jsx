@@ -11,10 +11,11 @@ import { Contact } from './pages/Contact';
 import { LubricantFinder } from './components/LubricantFinder';
 import { AdminLayout } from './pages/Admin/AdminLayout';
 
-// Determine initial page from URL hash
+// Support old hash links and new crawlable paths, including trailing slashes.
+// Product detail pages are generated separately at /products/:slug/.
 function getInitialPage() {
-  const hash = window.location.hash.replace('#', '').replace('/', '').toLowerCase();
-  const path = window.location.pathname.replace('/', '').toLowerCase();
+  const hash = window.location.hash.replace(/^#\\/?/, '').replace(/\\/+$/, '').toLowerCase();
+  const path = window.location.pathname.replace(/^\\/+|\\/+$/g, '').toLowerCase();
   if (hash === 'admin' || path === 'admin') return 'admin';
   if (hash === 'products' || path === 'products') return 'products';
   if (hash === 'about' || path === 'about') return 'about';
@@ -27,21 +28,24 @@ export function AppContent() {
   const [activePage, setActivePage] = useState(getInitialPage);
   const [selectedProductForInquiry, setSelectedProductForInquiry] = useState(null);
 
-  // Sync URL hash with page state
+  // Use canonical paths for new navigation without reloading the React app.
+  // Existing #products links remain readable through getInitialPage.
   const handlePageChange = (pageId) => {
+    const url = pageId === 'home' ? '/' : `/${pageId}/`;
+    window.history.pushState({ page: pageId }, '', url);
     setActivePage(pageId);
-    window.location.hash = pageId === 'home' ? '' : pageId;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Listen for hash changes (e.g., user types #admin in URL)
+  // Keep browser back/forward buttons and legacy hash links working.
   useEffect(() => {
-    const handleHashChange = () => {
-      const newPage = getInitialPage();
-      setActivePage(newPage);
+    const handleLocationChange = () => setActivePage(getInitialPage());
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
     };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   if (activePage === 'admin') {
