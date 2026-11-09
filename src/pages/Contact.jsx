@@ -29,7 +29,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
       `Enquiry type: ${formData.type}`,
       '',
       formData.message.trim()
-    ].join('\\n');
+    ].join(String.fromCharCode(10));
     const to = contactInfo.email || 'info@orbit-lubricants.com';
     setPreparedDraft({
       subject,
