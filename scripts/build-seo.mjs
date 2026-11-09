@@ -12,7 +12,7 @@ const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (ch) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 })[ch]);
 const productUrl = (p) => `${origin}/products/${p.id}/`;
-const imageUrl = (p) => new URL(p.image.replace(/^\\//, ''), origin + '/').href;
+const imageUrl = (p) => new URL(p.image.startsWith('/') ? p.image.slice(1) : p.image, origin + '/').href;
 const jsonLd = (data) => JSON.stringify(data).replace(/</g, '\\u003c');
 const unique = new Set();
 
@@ -126,7 +126,7 @@ function renderSpaShell(inputHtml, route) {
 <meta property="og:description" content="${esc(descriptions[route])}">
 <meta property="og:url" content="${url}">`;
   return inputHtml
-    .replace(/<title>[^<]*<\\/title>/, `<title>${esc(pageTitle)}</title>`)
+    .replace(new RegExp('<title>[^<]*</title>'), `<title>${esc(pageTitle)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(descriptions[route])}">`)
     .replace('</head>', addHead + '\n</head>');
 }
