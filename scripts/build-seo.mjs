@@ -126,6 +126,8 @@ function renderSpaShell(inputHtml, route) {
 <meta property="og:description" content="${esc(descriptions[route])}">
 <meta property="og:url" content="${url}">`;
   return inputHtml
+    .replace(/<link rel="canonical"[^>]*>\s*/g, '')
+    .replace(/<meta property="og:(title|description|url)"[^>]*>\s*/g, '')
     .replace(new RegExp('<title>[^<]*</title>'), `<title>${esc(pageTitle)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(descriptions[route])}">`)
     .replace('</head>', addHead + '\n</head>');
