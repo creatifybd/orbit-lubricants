@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useCms } from '../context/CmsContext';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, Sparkles, Building2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, Sparkles } from 'lucide-react';
 
 export const Contact = ({ selectedProductForInquiry }) => {
-  const { data, addInquiry } = useCms();
+  const { data } = useCms();
   const { contactInfo } = data;
 
   const [formData, setFormData] = useState({
@@ -14,14 +14,28 @@ export const Contact = ({ selectedProductForInquiry }) => {
     message: selectedProductForInquiry ? `I would like to receive a price quotation and delivery terms for ${selectedProductForInquiry}.` : ''
   });
 
-  const [submitted, setSubmitted] = useState(false);
+  // Temporary delivery fallback until a verified server-side enquiry API exists.
+  // A browser-local CMS cannot receive submissions from other visitors.
+  const [preparedDraft, setPreparedDraft] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-    addInquiry(formData);
-    setSubmitted(true);
-    setFormData({ name: '', email: '', phone: '', type: 'Becoming a Distributor', message: '' });
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
+    const subject = `Orbit Lubricants: ${formData.type}`;
+    const body = [
+      `Name: ${formData.name.trim()}`,
+      `Email: ${formData.email.trim()}`,
+      `Phone: ${formData.phone.trim() || 'Not provided'}`,
+      `Enquiry type: ${formData.type}`,
+      '',
+      formData.message.trim()
+    ].join('\\n');
+    const to = contactInfo.email || 'info@orbit-lubricants.com';
+    setPreparedDraft({
+      subject,
+      body,
+      url: `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    });
   };
 
   return (
@@ -114,29 +128,23 @@ export const Contact = ({ selectedProductForInquiry }) => {
             {/* Form Column */}
             <div>
               <div className="glass-card contact-form-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)' }}>
-                {submitted ? (
-                  <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
-                    <div style={{
-                      width: '64px',
-                      height: '64px',
-                      borderRadius: '50%',
-                      background: 'rgba(34, 197, 94, 0.15)',
-                      color: '#10B981',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: '0 auto 1.5rem'
-                    }}>
-                      <CheckCircle2 size={36} />
-                    </div>
+                {preparedDraft ? (
+                  <div style={{ padding: '1rem 0' }}>
                     <h3 style={{ fontSize: '1.4rem', color: 'var(--navy)', marginBottom: '0.75rem', fontFamily: 'var(--font-display)' }}>
-                      Inquiry Received!
+                      Your Email Enquiry Is Ready
                     </h3>
-                    <p style={{ color: 'var(--steel)', fontSize: '0.96rem', lineHeight: 1.6, marginBottom: '2rem' }}>
-                      Your inquiry has been saved in the website dashboard. For an immediate response, email info@orbit-lubricants.com.
+                    <p style={{ color: 'var(--steel)', fontSize: '0.96rem', lineHeight: 1.6 }}>
+                      Your enquiry has <strong>not been sent yet</strong>. Select "Open Email App" and send the prepared message to our team. If no email app opens, copy the details below and email them to {contactInfo.email}.
                     </p>
-                    <button onClick={() => setSubmitted(false)} className="btn btn-outline">
-                      Send Another Message
+                    <div className="form-group" style={{ marginTop: '1rem' }}>
+                      <label htmlFor="prepared-orbit-enquiry">Prepared enquiry (select and copy if needed)</label>
+                      <textarea id="prepared-orbit-enquiry" className="form-control" rows={8} value={preparedDraft.body} readOnly />
+                    </div>
+                    <a href={preparedDraft.url} className="btn btn-primary btn-lg" style={{ display: 'inline-flex', marginRight: '0.75rem' }}>
+                      <Mail size={17} /> Open Email App
+                    </a>
+                    <button type="button" className="btn btn-outline" onClick={() => setPreparedDraft(null)}>
+                      Edit Enquiry
                     </button>
                   </div>
                 ) : (
@@ -210,7 +218,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
                     </div>
 
                     <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
-                      <span>Save Inquiry</span>
+                      <span>Prepare Email Enquiry</span>
                       <Send size={18} />
                     </button>
                   </form>
