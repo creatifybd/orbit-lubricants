@@ -31,7 +31,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --input-type=module -e "import { writeFileSync } from 'node:fs'; import { initialData } from './src/data/initialData.js'; const m = {commit: process.env.GITHUB_SHA, productCount: initialData.products.length, catalogVersion: initialData.catalogVersion, builtAt: new Date().toISOString()}; writeFileSync('dist/deployment.json', JSON.stringify(m, null, 2) + '\\n'); console.log('Release marker:', m);"
+          node --input-type=module -e "import { writeFileSync } from 'node:fs'; import { initialData } from './src/data/initialData.js'; const m = {commit: process.env.GITHUB_SHA, productCount: initialData.products.length, catalogVersion: initialData.catalogVersion, builtAt: new Date().toISOString()}; writeFileSync('dist/deployment.json', JSON.stringify(m, null, 2)); console.log('Release marker:', m);"
 
       - name: Deploy to Hostinger over FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
