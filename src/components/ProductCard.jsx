@@ -23,6 +23,7 @@ export const ProductCard = ({ product, onSelect, onInquire }) => {
         <p>{product.description}</p>
         <div className="catalog-product-actions">
           <span>View specifications <ArrowUpRight size={16} /></span>
+          <a className="catalog-product-deep-link" href={`/products/${product.id}/`} onClick={(event) => event.stopPropagation()} aria-label={`Open dedicated page for ${product.name}`}>Product page</a>
           {onInquire && <button className="catalog-inquire" onClick={() => onInquire(product)} aria-label={`Enquire about ${product.name}`}><MessageSquare size={16} /></button>}
         </div>
       </div>
