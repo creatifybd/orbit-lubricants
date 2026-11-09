@@ -31,7 +31,7 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Move product/CMS/site settings into secured Firestore, image assets into approved Storage bucket.
 - [ ] Write and test least-privilege Firestore and Storage rules; enable backups, activity/audit logging.
 - [ ] Implement centrally delivered enquiries using protected backend and email alert; spam controls/rate limits; test end-to-end.
-- [ ] Remove misleading "inquiry received" success when data only exists in one visitor's browser.
+- [x] Replace misleading local-only inquiry success with clearly labeled email-draft fallback. A real backend delivery confirmation remains pending.
 - [ ] Keep the site's public content available when authentication is unavailable.
 
 ## P1: Catalog, product UX and trust
@@ -55,8 +55,8 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Crawlable links from product cards to dedicated pages, including original artwork.
 - [x] Initial Organization/WebSite structured data, canonical URL and OG/Twitter metadata.
 - [x] In-memory logic simulation: 38 generated product pages, 43 sitemap entries, 0 missing product image paths.
-- [ ] Validate full Vite build, deployment output, HTTP status codes, sitemaps, schema using Rich Results Test and crawler.
-- [ ] Resolve hash-only navigation on all remaining pages and ensure indexable URLs have unique content/title/canonical.
+- [ ] Validate full Vite build, deployment output, HTTP status codes, sitemaps, schema using Rich Results Test and crawler (generator/validator in-memory simulation passed only).
+- [x] Implement canonical-path client navigation, direct /products/ route handling and legacy hash compatibility; nine route cases passed in-memory tests. Full deployed URL/refresh QA pending.
 - [ ] Connect Search Console; submit sitemap and inspect indexed pages, image indexing, canonical selection and coverage.
 - [ ] Publish technically accurate lubrication education/FAQs with citations and editorial review; avoid keyword stuffing.
 
@@ -70,7 +70,8 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Verify analytics in DebugView/Tag Assistant, not only by viewing dashboard charts.
 
 ## P2: Release governance & QA
-- [ ] Add successful build, schema validation and link checking CI, plus smoke tests and backup checks.
+- [x] Add source-controlled post-build QA for 38 product pages, original image references, 43 sitemap routes, schema and canonical URLs; in-memory simulation passed. Full Vite/CI runner test is blocked.
+- [ ] Add deployed link checking, browser smoke tests and backup checks.
 - [ ] Review all site copy for human, professional Bangla/English expression as applicable.
 - [ ] Establish acceptance matrix: critical forms deliver, editor actions persist cross-device, all approved SKUs display, no broken links.
 - [ ] Verify production after deployment with version marker, browser interactions and rollback readiness.
