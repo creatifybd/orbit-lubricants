@@ -29,6 +29,23 @@ jobs:
         env:
           NODE_ENV: production
 
+      - name: 🧾 Stamp production build identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import { writeFileSync } from 'node:fs';
+          import { initialData } from './src/data/initialData.js';
+          const marker = {
+            commit: process.env.GITHUB_SHA,
+            productCount: initialData.products.length,
+            catalogVersion: initialData.catalogVersion,
+            builtAt: new Date().toISOString()
+          };
+          writeFileSync('dist/deployment.json', JSON.stringify(marker, null, 2) + '\n');
+          console.log('Deploying commit', marker.commit, 'with', marker.productCount, 'products');
+          NODE
+
       - name: 📤 Deploy to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -46,32 +63,36 @@ jobs:
             **/.git*/**
             **/node_modules/**
 
-      - name: ✅ Verify Live Production Build
+      - name: ✅ Verify exact LIVE commit and product count (no false positives)
         shell: bash
         run: |
           set -euo pipefail
 
-          sleep 45
-
+          # An asset existing on the domain does NOT prove this commit is live.
+          # Check the version marker deployed together with the production bundle.
           for attempt in 1 2 3 4 5 6; do
-            live_html="$(curl --fail --silent --show-error --location \
-              --header 'Cache-Control: no-cache' \
-              "https://orbit-lubricants.com/?deploy=${GITHUB_SHA}&attempt=${attempt}")"
-
-            if printf '%s' "$live_html" | grep -q '/src/main.jsx'; then
-              echo "Live site is still serving the development entrypoint."
-            elif printf '%s' "$live_html" | grep -Eq 'src="/assets/[^"]+\.js"'; then
-              curl --fail --silent --show-error \
-                --output /dev/null \
-                "https://orbit-lubricants.com/images/custom/home-hero-manufacturing.webp?deploy=${GITHUB_SHA}"
-              echo "Live production bundle and custom images verified."
-              exit 0
-            else
-              echo "Live production entrypoint is not ready yet."
+            if live_json="$(curl --fail --silent --show-error --location \
+              --max-time 18 --header 'Cache-Control: no-cache' \
+              "https://orbit-lubricants.com/deployment.json?commit=${GITHUB_SHA}&attempt=${attempt}")"; then
+              if LIVE_JSON="$live_json" node --input-type=module <<'NODE'
+          import { initialData } from './src/data/initialData.js';
+          let marker;
+          try { marker = JSON.parse(process.env.LIVE_JSON); }
+          catch { console.error('Live deployment marker is not valid JSON'); process.exit(1); }
+          if (marker.commit !== process.env.GITHUB_SHA || marker.productCount !== initialData.products.length) {
+            console.error('Wrong deploy target or cached build. Live marker:', marker);
+            process.exit(1);
+          }
+          console.log('Live domain serves current commit:', marker.commit);
+          console.log('Verified catalog product count:', marker.productCount);
+          NODE
+              then
+                exit 0
+              fi
             fi
-
-            sleep 10
+            echo "Attempt ${attempt}: live site is NOT serving this build."
+            sleep 12
           done
 
-          echo "Live deployment verification failed."
+          echo "::error::Deployment verification FAILED. Check Hostinger FTP_SERVER_DIR against orbit-lubricants.com website document root, and clear host/CDN cache. No production success claim."
           exit 1
