@@ -1,4 +1,5 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { initialData } from '../src/data/initialData.js';
@@ -19,6 +20,22 @@ const unique = new Set();
 const uniqueTitles = new Set();
 
 if (catalog.length === 0) throw new Error('Refusing to publish an empty Orbit catalog');
+
+// Publish a fingerprinted same-origin client for independently rendered SEO pages.
+// GA4 is disabled when the owner has not configured a valid Web Measurement ID.
+const configuredGa4Id = process.env.VITE_GA4_MEASUREMENT_ID || '';
+const ga4Id = /^G-[A-Z0-9]{6,18}$/.test(configuredGa4Id) ? configuredGa4Id : '';
+const staticTemplate = readFileSync(fileURLToPath(new URL('./static-analytics-client.template.js', import.meta.url)), 'utf8');
+if (!staticTemplate.includes("'__ORBIT_MEASUREMENT_ID__'")) {
+  throw new Error('Static analytics client is missing its measurement placeholder');
+}
+const staticAnalyticsClient = staticTemplate.replace("'__ORBIT_MEASUREMENT_ID__'", JSON.stringify(ga4Id));
+const staticAnalyticsHash = createHash('sha256').update(staticAnalyticsClient).digest('hex').slice(0, 14);
+const staticAnalyticsFile = 'orbit-static-analytics-' + staticAnalyticsHash + '.js';
+const staticAnalyticsSrc = '/assets/' + staticAnalyticsFile;
+mkdirSync(join(dist, 'assets'), { recursive: true });
+writeFileSync(join(dist, 'assets', staticAnalyticsFile), staticAnalyticsClient);
+
 
 function renderProductPage(p) {
   if (!/^[a-z0-9-]+$/.test(p.id) || unique.has(p.id)) {
@@ -94,6 +111,7 @@ function renderProductPage(p) {
 <meta name="twitter:image" content="${esc(imageUrl(p))}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/logo.png" type="image/png">
+<script defer src="${staticAnalyticsSrc}" data-orbit-kind="product" data-orbit-id="${esc(p.id)}" data-orbit-category="${esc(p.category)}"></script>
 <script type="application/ld+json">${jsonLd(schema)}</script>
 <script type="application/ld+json">${jsonLd(landingPage)}</script>
 <script type="application/ld+json">${jsonLd(breadcrumbs)}</script>
@@ -174,7 +192,7 @@ for (const p of catalog) {
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, 'index.html'), renderProductPage(p));
 }
-const applicationPages = buildCategoryPages({ dist, categories: initialData.categories, products: catalog });
+const applicationPages = buildCategoryPages({ dist, categories: initialData.categories, products: catalog, staticAnalyticsSrc });
 const paths = ['/', '/products/', '/about/', '/contact/', '/finder/',
   ...applicationPages.map((page) => page.path),
   ...catalog.map((p) => `/products/${p.id}/`)];
@@ -200,4 +218,4 @@ const release = {
   builtAt: new Date().toISOString()
 };
 writeFileSync(join(dist, 'deployment.json'), JSON.stringify(release, null, 2) + '\n');
-console.log(`Generated ${catalog.length} product detail pages, ${applicationPages.length} category hubs and ${paths.length} image-enhanced sitemap URLs.`);
+console.log(`Generated ${catalog.length} product detail pages, ${applicationPages.length} category hubs and ${paths.length} image-enhanced sitemap URLs; static analytics client: ${staticAnalyticsFile}; visitor GA4 ${ga4Id ? 'configured' : 'disabled'}.`);
