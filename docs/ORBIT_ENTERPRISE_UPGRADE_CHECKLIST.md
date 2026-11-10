@@ -20,7 +20,8 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Run minimal GitHub Actions smoke workflow on main.
 - [x] Investigate pre-job GitHub Actions failures: the smoke test succeeded on re-run (attempt 2) on Nov 10. Earlier incident matches GitHub service disruption; no evidence of account suspension. Run: https://github.com/creatifybd/orbit-lubricants/actions/runs/42674052980.
 - [x] Freeze automatic main-branch FTPS release: main/.github/workflows/deploy.yml now supports workflow_dispatch only, pending verified Orbit directory/backup (commit 29a8702).
-- [ ] Verify Hostinger > Websites > orbit-lubricants.com > website document root.
+- [x] Inspect Hostinger's Orbit-specific File Manager: public_html contains index.html, assets, and separately dist plus .git/.github/src and project files; high confidence public_html is the domain document root. Screenshot received on 2026-11-10.
+- [ ] Confirm absolute /home/.../public_html folder path and matching FTP_SERVER_DIR in FTP Accounts (do not disclose credentials).
 - [x] Read-only staging-to-production diagnostic confirms live JS asset hash differs and /deployment.json returns 404 (run 42758542859); the new release has not reached production.
 - [ ] Compare document root with secret FTP_SERVER_DIR and FTP account mapping. DO NOT expose secret values.
 - [ ] Check Hostinger Git deployment vs FTPS deployment: ensure only one canonical source of truth.
@@ -97,6 +98,15 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Safe staging build packaged as seven-day GitHub artifact, with no FTP push: https://github.com/creatifybd/orbit-lubricants/actions/runs/42757832132.
 - [x] Re-run staging production build and local HTTP tests after marquee, compare, navigation, admin and security-header edits; passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42758542859.
 - [ ] Make final pre-release approval gate: production host mapping, recoverable backup, security audit, original-art validation, product info approval and working backend.
+
+
+## Urgent hosting source-exposure risk (2026-11-10)
+- [x] Hostinger Orbit-specific `public_html` screenshot shows `.git`, `.github`, `src`, `hosting`, `public`, `dist`, `package.json`, `package-lock.json`, `index.source.html` and `Selected Designs.zip` beside the production `index.html` / `assets`. Repository deployment to the web root is strongly suspected but not proven; investigate Hostinger Deployments/Git auto-deploy.
+- [ ] Immediately generate/download a recoverable Orbit-only backup using Hostinger Files > Backups **before** modifying public_html. Do not upload/replace or delete sources until backup is verified.
+- [ ] Confirm whether `/.git/HEAD`, `/package.json` and any project archive are externally accessible (403 or 404 expected); no proof of public exposure yet. If accessible, block at server immediately and inspect logs/rotate affected secrets.
+- [x] Add deny rules for .git/.github, development source and archives to staging Apache .htaccess variants; **not yet live**. Review and deploy only after backup and root verification.
+- [ ] Move all repository source, archives and build infrastructure OUTSIDE public_html in a controlled post-backup release. The public document root should contain compiled `dist/` contents only, not a Git checkout.
+- [ ] Inspect Hostinger Deployments to check whether an additional automatic Git deploy wrote the full repo to public_html.
 
 ## Required owner access (never send passwords/keys in chat)
 1. Hostinger hPanel account sign-in, or sanitized screenshots of the domain website root, FTP account mapping and active deployment configuration.
