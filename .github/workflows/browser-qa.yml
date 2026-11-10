@@ -51,6 +51,8 @@ jobs:
             sleep 1
           done
           node scripts/qa-browser.mjs
+          test -f qa-screenshots/mobile-home.png
+          test -f qa-screenshots/desktop-catalog-comparison.png
 
       - name: Upload screenshots for independent visual review
         if: always()
