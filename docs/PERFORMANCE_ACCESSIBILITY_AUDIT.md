@@ -31,3 +31,11 @@
 - Run existing desktop/mobile Chromium functional QA (38-product catalog, compare, search, product detail, email draft).
 - Run bounded mobile/desktop Lighthouse again; compare relative improvements and regressions to baseline.
 - Only merge compiled release after successful QA; verify deployed marker + live browser behavior. Never report an optimization as live before the marker and browser checks pass.
+
+## Verification and release decision
+- Browser and Vite build QA after initial markup fixes: https://github.com/creatifybd/orbit-lubricants/actions/runs/42773003396 — SUCCESS.
+- Second lab run: https://github.com/creatifybd/orbit-lubricants/actions/runs/42773652258 — SUCCESS, home/mobile accessibility 95, desktop accessibility 95, products/mobile accessibility 96; desktop score 97, products mobile performance 78, home mobile performance 50. These mobile performance lab scores **vary** because deferred web fonts can cause CLS and hero content changes; do not report the home performance problem as solved.
+- Experiments that changed original hero image-loading behavior and slide timing were **reverted** because they did not demonstrate a reliable performance improvement.
+- Final accessibility/priority-image candidate: https://github.com/creatifybd/orbit-lubricants/actions/runs/42774089870 — real desktop/mobile browser regression, build integrity, original-brand file comparisons and non-destructive Git-root staging passed.
+- The current release addresses named button, heading hierarchy, text contrast and first catalog image loading priority **only**. It does not certify full WCAG conformance or a mobile Core Web Vitals pass.
+- **Open optimization item:** fix late web font swaps (CLS) with measured, visually reviewed font delivery, without changing approved typography or original product artwork. Verify on real mobile devices and with field data/CrUX if available.
