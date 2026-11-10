@@ -51,10 +51,10 @@ export const AdminLogin = ({ onReturnHome }) => {
           </div>
 
           <h2 style={{ color: '#FFFFFF', fontSize: '1.6rem', marginBottom: '0.4rem', fontFamily: 'var(--font-display)' }}>
-            {hasAdminPasscode ? 'Admin CMS Login' : 'Create Owner Access'}
+            {hasAdminPasscode ? 'Local CMS Preview Login' : 'Create Local Preview Access'}
           </h2>
           <p style={{ color: '#94A3B8', fontSize: '0.9rem' }}>
-            {hasAdminPasscode ? 'Orbit Lubricants Management System' : 'Set a private passcode for this browser'}
+            This passcode protects only local browser data; it is not a secure shared website administrator login.
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export const AdminLogin = ({ onReturnHome }) => {
           )}
 
           <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: '1rem' }}>
-            <span>{hasAdminPasscode ? 'Authenticate to Dashboard' : 'Create Passcode & Continue'}</span>
+            <span>{hasAdminPasscode ? 'Open Local Preview Dashboard' : 'Create Local Preview Passcode'}</span>
             <ArrowRight size={18} />
           </button>
         </form>
