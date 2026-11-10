@@ -4,6 +4,7 @@ import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
 import { ProductMarquee } from '../components/ProductMarquee';
+import { trackOrbitEvent } from '../lib/analytics';
 import heroAutomotive from '../assets/hero/automotive.webp';
 import heroHeavyDuty from '../assets/hero/heavy-duty.webp';
 import heroManufacturing from '../assets/hero/manufacturing.webp';
@@ -87,7 +88,11 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         <div className="container">
           <div className="section-head center"><span className="premium-kicker dark">Current lineup</span><h2>Featured products</h2><p>{products.length} updated packs, organized by application and label-stated performance classification.</p></div>
           <div className="premium-product-grid">
-            {featured.map((item) => <ProductCard key={item.id} product={item} onSelect={setSelectedProduct} onInquire={inquire} />)}
+            {featured.map((item) => <ProductCard key={item.id} product={item} onSelect={(product) => {
+              trackOrbitEvent('select_item', { item_id: product.id, item_category: product.category });
+              trackOrbitEvent('view_item', { item_id: product.id, item_category: product.category });
+              setSelectedProduct(product);
+            }} onInquire={inquire} />)}
           </div>
         </div>
       </section>
