@@ -1,4 +1,4 @@
-name: Orbit live Google Product snippets schema cleanup verification
+name: Orbit product markup live verification - actual original image paths
 
 on:
   push:
