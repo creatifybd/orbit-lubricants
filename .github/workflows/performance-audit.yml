@@ -1,4 +1,4 @@
-name: Orbit one-time Lighthouse performance and accessibility baseline
+name: Orbit isolated-build Lighthouse performance and accessibility baseline
 
 # This audit runs once when its workflow file is introduced. No cron or
 # recurring GitHub Actions use. Purely reads the public Orbit website.
@@ -24,22 +24,33 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run bounded Lighthouse audits against live Orbit website
+      - name: Install locked dependencies and build isolated Orbit production bundle
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+      - name: Run Lighthouse on local production preview (public server rejected crawler)
         env:
           CHROME_PATH: /usr/bin/google-chrome
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p qa-lighthouse
-          npx --yes lighthouse@12.8.2 'https://orbit-lubricants.com/' \
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-lighthouse-preview.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..25}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          npx --yes lighthouse@12.8.2 'http://127.0.0.1:4173/' \
             --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
             --output=json --output-path=qa-lighthouse/home-mobile.json \
             --only-categories=performance,accessibility,best-practices,seo --quiet
-          npx --yes lighthouse@12.8.2 'https://orbit-lubricants.com/' \
+          npx --yes lighthouse@12.8.2 'http://127.0.0.1:4173/' \
             --preset=desktop --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
             --output=json --output-path=qa-lighthouse/home-desktop.json \
             --only-categories=performance,accessibility,best-practices,seo --quiet
-          npx --yes lighthouse@12.8.2 'https://orbit-lubricants.com/products/' \
+          npx --yes lighthouse@12.8.2 'http://127.0.0.1:4173/products/' \
             --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
             --output=json --output-path=qa-lighthouse/products-mobile.json \
             --only-categories=performance,accessibility,best-practices,seo --quiet
