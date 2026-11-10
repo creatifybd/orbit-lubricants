@@ -102,7 +102,8 @@ Feature branch: orbit-enterprise-website-upgrade
 
 ## Urgent hosting source-exposure risk (2026-11-10)
 - [x] Hostinger Orbit-specific `public_html` screenshot shows `.git`, `.github`, `src`, `hosting`, `public`, `dist`, `package.json`, `package-lock.json`, `index.source.html` and `Selected Designs.zip` beside the production `index.html` / `assets`. Repository deployment to the web root is strongly suspected but not proven; investigate Hostinger Deployments/Git auto-deploy.
-- [ ] Immediately generate/download a recoverable Orbit-only backup using Hostinger Files > Backups **before** modifying public_html. Do not upload/replace or delete sources until backup is verified.
+- [x] Locate Hostinger Files > Backups > Restore and download; a files backup from 2026-11-08 22:06 is available (owner screenshot 2026-11-10).
+- [ ] Obtain and verify a current Orbit-only backup reflecting the Nov 10 public_html state before touching production; an older Nov 8 snapshot alone does not meet pre-deployment rollback requirements. Do not click Restore.
 - [ ] Confirm whether `/.git/HEAD`, `/package.json` and any project archive are externally accessible (403 or 404 expected); no proof of public exposure yet. If accessible, block at server immediately and inspect logs/rotate affected secrets.
 - [x] Add deny rules for .git/.github, development source and archives to staging Apache .htaccess variants; **not yet live**. Review and deploy only after backup and root verification.
 - [ ] Move all repository source, archives and build infrastructure OUTSIDE public_html in a controlled post-backup release. The public document root should contain compiled `dist/` contents only, not a Git checkout.
