@@ -53,33 +53,34 @@ function renderProductPage(p) {
   uniqueTitles.add(title);
   const seoDescription = `${description} Pack format: ${p.packing}. View product-label information and details.`;
   const specifications = Object.entries(p.specs || {}).filter(([, value]) => value !== undefined && value !== null && String(value).trim());
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: `${p.name} — ${p.packing}`,
-    sku: p.id,
-    size: p.packing,
-    description: seoDescription,
-    image: [imageUrl(p)],
-    url: productUrl(p),
-    brand: { '@type': 'Brand', name: brand },
-    category,
-    additionalProperty: specifications
-      .filter(([key]) => key.toLowerCase() !== 'selection guidance')
-      .map(([name, value]) => ({ '@type': 'PropertyValue', name, value: String(value) })),
-  };
+  // This is a B2B product information page, not a checkout page or product-review
+  // page. Google Product snippets require a real Offer/Review/AggregateRating.
+  // No authorized prices, live stock or genuine reviews are present in the catalog.
+  // Represent the landing page and original pack image accurately instead of
+  // emitting two ineligible Product entities or fabricating commercial claims.
   const landingPage = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': productUrl(p) + '#webpage',
     name: title,
+    description: seoDescription,
     url: productUrl(p),
+    isPartOf: { '@type': 'WebSite', name: brand, url: origin + '/' },
+    publisher: { '@type': 'Organization', name: brand, url: origin + '/' },
     primaryImageOfPage: {
       '@type': 'ImageObject',
       contentUrl: imageUrl(p),
       name: descriptiveAlt
     },
-    mainEntity: { '@type': 'Product', name: p.name, url: productUrl(p) }
+    mainEntity: {
+      '@type': 'Thing',
+      '@id': productUrl(p) + '#catalog-item',
+      name: p.name + ' — ' + p.packing,
+      description: seoDescription,
+      identifier: p.id,
+      image: imageUrl(p),
+      url: productUrl(p)
+    }
   };
   const breadcrumbs = {
     '@context': 'https://schema.org',
@@ -112,7 +113,6 @@ function renderProductPage(p) {
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/logo.png" type="image/png">
 <script defer src="${staticAnalyticsSrc}" data-orbit-kind="product" data-orbit-id="${esc(p.id)}" data-orbit-category="${esc(p.category)}"></script>
-<script type="application/ld+json">${jsonLd(schema)}</script>
 <script type="application/ld+json">${jsonLd(landingPage)}</script>
 <script type="application/ld+json">${jsonLd(breadcrumbs)}</script>
 <style>

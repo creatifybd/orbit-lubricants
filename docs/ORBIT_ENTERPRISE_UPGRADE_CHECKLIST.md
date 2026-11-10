@@ -215,3 +215,15 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Submit clean sitemap to verified Search Console property: `https://orbit-lubricants.com/sitemap.xml`; status **Success**, 52 discovered URLs and last read Nov 10, 2026 per owner's screenshot.
 - [ ] Next: inspect Page Indexing report plus representative product URL `https://orbit-lubricants.com/products/nova-hd40-1l/`; assess actual Google Images Performance after processing. Do not infer rankings/indexing from sitemap success.
 - [ ] Obtain final owner privacy consent copy and G-Measurement ID to activate consent-aware GA4 visitor metrics; this is separate from Search Console reporting.
+
+## GSC live product schema finding — 2026-11-10
+
+- [x] Owner ran `TEST LIVE URL` on `/products/nova-hd40-1l/`. Google reported **Page can be indexed**, **1 valid Breadcrumb**, but **2 invalid Product snippet items**. Index view remains **Discovered — currently not indexed**; last crawl N/A.
+- [x] Inspect static HTML generator: it published two unqualified `Product` entities, one standalone and one nested in `WebPage.mainEntity`. Neither contained valid `offers`, `review` or `aggregateRating`; Google requires one of these for Product snippets. The Orbit catalog does not have approved price, stock or authentic customer review data.
+- [x] On a reviewed branch, replace ineligible duplicate Product rich-result candidates with an honest **WebPage + Thing mainEntity + original ImageObject + existing BreadcrumbList**. Do not invent pricing, free offers, availability, reviews, stars or certifications. All 38 SEO pages regenerate from the same template.
+- [x] Build checks and browser/regression QA passed on staged candidate: https://github.com/creatifybd/orbit-lubricants/actions/runs/42805220451; no original pack assets changed.
+- [ ] Verify deployment using actual live HTML schema after merge; owner should rerun Search Console **TEST LIVE URL** to confirm Google no longer flags the two Product snippets. Google Search Console recrawl/reporting can lag.
+- [ ] **Product rich-result eligibility remains unavailable** until the business provides factual visible commercial offers/prices or real supported reviews. Removing invalid markup does not grant rich snippets or indexing.
+- [ ] Continue indexing follow-up: successful Live Test eligibility is not actual indexed status; revisit `URL Inspection → Google Index` and Page Indexing report after Google processes the sitemap.
+
+Detailed reasoning: `docs/PRODUCT_SNIPPET_INVALID_ITEMS_DIAGNOSTIC.md`.

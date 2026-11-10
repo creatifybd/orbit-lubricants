@@ -98,8 +98,26 @@ if (!errors.length) {
         try { schemas.push(JSON.parse(value)); }
         catch { errors.push('Malformed JSON-LD on ' + item.id); }
       }
-      check(schemas.some((x) => x['@type'] === 'Product' && x.image?.includes(expectedImageUrl)),
-        'Missing correct product image JSON-LD: ' + item.id);
+      // Until Orbit publishes factual prices/offers or verified reviews, Google
+      // cannot grant Product rich results. Avoid misleading duplicate/ineligible
+      // Product entities rather than inventing offers or ratings.
+      const allSchemaTypes = [];
+      const collectSchemaTypes = (node) => {
+        if (!node || typeof node !== 'object') return;
+        if (Array.isArray(node)) { node.forEach(collectSchemaTypes); return; }
+        if (node['@type']) {
+          const types = Array.isArray(node['@type']) ? node['@type'] : [node['@type']];
+          allSchemaTypes.push(...types);
+        }
+        Object.values(node).forEach(collectSchemaTypes);
+      };
+      schemas.forEach(collectSchemaTypes);
+      check(!allSchemaTypes.includes('Product'), 'Ineligible Product snippet schema present without real offers/reviews: ' + item.id);
+      check(schemas.some((x) => x['@type'] === 'WebPage'
+          && x.mainEntity?.['@type'] === 'Thing'
+          && x.mainEntity?.image === expectedImageUrl
+          && x.mainEntity?.identifier === item.id),
+        'WebPage does not identify original pack and SKU as an honest descriptive Thing: ' + item.id);
       check(schemas.some((x) => x['@type'] === 'WebPage' && x.primaryImageOfPage?.contentUrl === expectedImageUrl),
         'Missing preferred product image WebPage JSON-LD: ' + item.id);
       check(schemas.some((x) => x['@type'] === 'BreadcrumbList'), 'Missing breadcrumb JSON-LD: ' + item.id);
