@@ -202,3 +202,13 @@ Feature branch: orbit-enterprise-website-upgrade
 ### Verified owner project
 - [x] Owner screenshot showed Firebase project `orbit-lubricants` on Spark free plan with one app registered.
 - [ ] Confirm whether app is Web App, obtain safe public Firebase Web App configuration and inspect Google Auth/Firestore activation before building secure cross-device admin.
+
+
+## Search Console owner reporting — 2026-11-10
+- [x] Create separate **Search Performance** tab in Orbit Admin with verified-property-only Google OAuth `webmasters.readonly`, in-memory token and no stored Google credentials.
+- [x] Add Google Search Console **Web Search** and **Image Search** read-only API reports for finalized 28/90-day clicks, impressions, CTR, average position, top queries and landing pages.
+- [x] Restrict property identifiers to Orbit `sc-domain:orbit-lubricants.com` or `https://orbit-lubricants.com/`; no access to Joytun or arbitrary third-party properties.
+- [x] Unit query/API/authorization tests, Vite build and Chrome mock-owner Web/Image dashboard test successful: https://github.com/creatifybd/orbit-lubricants/actions/runs/42790107789.
+- [ ] Owner must verify Search Console property and create/approve public Google OAuth Web Client ID with correct domain origin/scope; actual Google API connection unverified.
+- [ ] Submit sitemap in the verified account (52 URLs, 76 image references) and inspect URL indexing & actual Google Images Performance. No organic position/rank is claimed without real account reports.
+- [ ] Obtain final owner privacy consent copy and G-Measurement ID to activate consent-aware GA4 visitor metrics; this is separate from Search Console reporting.
