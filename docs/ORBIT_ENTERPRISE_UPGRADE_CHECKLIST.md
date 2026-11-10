@@ -18,7 +18,7 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Diagnose previous CI false-positive: checked generic production assets, not exact build commit.
 - [x] Add live deployment.json fingerprint check to .github/workflows/deploy.yml on main.
 - [x] Run minimal GitHub Actions smoke workflow on main.
-- [ ] Investigate why both deployment and smoke runs fail before any jobs start (GitHub Actions account/repo policy, billing or platform support). This is independent of the Vite app build.
+- [x] Investigate pre-job GitHub Actions failures: the smoke test succeeded on re-run (attempt 2) on Nov 10. Earlier incident matches GitHub service disruption; no evidence of account suspension. Run: https://github.com/creatifybd/orbit-lubricants/actions/runs/42674052980.
 - [ ] Verify Hostinger > Websites > orbit-lubricants.com > website document root.
 - [ ] Compare document root with secret FTP_SERVER_DIR and FTP account mapping. DO NOT expose secret values.
 - [ ] Check Hostinger Git deployment vs FTPS deployment: ensure only one canonical source of truth.
@@ -32,19 +32,21 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Write and test least-privilege Firestore and Storage rules; enable backups, activity/audit logging.
 - [ ] Implement centrally delivered enquiries using protected backend and email alert; spam controls/rate limits; test end-to-end.
 - [x] Replace misleading local-only inquiry success with clearly labeled email-draft fallback. A real backend delivery confirmation remains pending.
-- [ ] Keep the site's public content available when authentication is unavailable.
+- [x] Public site remains functional without backend credentials, using catalog data in the build. Backend content publishing will be added after Firebase connection.
 
 ## P1: Catalog, product UX and trust
 - [x] Catalog source contains 38 unique records and 38 matching product artwork paths.
 - [ ] Review every label against original Orbit assets and approval sources, especially API grades and fluid classifications.
-- [ ] Implement product variant associations, category filtering, sorting, comparison and useful search.
+- [x] Build catalog search/category filters, name/grade/pack sorting, and up to three original-label specification comparisons on feature branch; full Vite compile passed.
+- [ ] Implement reviewed variant-group connections (only after confirming product variant relationships).
 - [ ] Offer application-based browsing; never issue make/model-specific oil recommendations without verified OEM compatibility database.
 - [ ] Provide usable, accessible product detail pages, enquiry CTAs, digital TDS and SDS only where genuine documents exist.
 - [ ] Add verified distributors/locations only when real addresses and business details are supplied.
 
 ## P1: Premium design and performance
 - [ ] Differentiate Orbit from household-cleaning site design: automotive/industrial visual storytelling, application-led navigation, richer tech/spec comparisons.
-- [ ] Confirm original-asset hero, application sections, two-direction product marquee and Our Story slideshow against approved briefs.
+- [x] Add two-direction, 2-row, hover-pausing product marquee using unchanged original product file URLs, with reduced-motion support; full Vite compile passed.
+- [ ] Review hero visuals, application section and separate Our Story slideshow against approved briefs on desktop and mobile.
 - [ ] Review desktop, tablet, small-screen mobile, reduced-motion, keyboard navigation, form validation and contrast.
 - [ ] Check Core Web Vitals, image sizing/format, lazy loading, JavaScript cost, caching and reliable error states.
 - [ ] Verify no overflow, missing artwork, duplicated labels, distorted container shapes or fake-looking visuals.
@@ -55,7 +57,8 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Crawlable links from product cards to dedicated pages, including original artwork.
 - [x] Initial Organization/WebSite structured data, canonical URL and OG/Twitter metadata.
 - [x] In-memory logic simulation: 38 generated product pages, 43 sitemap entries, 0 missing product image paths.
-- [ ] Validate full Vite build, deployment output, HTTP status codes, sitemaps, schema using Rich Results Test and crawler (generator/validator in-memory simulation passed only).
+- [x] Real GitHub-hosted Vite production build, 38 SEO pages, 43 sitemap URLs, static image/path checks and HTTP smoke tests of homepage/catalog/product/contact/sitemap/robots/image PASSED: https://github.com/creatifybd/orbit-lubricants/actions/runs/42757832132.
+- [ ] Test schema in Google Rich Results Test and live Google Search Console, crawl deployed links, inspect response headers, robots, 404 and www redirects.
 - [x] Implement canonical-path client navigation, direct /products/ route handling and legacy hash compatibility; nine route cases passed in-memory tests. Full deployed URL/refresh QA pending.
 - [ ] Connect Search Console; submit sitemap and inspect indexed pages, image indexing, canonical selection and coverage.
 - [ ] Publish technically accurate lubrication education/FAQs with citations and editorial review; avoid keyword stuffing.
@@ -70,12 +73,25 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Verify analytics in DebugView/Tag Assistant, not only by viewing dashboard charts.
 
 ## P2: Release governance & QA
-- [x] Add source-controlled post-build QA for 38 product pages, original image references, 43 sitemap routes, schema and canonical URLs; in-memory simulation passed. Full Vite/CI runner test is blocked.
-- [ ] Add deployed link checking, browser smoke tests and backup checks.
-- [ ] Review all site copy for human, professional Bangla/English expression as applicable.
+- [x] Real GitHub Actions production build passes source-controlled SEO checks and local HTTP route smoke tests. Hostinger production end-to-end QA remains pending.
+- [x] Add local staging HTTP route smoke tests and generated build artifact with seven-day retention. No live deployment triggered.
+- [ ] Add deployed link checking, browser interaction tests and recoverable hosting backup checks.
+- [x] Remove or clarify several unsupported homepage QA/certification and local CMS live-health assertions; full copy review still pending.
+- [ ] Complete human editorial review of all pages in approved language(s).
 - [ ] Establish acceptance matrix: critical forms deliver, editor actions persist cross-device, all approved SKUs display, no broken links.
 - [ ] Verify production after deployment with version marker, browser interactions and rollback readiness.
 - [ ] Obtain owner final sign-off before declaring website fully complete.
+
+
+## Additional verified staging improvements (2026-11-10)
+- [x] React navigation now exposes real `href` links in the top-level navbar for crawlers and standard browser actions; SPA click navigation retained.
+- [x] SPA route changes update document title, description, canonical URL and Open Graph metadata; browser-local CMS settings no longer flatten all route titles.
+- [x] Contact form shows an honest, copyable email draft instead of claiming a localStorage-only enquiry reached the team.
+- [x] Admin pages identify the current CMS as browser-only preview, not secure centralized administration or live performance monitoring.
+- [x] Conservative X-Content-Type-Options, Referrer-Policy, X-Frame-Options and Permissions-Policy headers added to both FTP and root-hosting .htaccess variants; not yet verified on Hostinger.
+- [x] Safe staging build packaged as seven-day GitHub artifact, with no FTP push: https://github.com/creatifybd/orbit-lubricants/actions/runs/42757832132.
+- [ ] Run production staging QA again after the latest code changes, before considering release.
+- [ ] Make final pre-release approval gate: production host mapping, recoverable backup, security audit, original-art validation, product info approval and working backend.
 
 ## Required owner access (never send passwords/keys in chat)
 1. Hostinger hPanel account sign-in, or sanitized screenshots of the domain website root, FTP account mapping and active deployment configuration.
