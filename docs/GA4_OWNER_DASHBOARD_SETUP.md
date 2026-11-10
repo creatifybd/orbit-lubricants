@@ -17,7 +17,7 @@
 - `select_item` and `view_item` are recorded separately when a user opens an on-page product modal; the same values should not be interpreted as completed sales or verified leads.
 - Search: record result count, **not raw search terms**, to prevent accidental collection of emails/phone numbers from free-form searches.
 - Email enquiry: `enquiry_email_prepared` denotes a locally prepared `mailto:` draft. **Do not fire `generate_lead` or claim delivery until a verified server endpoint actually accepts the lead.**
-- The 38 static SEO product landing pages **still require consent-aware tracking instrumentation**. This React SPA adapter does not claim their view counts; the reporting API itself will only show whatever events your configured GA4 property actually collected.
+- The 38 standalone Product Pages and nine Category Pages now have a first-party, consent-aware analytics adapter. This is **implemented and browser-tested but tracking remains inactive** until the Orbit Measurement ID and approved privacy notice are configured. The dashboard will only display events actually collected by the GA4 property.
 
 ## Owner setup steps (all free-tier compatible when eligibility confirmed)
 1. Open https://analytics.google.com/ and select/create the **Orbit Lubricants** GA4 property. Record both its **numeric Property ID** and the Web Data Stream's **Measurement ID** (`G-...`). These are different identifiers.
@@ -42,7 +42,7 @@
 ## Evidence
 - Privacy event tests and Chrome consent opt-in/out: carried from tested Orbit draft PR #2.
 - Admin unit tests use a fake OAuth token and mocked API responses to prove only API-sourced counts render.
-- Release code remains branch-only pending actual GA4/OAuth configuration and owner privacy approval.
+- Owner Analytics UI is already published with visitor tags disabled. The standalone page adapter has separately passed Chrome consent QA and is being released with tags still disabled; real Google OAuth reporting and visitor tracking need account configuration and privacy approval.
 
 ## Primary docs
 - https://developers.google.com/identity/oauth2/web/guides/overview

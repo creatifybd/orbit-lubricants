@@ -24,7 +24,7 @@ const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({
 }[c]));
 const safeJson = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
 
-export function buildCategoryPages({ dist, categories, products }) {
+export function buildCategoryPages({ dist, categories, products, staticAnalyticsSrc }) {
   const pages = [];
   for (const category of categories) {
     if (!Object.hasOwn(descriptions, category.id)) {
@@ -36,6 +36,9 @@ export function buildCategoryPages({ dist, categories, products }) {
     const url = origin + '/applications/' + category.id + '/';
     const title = category.name + ' in Bangladesh | Orbit Lubricants';
     const intro = descriptions[category.id];
+    const staticTrackingScript = '<script defer src="' + escapeHtml(staticAnalyticsSrc) +
+      '" data-orbit-kind="category" data-orbit-category="' + escapeHtml(category.id) +
+      '" data-orbit-items="' + escapeHtml(group.map((item) => item.id).join(',')) + '"></script>';
     const cardHtml = group.map((p) => {
       const packTitle = p.name + ' — ' + p.packing;
       const href = '/products/' + p.id + '/';
@@ -85,6 +88,7 @@ export function buildCategoryPages({ dist, categories, products }) {
       '<meta property="og:url" content="' + url + '">' +
       '<meta property="og:image" content="' + origin + escapeHtml(group[0].image) + '">' +
       '<link rel="icon" href="/logo.png" type="image/png">' +
+      staticTrackingScript +
       '<script type="application/ld+json">' + safeJson(schema) + '</script>' +
       '<script type="application/ld+json">' + safeJson(breadcrumb) + '</script>' +
       '<style>:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#102c40;background:#f7fafc}' +
