@@ -1,0 +1,92 @@
+name: Orbit GA4 owner reporting — safe production-disabled QA and staging
+
+# Single-trigger code QA. Never connects a real Google property or Firebase.
+# Built without VITE_GA4_MEASUREMENT_ID, so public visitor tagging is OFF.
+on:
+  push:
+    branches: [orbit-zero-cost-ga4-owner-dashboard]
+    paths: [.github/workflows/owner-ga4-stage.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-ga4-owner-staging-one-off
+  cancel-in-progress: false
+
+jobs:
+  safe-qa:
+    name: Privacy unit tests, owner Chrome mocks and static release staging
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Check all privacy and GA4 reporting logic
+        run: npm run test:analytics
+      - name: Compile production with NO visitor GA4 property configured
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -z "${VITE_GA4_MEASUREMENT_ID:-}"
+          npm run build
+          node scripts/prepare-git-publish.mjs
+          if grep -Fq 'G-TEST123456' index.html; then
+            echo "::error::Test tracking tag leaked into production."
+            exit 1
+          fi
+          test -f applications/motorcycle/index.html
+          test -f products/nova-hd40-1l/index.html
+          grep -Fq '<image:loc>' sitemap.xml
+      - name: Install Chrome testing driver only
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Verify desktop, mobile and owner-only Google reporting with mock data
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-ga4-owner-preview.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in {1..25}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/qa-browser.mjs
+          node scripts/tests/ga4-owner.browser.mjs
+      - name: Stage only verified public static files; do not delete existing files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets applications products images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::Deletion detected; aborting."
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          echo "Safe static updates: $count"
+          if [ "$count" -gt 115 ]; then
+            echo "::error::Unexpectedly large update; aborting."
+            exit 1
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Stage tested Orbit GA4 owner UI with visitor tracking disabled"
+          git push origin HEAD:orbit-zero-cost-ga4-owner-dashboard
+          echo "Candidate staged on feature branch, not published."
+      - name: Preserve QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-ga4-owner-chrome-qa
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
