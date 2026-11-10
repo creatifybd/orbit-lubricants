@@ -1,0 +1,88 @@
+name: Orbit Product structured-data cleanup - one-time safe QA
+
+on:
+  push:
+    branches: [orbit-fix-invalid-product-snippets]
+    paths:
+      - .github/workflows/product-schema-cleanup-stage.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-product-schema-cleanup-once
+  cancel-in-progress: false
+
+jobs:
+  build-and-stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Compile and audit all 38 original SKU landing pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          test -z "${VITE_GA4_MEASUREMENT_ID:-}"
+          npm run build
+          npm run test:analytics
+          npm run test:gsc
+          node scripts/prepare-git-publish.mjs
+          test -f products/nova-hd40-1l/index.html
+          test -f applications/motorcycle/index.html
+          grep -q 'BreadcrumbList' products/nova-hd40-1l/index.html
+          grep -q 'primaryImageOfPage' products/nova-hd40-1l/index.html
+          if grep -Eq '"@type":"Product"' products/nova-hd40-1l/index.html; then
+            echo "::error::Ineligible Product rich-result entity still present."
+            exit 1
+          fi
+      - name: Run real Chrome desktop/mobile and SEO route regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort >/tmp/orbit-structured-data-qa.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in {1..20}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/qa-browser.mjs
+          node scripts/qa-image-seo-browser.mjs
+      - name: Stage only reviewed static SEO files on feature branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets products applications images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::Release would delete a file."
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          test "$count" -le 100
+          if git diff --cached --quiet; then
+            echo "No static changes needed."
+            exit 0
+          fi
+          git commit -m "Stage honest Orbit item metadata without ineligible Product rich-result claims"
+          git push origin HEAD:orbit-fix-invalid-product-snippets
+          echo "Static release staged; production main unchanged."
+      - name: Keep short QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-product-schema-qa
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
