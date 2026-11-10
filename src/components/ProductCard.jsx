@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, FileText, MessageSquare, Package } from 'lucide-react';
+import { ArrowUpRight, Check, FileText, MessageSquare, Package, Scale } from 'lucide-react';
 
-export const ProductCard = ({ product, onSelect, onInquire }) => {
+export const ProductCard = ({ product, onSelect, onInquire, onToggleCompare, isCompared = false, disableCompare = false }) => {
   const [loaded, setLoaded] = useState(false);
   const standardVisible = product.apiGrade && !product.apiGrade.toLowerCase().includes('not stated');
 
@@ -24,6 +24,19 @@ export const ProductCard = ({ product, onSelect, onInquire }) => {
         <div className="catalog-product-actions">
           <span>View specifications <ArrowUpRight size={16} /></span>
           <a className="catalog-product-deep-link" href={`/products/${product.id}/`} onClick={(event) => event.stopPropagation()} aria-label={`Open dedicated page for ${product.name}`}>Product page</a>
+          {onToggleCompare && (
+            <button
+              type="button"
+              className={`catalog-compare${isCompared ? ' active' : ''}`}
+              aria-pressed={isCompared}
+              aria-label={`${isCompared ? 'Remove' : 'Add'} ${product.name} ${isCompared ? 'from' : 'to'} comparison`}
+              disabled={disableCompare && !isCompared}
+              onClick={() => onToggleCompare(product)}
+            >
+              {isCompared ? <Check size={15} /> : <Scale size={15} />}
+              <span>{isCompared ? 'Added' : 'Compare'}</span>
+            </button>
+          )}
           {onInquire && <button className="catalog-inquire" onClick={() => onInquire(product)} aria-label={`Enquire about ${product.name}`}><MessageSquare size={16} /></button>}
         </div>
       </div>
