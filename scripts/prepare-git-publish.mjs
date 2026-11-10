@@ -88,6 +88,9 @@ for (const path of [
 for (const product of initialData.products) {
   publish('products/' + product.id + '/index.html');
 }
+for (const category of initialData.categories) {
+  publish('applications/' + category.id + '/index.html');
+}
 
 // Approved original product pack imagery cannot change by even one byte.
 walk('products', (path) => {
