@@ -79,9 +79,16 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Publish technically accurate lubrication education/FAQs with citations and editorial review; avoid keyword stuffing.
 
 ## P2: Analytics & conversion intelligence
+- [x] Implement consent-first GA4 adapter on staging only, behind a verified VITE_GA4_MEASUREMENT_ID. Without a property ID or explicit opt-in, no tag loads; not yet published.
+- [x] Build accessible grant/deny/revoke preference UI and footer privacy settings; Google Consent Mode v2 with advertising consent always denied.
+- [x] Strict anonymous event whitelist for SPA page_view, view_item, search-result counts, product comparison and email-draft preparation; no PII or raw search terms.
+- [x] Test privacy unit cases, production build and real Chrome consent transitions using a fake measurement ID (run 42770355507); real Orbit GA4 property still not connected.
+- [ ] Add consent-aware tracking coverage to static HTML product-detail pages after source-of-truth approval and independent QA.
+- [ ] Verify actual Orbit GA4 property / Measurement ID, business privacy notice and consent language before activation.
+
 - [ ] Verify Orbit GA4 property and GTM container and confirm owner/editor access.
 - [ ] Implement consent-aware tags and document privacy disclosures (local regulatory review).
-- [ ] Instrument page_view, view_item, select_item, site_search, product_engagement, qualified_enquiry.
+- [ ] Verify actual delivered SPA page_view, product view, search-result counts and product comparison events in Orbit GA4 DebugView after property setup. No legitimate qualified_enquiry event exists without a server-side lead backend.
 - [ ] Fire generate_lead only after backend successfully accepts and persists the enquiry.
 - [ ] Configure UTM source tracking, goal funnels, Search Console link, internal traffic exclusion.
 - [ ] Build Looker Studio / GA4 reporting for qualified leads, catalog engagement, organic growth, Core Web Vitals and indexed pages.
@@ -143,3 +150,8 @@ Feature branch: orbit-enterprise-website-upgrade
 3. Google Cloud/Firebase Orbit project owner permissions or safe public web-app configuration; approve admin emails through secure channels.
 4. Google Search Console verified domain property and GA4/GTM account (IDs can be supplied without secrets).
 5. Original Orbit product master assets and evidence for unverified specs, product documentation, contact details and any approved content.
+
+## Analytics milestone (staging only — 2026-11-10)
+- [x] Create docs/ANALYTICS_CONSENT_IMPLEMENTATION.md with activation checks, privacy limits and static-page coverage gaps.
+- [x] No new credentials or customer data required for implementing and testing the baseline code.
+- [ ] Do not claim analytics is collecting actual traffic until Google property, consent, release and live DebugView are verified.
