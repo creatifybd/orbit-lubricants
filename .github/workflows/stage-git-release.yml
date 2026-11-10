@@ -40,6 +40,8 @@ jobs:
           npm ci --no-audit --no-fund
           npm run build
           node scripts/prepare-git-publish.mjs
+          test -f products/nova-hd40-1l/index.html
+          grep -Fq '"productCount": 38' deployment.json
 
       - name: Commit only allowlisted published files to staging
         shell: bash
