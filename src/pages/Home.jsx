@@ -21,7 +21,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
 
   useEffect(() => {
     if (heroSlides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const timer = window.setInterval(() => setHeroSlide((current) => (current + 1) % heroSlides.length), 6500);
+    const timer = window.setInterval(() => setHeroSlide((current) => (current + 1) % heroSlides.length), 11000);
     return () => window.clearInterval(timer);
   }, [heroSlides.length]);
 
