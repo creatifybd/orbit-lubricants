@@ -41,6 +41,7 @@ jobs:
         run: |
           set -euo pipefail
           test -f dist/sitemap.xml
+          test -f dist/.htaccess
           test -f dist/robots.txt
           test -f dist/seo-manifest.json
           test -f dist/products/index.html
@@ -84,10 +85,40 @@ jobs:
       - name: Compare live Orbit bundle fingerprint without changing production
         run: node scripts/diagnose-live.mjs
 
+      - name: Check public web-root exposure using HEAD only
+        run: node scripts/probe-exposure.mjs
+
+      - name: Assemble rollback capsule from current main build (no hosting changes)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin main
+          mkdir -p rollback-capsule/assets
+          git show origin/main:index.html > rollback-capsule/index.html
+          git show origin/main:.htaccess > rollback-capsule/.htaccess
+          mapfile -t compiled_assets < <(grep -oE '/assets/[^"]+\\.(js|css)' rollback-capsule/index.html | sort -u)
+          test "${#compiled_assets[@]}" -ge 2
+          for asset in "${compiled_assets[@]}"; do
+            file="${asset#/}"
+            case "$file" in assets/*) ;; *) echo "Invalid asset path"; exit 1 ;; esac
+            git show "origin/main:$file" > "rollback-capsule/$file"
+          done
+          echo "Prepared old index, htaccess and referenced immutable bundles. This is NOT a full site backup."
+
+      - name: Archive targeted rollback capsule (non-public)
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-rollback-capsule
+          path: rollback-capsule/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Package verified staging site for manual Hostinger deployment
         uses: actions/upload-artifact@v4
         with:
           name: orbit-staging-site
           path: dist/
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
