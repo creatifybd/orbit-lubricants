@@ -1870,3 +1870,47 @@ body { color: #17324d; background: #f8fbfe; }
 @media(prefers-reduced-motion:reduce) {
   .orbit-consent-panel *, .orbit-consent-panel *::before, .orbit-consent-panel *::after { transition: none !important; animation: none !important; }
 }
+
+
+/* Orbit Owner Analytics · read-only GA4, no false placeholder counters */
+.orbit-analytics { color: #eaf2fa; max-width: 1480px; margin-inline: auto; }
+.orbit-analytics-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.orbit-analytics-head h1 { color: #fff; font: 800 clamp(1.75rem,3vw,2.4rem)/1.2 var(--font-display); margin: .55rem 0 .7rem; }
+.orbit-analytics-head p { color: #afc4d9; max-width: 680px; line-height: 1.6; }
+.orbit-analytics-eyebrow { color: #ffc278; font: 800 .76rem var(--font-display); text-transform: uppercase; letter-spacing: .07em; display: inline-flex; align-items: center; gap: 8px; }
+.orbit-analytics-head-status { color: #c7d7e6; background: #102c49; border: 1px solid #24496c; border-radius: 999px; padding: .5rem .8rem; font-size: .74rem; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+.orbit-analytics-note { border-left: 4px solid #f79b25; color: #e4eef6; line-height: 1.65; background: #12304b; padding: 1.1rem 1.25rem; border-radius: 0 11px 11px 0; margin: 0 0 1.6rem; }
+.orbit-analytics-setup { display: grid; grid-template-columns: minmax(200px,1fr) minmax(310px,1.8fr) auto; align-items: end; gap: 1rem; padding: 1.2rem; background: #0f2740; border: 1px solid #2b4361; border-radius: 16px; margin-bottom: 1rem; }
+.orbit-analytics-setup label { display: block; margin-bottom: .5rem; color: #dce9f5; font: 750 .83rem var(--font-display); }
+.orbit-analytics-setup .form-control { height: 45px; color: #102b45; background: white; border: 1px solid #b6c9d9; min-width: 0; font-size: .9rem; }
+.orbit-analytics-setup > button { min-height: 45px; }
+.orbit-analytics-actions { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.orbit-analytics-actions .form-control { width: auto; min-width: 155px; color: #102b45; background: #fff; }
+.orbit-analytics-actions button { display: inline-flex; align-items: center; gap: 8px; }
+.orbit-analytics-error { background: #4b1d28; border: 1px solid #ad4a61; color: #ffe0e5; padding: .9rem 1.1rem; border-radius: 9px; margin-bottom: 1rem; }
+.orbit-analytics-progress { background: #102d48; border: 1px solid #376083; color: #e0f1ff; padding: 1rem; border-radius: 9px; margin-bottom: 1rem; }
+.orbit-analytics-stats { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 1rem; margin: 1rem 0 1.2rem; }
+.orbit-analytics-stat { display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; padding: 1.25rem; border: 1px solid #2d4e6b; border-radius: 15px; background: linear-gradient(145deg,#143551,#0c2540); min-width: 0; }
+.orbit-analytics-stat-icon { display: inline-grid; place-items: center; width: 36px; height: 36px; color: #ffb557; background: rgba(255,177,70,.1); border-radius: 10px; }
+.orbit-analytics-stat-label { color: #c0d1e1; font-weight: 650; font-size: .79rem; }
+.orbit-analytics-stat strong { color: #fff; font: 850 clamp(1.45rem,2vw,2.3rem) var(--font-display); overflow-wrap: anywhere; }
+.orbit-analytics-stat small { color: #8daec5; font-size: .7rem; }
+.orbit-analytics-last { color: #b7cada; font-size: .79rem; margin: .65rem 0 1.2rem; }
+.orbit-analytics-report-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.1rem; }
+.orbit-analytics-table-wrap { padding: 1.3rem; border: 1px solid #2c4763; background: #0e2740; border-radius: 15px; min-width: 0; }
+.orbit-analytics-table-wrap h3 { color: #fff; margin: 0 0 1rem; font-size: 1.05rem; }
+.orbit-analytics-table-scroll { overflow-x: auto; max-width: 100%; }
+.orbit-analytics-table-wrap table { border-collapse: collapse; width: 100%; min-width: 280px; font-size: .84rem; color: #d5e3ef; }
+.orbit-analytics-table-wrap th { color: #a8c1d5; border-bottom: 1px solid #456782; text-align: left; padding: .7rem .6rem; }
+.orbit-analytics-table-wrap td { border-bottom: 1px solid #1f3c58; padding: .7rem .6rem; word-break: break-word; }
+.orbit-analytics-table-wrap td:last-child,.orbit-analytics-table-wrap th:last-child { text-align: right; }
+.orbit-analytics-empty { color: #b0c8db; line-height: 1.6; }
+.orbit-analytics-empty-state { padding: 2.8rem 1rem; border: 1px dashed #42617b; border-radius: 14px; text-align: center; color: #b4ccdc; }
+.orbit-analytics-empty-state svg { color: #f6a247; }
+.orbit-analytics-empty-state h2 { color: #fff; margin: 1rem 0 .6rem; }
+.orbit-analytics-empty-state p { margin-bottom: .6rem; }
+.orbit-analytics-empty-state a { display: inline-flex; align-items: center; gap: .4rem; color: #ffba69; font-weight: 700; }
+.orbit-analytics button:focus-visible,.orbit-analytics a:focus-visible,.orbit-analytics input:focus-visible { outline: 3px solid #ffbb5e; outline-offset: 3px; }
+@media(max-width:1220px) { .orbit-analytics-setup { grid-template-columns: 1fr 1fr; } .orbit-analytics-setup>button { grid-column:1/-1; } .orbit-analytics-stats { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media(max-width:780px) { .orbit-analytics-report-grid { grid-template-columns: minmax(0,1fr); } .orbit-analytics-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } .orbit-analytics-setup { grid-template-columns: minmax(0,1fr); } .orbit-analytics-setup>button { grid-column:auto; } }
+@media(max-width:420px) { .orbit-analytics-stats { grid-template-columns:minmax(0,1fr); } .orbit-analytics-head-status { border-radius:12px; } .orbit-analytics-actions>* { width:100%; } }
