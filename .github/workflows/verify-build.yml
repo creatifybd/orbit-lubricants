@@ -45,3 +45,11 @@ jobs:
           test -f dist/seo-manifest.json
           test -f dist/products/index.html
           echo "Staging build verification passed. Nothing was deployed."
+
+      - name: Package verified staging site for manual Hostinger deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-staging-site
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
