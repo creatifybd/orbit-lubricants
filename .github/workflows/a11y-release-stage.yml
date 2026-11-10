@@ -1,0 +1,74 @@
+name: Prepare reviewed Orbit accessibility release candidate
+
+# One-time branch-only release preparation. No Hostinger FTP, no cron.
+on:
+  push:
+    branches: [orbit-mobile-a11y-performance]
+    paths: [.github/workflows/a11y-release-stage.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-a11y-static-release-candidate
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Compile and verify all original catalog products
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+          node scripts/prepare-git-publish.mjs
+      - name: Verify Chrome mobile and desktop functional workflows
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-a11y-stage-preview.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in {1..20}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/qa-browser.mjs
+      - name: Stage only reviewed compiled static files (no deletions)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets products images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::Deletion detected; stop."
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          test "$count" -le 100
+          if git diff --cached --quiet; then
+            echo "Candidate already synchronized."
+            exit 0
+          fi
+          git commit -m "Stage Orbit accessibility and mobile catalog loading improvements"
+          git push origin HEAD:orbit-mobile-a11y-performance
+          echo "Staging-only compiled candidate; production main unchanged."
+      - name: Archive QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-a11y-browser-shots
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7

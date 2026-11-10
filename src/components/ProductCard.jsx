@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, Check, FileText, MessageSquare, Package, Scale } from 'lucide-react';
 
-export const ProductCard = ({ product, onSelect, onInquire, onToggleCompare, isCompared = false, disableCompare = false }) => {
+export const ProductCard = ({ product, onSelect, onInquire, onToggleCompare, isCompared = false, disableCompare = false, prioritizeImage = false }) => {
   const [loaded, setLoaded] = useState(false);
   const standardVisible = product.apiGrade && !product.apiGrade.toLowerCase().includes('not stated');
 
@@ -13,12 +13,12 @@ export const ProductCard = ({ product, onSelect, onInquire, onToggleCompare, isC
       <div className="catalog-product-visual">
         <div className="catalog-product-code">{product.viscosity}</div>
         <div className="catalog-product-lines" />
-        <img className={loaded ? 'loaded' : ''} src={product.image} alt={product.name} loading="lazy" decoding="async" onLoad={() => setLoaded(true)} />
+        <img className={`${loaded ? 'loaded' : ''}${prioritizeImage ? ' orbit-priority-image' : ''}`} src={product.image} alt={product.name} loading={prioritizeImage ? 'eager' : 'lazy'} fetchPriority={prioritizeImage ? 'high' : 'auto'} decoding="async" onLoad={() => setLoaded(true)} />
         <span className="catalog-product-pack"><Package size={13} /> {product.packing}</span>
       </div>
       <div className="catalog-product-content">
         <span className="catalog-product-category">{product.badge}</span>
-        <h3>{product.name}</h3>
+        <h2 className="orbit-product-card-heading">{product.name}</h2>
         {standardVisible && <div className="catalog-product-standard"><FileText size={13} /> {product.apiGrade}</div>}
         <p>{product.description}</p>
         <div className="catalog-product-actions">

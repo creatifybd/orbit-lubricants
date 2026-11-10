@@ -224,6 +224,8 @@ export const Navbar = ({ activePage, setActivePage }) => {
                 style={{ height: '38px', objectFit: 'contain' }}
               />
               <button
+                type="button"
+                aria-label="Close mobile navigation"
                 onClick={() => setMobileOpen(false)}
                 style={{
                   background: '#EDF5FC', border: '1px solid rgba(0,90,171,0.14)',

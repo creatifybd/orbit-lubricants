@@ -151,10 +151,11 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
           {/* Product Grid */}
           {sortedProducts.length > 0 ? (
             <div className="catalog-grid">
-              {sortedProducts.map(product => (
+              {sortedProducts.map((product, index) => (
                 <ProductCard
                   key={product.id}
                   product={product}
+                  prioritizeImage={index === 0}
                   onSelect={(p) => setSelectedProduct(p)}
                   onInquire={handleInquireFromModal}
                   onToggleCompare={toggleComparison}
