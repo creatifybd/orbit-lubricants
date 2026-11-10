@@ -1,6 +1,6 @@
 # Orbit Lubricants — Google Search Console Owner Reports (No Paid Backend)
 
-**Status:** Implemented on a reviewed feature branch. Production deployment and a real Search Console authorization have not yet been verified.
+**Status (2026-11-10):** Search Performance UI shipped and its live JavaScript module verified in the Orbit production bundle. The owner verified `sc-domain:orbit-lubricants.com` in Search Console using DNS TXT. Actual Google OAuth API connection, owner account reporting and real index/image visibility remain unverified. Do not claim real Google metrics without authorized evidence.
 
 ## Purpose
 
@@ -25,13 +25,13 @@ Image Search queries/landing pages indicate appearance in Google's image-results
 
 ## Owner setup
 
-1. Open https://search.google.com/search-console and choose **Add property** → **Domain** → enter `orbit-lubricants.com`. If it already exists, choose that property.
-2. Verify ownership through your DNS provider's TXT record only if prompted; do not change/remove existing DNS records without understanding them. This step may require the domain owner account.
+1. **Completed:** the owner verified the Search Console Domain property `orbit-lubricants.com` on 2026-11-10. Continue using that existing property; don't create duplicates.
+2. **Completed:** a new Hostinger DNS TXT record verified ownership. Preserve the existing verification TXT record; do not modify unrelated SPF, MX or DNS entries.
 3. Open https://console.cloud.google.com and select the **Orbit** Google Cloud project. Enable **Search Console API** (not a new paid service).
 4. In Google Auth Platform, configure one **OAuth Web Application Client ID** with Authorized JavaScript Origin `https://orbit-lubricants.com`. If the application is in Testing mode, ensure the intended Google accounts are allowed test users. The same public OAuth Client ID may be reused for GA4 read-only reporting if its scopes and owner permissions are properly approved.
 5. Open `https://orbit-lubricants.com/admin/` → **Search Performance**. Enter the public OAuth Web Client ID; choose **Domain** or **URL-prefix** property to match your verified Search Console property. Click Save, then Connect Search Console.
 6. Authorize the Google account that has access to the Orbit property. With proper permissions, report rows appear when Google has processed data. If an error says 403/404, check that the exact property is verified and Search Console API enabled.
-7. Submit `https://orbit-lubricants.com/sitemap.xml` in **Indexing → Sitemaps** using the authorized Search Console UI. The sitemap currently contains 52 URLs and 76 product image references; submission is **not** a guarantee Google indexes them.
+7. **Completed and expanded:** the owner submitted `https://orbit-lubricants.com/sitemap.xml` with a successful GSC read on 2026-11-10. The newer production build exposes **53 page URLs**, **114 sitemap image references to 38 DISTINCT original pack images**, and a new `/product-gallery/` with all 38 images. Monitor when Search Console refreshes its discovered-URL count; no repeated submission is needed and submission does **not** mean Google indexed these pages or images.
 8. For initial indexing diagnosis, inspect `/products/nova-hd40-1l/`, `/applications/motorcycle/`, and several additional URLs in Search Console URL Inspection, plus Page Indexing reports.
 9. In **Performance**, switch Search type to **Image** to confirm that actual image-related impressions are appearing. The Admin Search Performance tab reads the corresponding Image Search API data; neither can fabricate traffic that Google has not recorded.
 
