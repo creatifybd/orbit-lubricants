@@ -59,6 +59,12 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Add verified distributors/locations only when real addresses and business details are supplied.
 
 ## P1: Premium design and performance
+- [x] Run isolated production-build Lighthouse baseline (Home mobile: 70 performance/82 accessibility; Home desktop: 95/89; Products mobile: 77/85; SEO 100) — https://github.com/creatifybd/orbit-lubricants/actions/runs/42771954468. This is synthetic preview data, not live field Core Web Vitals.
+- [x] Correct mobile navigation close-button accessible name, footer heading hierarchy, product-card heading hierarchy and several low-contrast text styles; original Orbit pack images untouched.
+- [x] Prioritize the first visible catalog artwork without stretching or editing the original image bytes.
+- [x] Confirm accessibility markup improvements in follow-up lab measurements (Home mobile 95, Home desktop 95, Products mobile 96); browser UI tests and non-deleting static release preparation passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42774089870.
+- [ ] Investigate noisy/worse mobile HOME Lighthouse performance caused by late Google web-font swap CLS; experimental hero timing/secondary-image changes were reverted. Do not claim mobile performance optimization is complete.
+
 - [ ] Differentiate Orbit from household-cleaning site design: automotive/industrial visual storytelling, application-led navigation, richer tech/spec comparisons.
 - [x] Add two-direction, 2-row, hover-pausing product marquee using unchanged original product file URLs, with reduced-motion support; full Vite compile passed.
 - [ ] Review hero visuals, application section and separate Our Story slideshow against approved briefs on desktop and mobile.
