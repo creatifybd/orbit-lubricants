@@ -46,6 +46,14 @@ export const Navbar = ({ activePage, setActivePage }) => {
     setMobileOpen(false);
   };
 
+  // Keep URLs crawlable and preserve normal browser open-in-new-tab behavior.
+  const handleAnchorNav = (event, id) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    handleNav(id);
+  };
+
+
   return (
     <>
       {/* ── Transparent Header Wrapper (Fixed Overlay Over Hero) ── */}
@@ -73,8 +81,10 @@ export const Navbar = ({ activePage, setActivePage }) => {
             height: '75px',
           }}>
             {/* Brand Logo */}
-            <div
-              onClick={() => handleNav('home')}
+            <a
+              href="/"
+              onClick={(event) => handleAnchorNav(event, 'home')}
+              aria-label="Orbit Lubricants — Home"
               style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', flexShrink: 0 }}
             >
               <img
@@ -87,7 +97,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   filter: 'drop-shadow(0 4px 10px rgba(10,37,64,0.12))'
                 }}
               />
-            </div>
+            </a>
 
             {/* Desktop Nav Links (Default White Text + Intelligent Red Glow Hover) */}
             {!isMobile && (
@@ -97,9 +107,11 @@ export const Navbar = ({ activePage, setActivePage }) => {
                   const isHovered = hoveredNav === link.id;
 
                   return (
-                    <button
+                    <a
                       key={link.id}
-                      onClick={() => handleNav(link.id)}
+                      href={link.id === 'home' ? '/' : `/${link.id}/`}
+                      onClick={(event) => handleAnchorNav(event, link.id)}
+                      aria-current={isActive ? 'page' : undefined}
                       onMouseEnter={() => setHoveredNav(link.id)}
                       onMouseLeave={() => setHoveredNav(null)}
                       style={{
@@ -117,6 +129,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                         position: 'relative',
                         transition: 'all 0.25s ease',
                         whiteSpace: 'nowrap',
+                        textDecoration: 'none',
                         display: 'flex',
                         alignItems: 'center'
                       }}
@@ -136,7 +149,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                         }} />
                       )}
                       <span>{link.label}</span>
-                    </button>
+                    </a>
                   );
                 })}
               </nav>
@@ -225,12 +238,14 @@ export const Navbar = ({ activePage, setActivePage }) => {
 
             <nav style={{ padding: '1rem', flex: 1 }}>
               {navLinks.map(link => (
-                <button
+                <a
                   key={link.id}
-                  onClick={() => handleNav(link.id)}
+                  href={link.id === 'home' ? '/' : `/${link.id}/`}
+                  onClick={(event) => handleAnchorNav(event, link.id)}
+                  aria-current={activePage === link.id ? 'page' : undefined}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    width: '100%', textAlign: 'left',
+                    width: '100%', textAlign: 'left', textDecoration: 'none',
                     background: activePage === link.id ? 'rgba(247, 147, 30, 0.10)' : 'transparent',
                     border: 'none', borderBottom: '1px solid rgba(10,37,64,0.08)',
                     padding: '1rem 0.5rem',
@@ -241,7 +256,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
                 >
                   {link.label}
                   <ChevronRight size={18} style={{ color: '#F7931E', opacity: 0.8 }} />
-                </button>
+                </a>
               ))}
             </nav>
 
