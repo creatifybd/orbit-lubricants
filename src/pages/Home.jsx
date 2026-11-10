@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Check, ChevronRight, Gauge, Headphones, PackageC
 import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
+import { ProductMarquee } from '../components/ProductMarquee';
 import heroAutomotive from '../assets/hero/automotive.webp';
 import heroHeavyDuty from '../assets/hero/heavy-duty.webp';
 import heroManufacturing from '../assets/hero/manufacturing.webp';
@@ -91,6 +92,8 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         </div>
       </section>
 
+      <ProductMarquee products={products} />
+
       <section className="section corporate-showcase-section">
         <div className="container">
           <div className="mjl-showcase-grid">
@@ -100,7 +103,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                 <span className="circle-plus"><Plus size={20} /></span>
                 <span className="showcase-eyebrow">Leadership</span>
                 <strong>Board of Directors</strong>
-                <span className="showcase-description">Take a look at the leaders of innovation at the helm of Orbit Lubricants.</span>
+                <span className="showcase-description">Explore the people and principles behind the Orbit portfolio.</span>
               </span>
             </button>
 
@@ -110,7 +113,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                 <span className="circle-plus"><Plus size={20} /></span>
                 <span className="showcase-eyebrow">Portfolio</span>
                 <strong>Product Range</strong>
-                <span className="showcase-description">Engineered for modern passenger cars, heavy trucks and industrial plant machinery.</span>
+                <span className="showcase-description">Explore options for motorcycles, passenger cars, trucks and compatible equipment.</span>
               </span>
             </button>
 
@@ -120,7 +123,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
                 <span className="circle-plus"><Plus size={20} /></span>
                 <span className="showcase-eyebrow">Corporate</span>
                 <strong>Corporate Client Relations</strong>
-                <span className="showcase-description">Our unrivaled attitude towards excellence is a big reason behind our client trust and growth.</span>
+                <span className="showcase-description">Explore Orbit's approach to serving workshops, fleet operators and distribution partners.</span>
               </span>
             </button>
 
@@ -128,9 +131,9 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
               <img src="/images/custom/home-showcase-quality.webp" alt="Orbit quality assurance" className="card-img-bg" loading="lazy" decoding="async" />
               <span className="card-overlay">
                 <span className="circle-plus"><Plus size={20} /></span>
-                <span className="showcase-eyebrow">Certification</span>
-                <strong>Quality Assurance</strong>
-                <span className="showcase-description">Each product goes through acute QA measures to ensure uncompromised quality.</span>
+                <span className="showcase-eyebrow">Product information</span>
+                <strong>Label & Specification Guidance</strong>
+                <span className="showcase-description">Review product-label information and our commitment to clear specifications.</span>
               </span>
             </button>
           </div>
