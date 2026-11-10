@@ -1,0 +1,89 @@
+name: Orbit original pack image gallery - safe one-time QA and staging
+
+on:
+  push:
+    branches: [orbit-all-images-discovery-audit-20261110]
+    paths: [.github/workflows/image-gallery-stage.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-original-image-gallery-stage
+  cancel-in-progress: false
+
+jobs:
+  qa-stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Verify product database, scripts and stable privacy behavior
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run test:analytics
+          npm run test:gsc
+          test -z "${VITE_GA4_MEASUREMENT_ID:-}"
+          npm run build
+          node scripts/prepare-git-publish.mjs
+          grep -Fq 'product-gallery/' sitemap.xml
+          test "$(grep -o '<figure class="card">' product-gallery/index.html | wc -l)" -eq 38
+          if grep -Rl --include='*.js' -F 'G-TEST123456' assets/ | grep -q .; then
+            echo "::error::Fake analytics ID leaked into release"
+            exit 1
+          fi
+      - name: Run desktop and mobile Chrome regressions and static image gallery QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-gallery-test.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for i in {1..25}; do
+            if curl -fsS -o /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/qa-browser.mjs
+          node scripts/qa-image-seo-browser.mjs
+      - name: Stage only original-art-safe static release
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets applications products product-gallery images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::Tracked file deletion detected"
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          echo "Staged safe static updates: $count"
+          if [ "$count" -gt 95 ]; then
+            echo "::error::Unexpectedly large compiled diff"
+            exit 1
+          fi
+          if git diff --cached --quiet; then
+            echo "Already staged"
+            exit 0
+          fi
+          git commit -m "Stage reviewed 38-original-pack public image gallery and discovery links"
+          git push origin HEAD:orbit-all-images-discovery-audit-20261110
+          echo "Staged branch only. Main production is unchanged."
+      - name: Store short-lived screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-gallery-qa-shots
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
