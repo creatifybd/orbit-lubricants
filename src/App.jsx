@@ -100,6 +100,28 @@ export function AppContent() {
     };
   }, []);
 
+  // One anonymous impression per visible content section, after consent.
+  // Raw scroll coordinates or visitor identity are never captured.
+  useEffect(() => {
+    if (activePage === 'admin' || !('IntersectionObserver' in window)) return undefined;
+    const nodes = [...document.querySelectorAll('[data-orbit-section]')];
+    if (!nodes.length) return undefined;
+    const observed = new Set();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const sectionId = entry.target.getAttribute('data-orbit-section');
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.35 ||
+          document.visibilityState !== 'visible' || observed.has(sectionId)) continue;
+        if (trackOrbitEvent('section_view', { section_id: sectionId })) {
+          observed.add(sectionId);
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: [0.35, 0.6] });
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, [activePage]);
+
   if (activePage === 'admin') {
     return <AdminLayout onReturnHome={() => handlePageChange('home')} />;
   }
