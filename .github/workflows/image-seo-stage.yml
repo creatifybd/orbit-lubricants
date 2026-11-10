@@ -1,0 +1,88 @@
+name: Orbit image discovery SEO — complete browser review and staging
+
+# One-time staging workflow only; no recurring schedule, no FTP or Firebase access.
+on:
+  push:
+    branches: [orbit-seo-image-discovery-2026]
+    paths: [.github/workflows/image-seo-stage.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-image-seo-stage-once
+  cancel-in-progress: false
+
+jobs:
+  validate-and-stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - name: Checkout SEO branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Build, validate metadata and preserve approved artwork
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run build
+          node scripts/prepare-git-publish.mjs
+          test -f applications/motorcycle/index.html
+          test -f applications/brake-fluid/index.html
+          test -f products/nova-hd40-1l/index.html
+          grep -Fq 'xmlns:image=' sitemap.xml
+          grep -Fq '<image:loc>https://orbit-lubricants.com/products/nova-hd40-1l.webp</image:loc>' sitemap.xml
+          echo "Original image checksum safety validated by prepare-git-publish.mjs."
+      - name: Run Chrome SEO navigation check against local Vite production preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-image-preview.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in {1..25}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/qa-browser.mjs
+          node scripts/qa-image-seo-browser.mjs
+      - name: Stage strictly allowlisted static SEO release
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets applications products images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::File deletion detected. Aborting."
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          echo "Safe static file additions/updates: $count"
+          if [ "$count" -gt 130 ]; then
+            echo "::error::Unexpectedly large release diff."
+            exit 1
+          fi
+          if git diff --cached --quiet; then
+            echo "Compiled static files already staged."
+            exit 0
+          fi
+          git commit -m "Stage verified 52 Orbit image SEO pages and sitemap"
+          git push origin HEAD:orbit-seo-image-discovery-2026
+          echo "STAGING COMPLETE. Production main unchanged."
+      - name: Archive local QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-image-seo-qa
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7

@@ -2,6 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { initialData } from '../src/data/initialData.js';
+import { buildCategoryPages } from './build-category-pages.mjs';
 
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const origin = 'https://orbit-lubricants.com';
@@ -26,6 +27,8 @@ function renderProductPage(p) {
   unique.add(p.id);
   const description = p.description || `Explore ${p.name} from Orbit Lubricants.`;
   const category = categoryNames.get(p.category) || p.category || 'Lubricants';
+  const categoryUrl = origin + '/applications/' + p.category + '/';
+  const descriptiveAlt = `${p.name} ${p.packing} original Orbit lubricant product pack`;
   // Pack size is a meaningful distinction between otherwise identical variants.
   // This avoids duplicate titles and descriptions without inventing product claims.
   const title = `${p.name} — ${p.packing} | Orbit Lubricants`;
@@ -48,13 +51,27 @@ function renderProductPage(p) {
       .filter(([key]) => key.toLowerCase() !== 'selection guidance')
       .map(([name, value]) => ({ '@type': 'PropertyValue', name, value: String(value) })),
   };
+  const landingPage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': productUrl(p) + '#webpage',
+    name: title,
+    url: productUrl(p),
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      contentUrl: imageUrl(p),
+      name: descriptiveAlt
+    },
+    mainEntity: { '@type': 'Product', name: p.name, url: productUrl(p) }
+  };
   const breadcrumbs = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: origin + '/' },
       { '@type': 'ListItem', position: 2, name: 'Products', item: origin + '/products/' },
-      { '@type': 'ListItem', position: 3, name: p.name, item: productUrl(p) },
+      { '@type': 'ListItem', position: 3, name: category, item: categoryUrl },
+      { '@type': 'ListItem', position: 4, name: p.name + ' — ' + p.packing, item: productUrl(p) },
     ],
   };
   const rows = specifications.map(([key, value]) => `<tr><th scope="row">${esc(key)}</th><td>${esc(value)}</td></tr>`).join('');
@@ -67,14 +84,18 @@ function renderProductPage(p) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(seoDescription).slice(0, 250)}">
 <link rel="canonical" href="${esc(productUrl(p))}">
+<meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="product">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(seoDescription).slice(0, 250)}">
 <meta property="og:url" content="${esc(productUrl(p))}">
 <meta property="og:image" content="${esc(imageUrl(p))}">
+<meta property="og:image:alt" content="${esc(descriptiveAlt)}">
+<meta name="twitter:image" content="${esc(imageUrl(p))}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/logo.png" type="image/png">
 <script type="application/ld+json">${jsonLd(schema)}</script>
+<script type="application/ld+json">${jsonLd(landingPage)}</script>
 <script type="application/ld+json">${jsonLd(breadcrumbs)}</script>
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#0c2b44;background:#f7fafc}
@@ -103,8 +124,8 @@ footer{background:#09263e;color:#deebf4;padding:32px 0}footer a{color:white}
 <body>
 <header><nav class="container" aria-label="Primary"><a href="/"><img src="/logo.png" alt="Orbit Lubricants"></a><a href="/products/">Products</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav></header>
 <main class="container">
-<div class="crumbs"><a href="/">Home</a> / <a href="/products/">Products</a> / ${esc(p.name)}</div>
-<article class="layout"><div class="visual"><img src="${esc(p.image)}" width="600" height="600" alt="${esc(p.name)} – ${esc(p.packing)}" loading="eager" fetchpriority="high"></div>
+<div class="crumbs"><a href="/">Home</a> / <a href="/products/">Products</a> / <a href="/applications/${esc(p.category)}/">${esc(category)}</a> / ${esc(p.name)} — ${esc(p.packing)}</div>
+<article class="layout"><div class="visual"><img src="${esc(p.image)}" width="600" height="600" alt="${esc(descriptiveAlt)}" loading="eager" fetchpriority="high"></div>
 <div><span class="kicker">${esc(category)}</span><h1>${esc(p.name)}</h1><p class="lead">${esc(description)}</p>
 <span class="tag">${esc(p.packing)}</span>${p.viscosity ? `<span class="tag">${esc(p.viscosity)}</span>` : ''}
 <h2>Product information</h2><table><tbody>${rows}</tbody></table>
@@ -153,13 +174,25 @@ for (const p of catalog) {
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, 'index.html'), renderProductPage(p));
 }
-const paths = ['/', '/products/', '/about/', '/contact/', '/finder/', ...catalog.map((p) => `/products/${p.id}/`)];
-const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-  + paths.map((path) => `  <url><loc>${origin}${path}</loc></url>`).join('\n')
+const applicationPages = buildCategoryPages({ dist, categories: initialData.categories, products: catalog });
+const paths = ['/', '/products/', '/about/', '/contact/', '/finder/',
+  ...applicationPages.map((page) => page.path),
+  ...catalog.map((p) => `/products/${p.id}/`)];
+const imageMap = new Map();
+for (const p of catalog) imageMap.set(`/products/${p.id}/`, [p.image]);
+for (const page of applicationPages) imageMap.set(page.path, page.images);
+const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
+  + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
+  + paths.map((path) => {
+    const images = [...new Set(imageMap.get(path) || [])];
+    return '  <url><loc>' + origin + path + '</loc>'
+      + images.map((url) => '<image:image><image:loc>' + origin + esc(url) + '</image:loc></image:image>').join('')
+      + '</url>';
+  }).join('\n')
   + '\n</urlset>\n';
 writeFileSync(join(dist, 'sitemap.xml'), sitemap);
 writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: ${origin}/sitemap.xml\n`);
-writeFileSync(join(dist, 'seo-manifest.json'), JSON.stringify({ products: catalog.length, routes: paths.length }, null, 2));
+writeFileSync(join(dist, 'seo-manifest.json'), JSON.stringify({ products: catalog.length, applications: applicationPages.length, routes: paths.length, imageReferences: catalog.length * 2 }, null, 2));
 const release = {
   commit: process.env.GITHUB_SHA || 'local-development',
   productCount: catalog.length,
@@ -167,4 +200,4 @@ const release = {
   builtAt: new Date().toISOString()
 };
 writeFileSync(join(dist, 'deployment.json'), JSON.stringify(release, null, 2) + '\n');
-console.log(`Generated ${catalog.length} product detail pages and ${paths.length} sitemap URLs.`);
+console.log(`Generated ${catalog.length} product detail pages, ${applicationPages.length} category hubs and ${paths.length} image-enhanced sitemap URLs.`);
