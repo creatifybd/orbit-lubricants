@@ -1,39 +1,46 @@
 import assert from 'node:assert/strict';
-import { chromium } from 'playwright';
+import { readFileSync } from 'node:fs';
 
-const browser=await chromium.launch({channel:'chrome',headless:true});
+// Live Hostinger rejects headless browser probes with HTTP 403.
+// Verify the deployed HTML/JS/source version using bounded read-only HTTP.
+// A successful result is NOT a live UI interaction or real OAuth verification.
 const base='https://orbit-lubricants.com';
-try{
-  const context=await browser.newContext({viewport:{width:1280,height:820}});
-  let apiCalls=0,tagRequests=0;
-  await context.route('**/www.googleapis.com/webmasters/v3/**', route=>{
-    apiCalls+=1;
-    return route.abort();
+async function get(path) {
+  const r=await fetch(base+path,{
+    headers:{'Cache-Control':'no-cache'},
+    signal:AbortSignal.timeout(12000)
   });
-  await context.route('**/googletagmanager.com/**', route=>{
-    tagRequests+=1;
-    return route.abort();
-  });
-  const page=await context.newPage();
-  const errors=[];
-  page.on('pageerror',e=>errors.push(e.message));
-  const response=await page.goto(base+'/admin/',{waitUntil:'domcontentloaded'});
-  assert.equal(response.status(),200,'Orbit admin public shell not reachable');
-  const fields=page.locator('input[type="password"]');
-  assert.equal(await fields.count(),2,'Local preview passcode should need 2 fields');
-  await fields.nth(0).fill('OrbitBrowserQATemporary!2026');
-  await fields.nth(1).fill('OrbitBrowserQATemporary!2026');
-  await page.getByRole('button',{name:/Create Local Preview Passcode/}).click();
-  await page.getByRole('button',{name:'Search Performance'}).click();
-  await page.getByRole('heading',{name:'Google Search Performance'}).waitFor();
-  assert.ok(await page.getByText('No Search Console reports loaded').count());
-  const options=await page.locator('#orbit-search-property option').allTextContents();
-  assert.equal(options.length,2,'Only the two Orbit GSC property variants must be selectable');
-  assert.equal(await page.getByRole('button',{name:'Connect Search Console'}).isDisabled(),true,
-    'Google OAuth button must be disabled until a valid public OAuth Client ID is configured');
-  assert.equal(apiCalls,0,'No Search Console API call before Google authorization');
-  assert.equal(tagRequests,0,'No visitor GA4 tracking should be loaded in unconfigured release');
-  assert.deepEqual(errors,[],'Client JavaScript error on live admin reporting page');
-  console.log('LIVE GSC OWNER UI VERIFIED: actual admin shell, two Orbit properties, no fake reports, OAuth-gated API, no Google tag or client error.');
-  await context.close();
-}finally{await browser.close();}
+  assert.equal(r.status,200,path+' must return HTTP 200');
+  return r.text();
+}
+const expected=JSON.parse(readFileSync('deployment.json','utf8'));
+const live=JSON.parse(await get('/deployment.json?verify=owner-gsc'));
+assert.equal(live.commit,expected.commit,'Stale Hostinger Git build');
+assert.equal(live.productCount,38);
+assert.equal(live.catalogVersion,3);
+const html=await get('/');
+const bundled=html.match(/<script[^>]+src="(\/assets\/[^"]+\.js)"/)?.[1];
+assert.ok(bundled,'No published React application script');
+const client=await get(bundled);
+for(const key of ['Search Performance','Google Search Performance','webmasters.readonly','webmasters/v3/sites/','Image Search']){
+  assert.ok(client.includes(key),'Published JS missing Search Console module: '+key);
+}
+assert.ok(!client.includes('MOCK-GSC-OWNER-TOKEN'),'Test OAuth token leaked into production');
+assert.ok(!client.includes('G-TEST123456'),'Fake GA4 measurement stream leaked');
+const sku=await get('/products/nova-hd40-1l/');
+assert.ok(sku.includes('data-orbit-kind="product"'),'Static product consent adapter missing');
+const hub=await get('/applications/motorcycle/');
+assert.ok(hub.includes('data-orbit-kind="category"'),'Static category consent adapter missing');
+const sitemap=await get('/sitemap.xml');
+assert.equal((sitemap.match(/<loc>/g)||[]).length,52);
+assert.equal((sitemap.match(/<image:loc>/g)||[]).length,76);
+console.log(JSON.stringify({
+  status:'PASS',
+  tested:'Live HTTP version marker, React bundle contents, GSC OAuth module and public SEO pages',
+  bundle:bundled,
+  searchConsoleModule:'published',
+  GA4Measurement:'not configured',
+  serverSideOAuth:'not connected; Google account access required',
+  limitation:'Hostinger HTTP 403 blocks GitHub headless-browser access to /admin; live interactive UI test not established',
+  separateStagingBrowserEvidence:'https://github.com/creatifybd/orbit-lubricants/actions/runs/42790107789'
+},null,2));
