@@ -6,6 +6,20 @@ const base = 'http://127.0.0.1:4173';
 const shots = 'qa-screenshots';
 mkdirSync(shots, { recursive: true });
 const browser = await chromium.launch({ headless: true, channel: 'chrome' });
+
+async function settleScreenshot(page) {
+  // Let the intentional 0.8-second hero motion finish and progressively
+  // load IntersectionObserver images before capturing full-page visual QA.
+  await page.evaluate(async () => {
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    for (let y = 0; y < document.documentElement.scrollHeight; y += 700) {
+      window.scrollTo(0, y);
+      await sleep(45);
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForTimeout(1200);
+}
 const jsErrors = [];
 
 async function checkNoRuntimeError(stage) {
@@ -21,6 +35,7 @@ try {
   await desktop.locator('.premium-hero').waitFor();
   assert.ok(await desktop.locator('.orbit-marquee-product').count() >= 38, 'The two-row product marquee is missing');
   assert.ok(await desktop.getByRole('link', { name: 'Products & Technology' }).count(), 'No crawlable desktop Products link');
+  await settleScreenshot(desktop);
   await desktop.screenshot({ path: shots + '/desktop-home.png', fullPage: true });
   await checkNoRuntimeError('desktop homepage');
 
@@ -31,6 +46,7 @@ try {
   await desktop.locator('.catalog-compare').nth(1).click();
   await desktop.locator('.orbit-compare-table').waitFor();
   assert.equal(await desktop.locator('.orbit-compare-table thead th').count(), 3, 'Comparison needs two product columns');
+  await settleScreenshot(desktop);
   await desktop.screenshot({ path: shots + '/desktop-catalog-comparison.png', fullPage: true });
   await desktop.getByRole('searchbox', { name: 'Search Orbit products by name, grade or pack size' }).fill('brako');
   assert.equal(await desktop.locator('.catalog-product-card').count(), 2, 'Catalog search did not filter Brako variants');
@@ -57,11 +73,13 @@ try {
   mobile.on('pageerror', (error) => jsErrors.push('mobile: ' + error.message));
   await mobile.goto(base + '/', { waitUntil: 'domcontentloaded' });
   await mobile.locator('.premium-hero').waitFor();
+  await settleScreenshot(mobile);
   await mobile.screenshot({ path: shots + '/mobile-home.png', fullPage: true });
   await mobile.getByRole('button', { name: 'Toggle menu' }).click();
   await mobile.getByRole('link', { name: 'Products & Technology' }).click();
   await mobile.locator('.catalog-product-card').first().waitFor();
   assert.equal(await mobile.locator('.catalog-product-card').count(), 38, 'Mobile catalog is incomplete');
+  await settleScreenshot(mobile);
   await mobile.screenshot({ path: shots + '/mobile-catalog.png', fullPage: true });
   const overflow = await mobile.evaluate(() => ({
     pageWidth: document.documentElement.scrollWidth,
