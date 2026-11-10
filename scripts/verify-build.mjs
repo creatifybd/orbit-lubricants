@@ -39,6 +39,7 @@ if (!errors.length) {
     check(paths.includes('https://orbit-lubricants.com' + route), 'Missing sitemap route: ' + route);
   }
 
+  const productTitles = new Set();
   for (const item of initialData.products) {
     const url = 'https://orbit-lubricants.com/products/' + item.id + '/';
     const productHtmlPath = join(dist, 'products', item.id, 'index.html');
@@ -50,6 +51,10 @@ if (!errors.length) {
 
     if (existsSync(productHtmlPath)) {
       const html = readFileSync(productHtmlPath, 'utf8');
+      const title = html.match(/<title>([^<]+)<\\/title>/i)?.[1] || '';
+      check(Boolean(title), 'Missing page title: ' + item.id);
+      check(!productTitles.has(title), 'Duplicate SEO title: ' + title);
+      productTitles.add(title);
       check(html.includes('<link rel="canonical" href="' + url + '">'), 'Wrong canonical URL on ' + item.id);
       const ldJson = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
       const schemas = [];
