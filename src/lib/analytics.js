@@ -142,13 +142,19 @@ export function setOrbitAnalyticsChoice(choice) {
   try {
     window.localStorage.setItem(ANALYTICS_CONSENT_KEY, choice);
   } catch {
-    // Storage can be blocked; never treat this as implicit consent.
+    // Refusal must remain possible even when localStorage is unavailable.
+    if (choice === 'denied') {
+      if (initialized) gtag('consent', 'update', consentPayload(false));
+      return true;
+    }
+    // Never infer permission from a failure to persist consent.
     return false;
   }
   if (choice === 'denied') {
     if (initialized) gtag('consent', 'update', consentPayload(false));
-  } else {
-    initializeOrbitAnalytics();
+  } else if (initializeOrbitAnalytics()) {
+    // An existing gtag instance may have been denied after an earlier choice.
+    gtag('consent', 'update', consentPayload(true));
   }
   return true;
 }
