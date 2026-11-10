@@ -151,4 +151,11 @@ const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 writeFileSync(join(dist, 'sitemap.xml'), sitemap);
 writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: ${origin}/sitemap.xml\n`);
 writeFileSync(join(dist, 'seo-manifest.json'), JSON.stringify({ products: catalog.length, routes: paths.length }, null, 2));
+const release = {
+  commit: process.env.GITHUB_SHA || 'local-development',
+  productCount: catalog.length,
+  catalogVersion: initialData.catalogVersion,
+  builtAt: new Date().toISOString()
+};
+writeFileSync(join(dist, 'deployment.json'), JSON.stringify(release, null, 2) + '\n');
 console.log(`Generated ${catalog.length} product detail pages and ${paths.length} sitemap URLs.`);
