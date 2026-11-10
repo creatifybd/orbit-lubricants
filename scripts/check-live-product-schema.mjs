@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { initialData } from '../src/data/initialData.js';
 
 const origin = 'https://orbit-lubricants.com';
 async function get(path) {
@@ -24,8 +25,11 @@ for (const slug of ['nova-hd40-1l','gearx-80w90-4litres','brako-dot3-500ml']) {
   const page = nodes[0];
   assert.equal(page.mainEntity['@type'], 'Thing');
   assert.equal(page.mainEntity.identifier, slug);
-  assert.equal(page.mainEntity.image, origin + '/products/' + slug + '.webp');
-  assert.equal(page.primaryImageOfPage.contentUrl, origin + '/products/' + slug + '.webp');
+  const original = initialData.products.find((item) => item.id === slug);
+  assert.ok(original, 'SKU missing from verified Orbit catalog');
+  const expectedOriginalImage = origin + original.image;
+  assert.equal(page.mainEntity.image, expectedOriginalImage);
+  assert.equal(page.primaryImageOfPage.contentUrl, expectedOriginalImage);
   assert.ok(html.includes('data-orbit-kind="product"'), url + ': consent script missing');
   assert.ok(html.includes('original Orbit lubricant product pack'), url + ': descriptive product image alt missing');
   assert.ok(!html.includes('"@type":"Product"'), url + ': ineligible Product markup still live');
