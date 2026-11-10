@@ -7,8 +7,9 @@ import { ContentManager } from './ContentManager';
 import { InquiriesManager } from './InquiriesManager';
 import { SiteSettings } from './SiteSettings';
 import { AnalyticsDashboard } from './AnalyticsDashboard';
+import { SearchConsoleDashboard } from './SearchConsoleDashboard';
 import { 
-  LayoutDashboard, Package, FileText, Mail, Settings, BarChart3,
+  LayoutDashboard, Package, FileText, Mail, Settings, BarChart3, Search,
   LogOut, Globe, Shield, Sparkles 
 } from 'lucide-react';
 
@@ -23,6 +24,7 @@ export const AdminLayout = ({ onReturnHome }) => {
   const menuItems = [
     { id: 'overview', label: 'Dashboard Overview', icon: LayoutDashboard },
     { id: 'analytics', label: 'Website Analytics', icon: BarChart3 },
+    { id: 'search-performance', label: 'Search Performance', icon: Search },
     { id: 'products', label: 'Product Manager', icon: Package },
     { id: 'content', label: 'Content CMS', icon: FileText },
     { id: 'inquiries', label: 'Leads & Inquiries', icon: Mail },
@@ -137,6 +139,7 @@ export const AdminLayout = ({ onReturnHome }) => {
         </div>
         {activeTab === 'overview' && <DashboardOverview setActiveTab={setActiveTab} />}
         {activeTab === 'analytics' && <AnalyticsDashboard />}
+        {activeTab === 'search-performance' && <SearchConsoleDashboard />}
         {activeTab === 'products' && <ProductManager />}
         {activeTab === 'content' && <ContentManager />}
         {activeTab === 'inquiries' && <InquiriesManager />}
