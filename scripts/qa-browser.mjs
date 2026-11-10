@@ -5,7 +5,7 @@ import { chromium } from 'playwright';
 const base = 'http://127.0.0.1:4173';
 const shots = 'qa-screenshots';
 mkdirSync(shots, { recursive: true });
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, channel: 'chrome' });
 const jsErrors = [];
 
 async function checkNoRuntimeError(stage) {
