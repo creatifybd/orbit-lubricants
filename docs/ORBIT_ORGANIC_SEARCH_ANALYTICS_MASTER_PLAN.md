@@ -39,12 +39,12 @@
 - [ ] Establish consistent NAP identity across authoritative directories and genuine supplier/workshop partnerships. Digital PR and links must be editorial/earned; avoid paid link farms.
 
 ## P2 — Analytics with a strict zero-upfront-cost gate
-- [x] Consent-first GA4 client tracking code with privacy-regression and Chrome tests exists in a separate **draft PR #2**; it is **not live or collecting actual Orbit traffic**.
+- [x] Consent-first GA4 client and Owner Analytics UI are live with **no configured GA4 Measurement ID**, so they are not yet collecting actual Orbit visitor traffic.
 - [ ] Verify/create Orbit-specific GA4 property and exact **G-...** web stream Measurement ID. Firebase project existence alone does not imply GA4 enabled.
 - [ ] Owner approves privacy text and consent. Enable tags without duplicate GA4/GTM pageviews; event scope includes page view, SKU/detail, category, on-site search (never raw PII), comparisons and contact-draft engagement.
-- [ ] Track product-detail static HTML pages with the same real consent gating; the React-only adapter does not yet cover them.
+- [x] Add the same strict opt-in consent key to all 38 standalone product and nine application pages, with GA4 view_item/view_item_list events. Browser tests pass; actual reporting waits for a verified GA4 Measurement ID.
 - [ ] Authenticate Admin users with Firebase Google Authentication & strict authorization. Browser-local passcode is not secure central admin identity. Spark provides some free quota for Auth/Firestore; feature eligibility must be checked per actual region and plan.
-- [ ] Build a private admin reporting view backed by **authorized** GA4 Data API and Search Console data. Use OAuth/secure server-side API access or reviewed private Looker Studio embed. Do not place GA4 private tokens, credential JSON or customer data in public Vite files. Serverless Functions deployment may require billing/Blaze; stay on Spark unless explicitly approved.
+- [x] Add Google OAuth read-only Owner Analytics UI backed by GA4 Data API; implementation is published but real OAuth/Property permissions are unverified. Search Console data inside Admin remains a separate pending milestone. Never expose secrets or visitor PII.
 - [ ] Admin KPIs: active/realtime users, sessions, organic traffic, page/section engagement, top SKUs and categories, search result counts, comparison interactions, enquiry drafts vs verified submitted leads, geography/referrer at privacy-safe aggregate levels, indexed URL count and GSC Image Search impressions.
 - [ ] Test all events in GA4 DebugView/Tag Assistant, link Search Console to GA4, publish a privacy-safe owner dashboard and verify cross-device access. No invented visitor statistics or “live” placeholder counters.
 - [ ] Enquiry `generate_lead` **only** after a trusted backend accepts and persists a real message. On Spark, evaluate a permitted no-cost solution before introducing Cloud Functions billing.
