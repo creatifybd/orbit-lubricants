@@ -1,5 +1,13 @@
 # Orbit Lubricants — Enterprise Website Recovery & Upgrade Checklist
 
+## Production release milestone — LIVE VERIFIED (2026-11-10)
+- [x] Protected Git-root static release deployed to orbit-lubricants.com through existing Hostinger Git connection, with no manual FTP or full folder deletion.
+- [x] Live marker: productCount 38, catalogVersion 3; JS bundle matches reviewed release. Live HTTP/static SEO tests passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42766014457.
+- [x] Actual live desktop and mobile Chromium QA passed: catalog 38, dual marquee, search, comparison, direct product details, mobile navigation, no horizontal overflow or JS errors: https://github.com/creatifybd/orbit-lubricants/actions/runs/42766299374.
+- [x] Restricted source access, HTTP HEAD 403 for sensitive paths. Original product imagery left untouched.
+- [x] Pinned pre-release branch `orbit-pre-release-2026-11-10` and scoped rollback capsule; neither constitutes a verified complete hosting restore.
+- [ ] Remaining priorities: secure server-backed Admin CMS & Auth, enquiry delivery, privacy/consent-aware analytics, Search Console, TDS/SDS editorial validation, comprehensive SEO/performance/accessibility QA and final owner sign-off.
+
 Audit date: 2026-11-10 (Asia/Dhaka).
 Production: https://orbit-lubricants.com/
 Repository: https://github.com/creatifybd/orbit-lubricants
@@ -13,7 +21,7 @@ Feature branch: orbit-enterprise-website-upgrade
 - Changes requiring account access must be verified through proper signed-in administration, not guessed.
 
 ## P0: Production recovery — BLOCKED by external access
-- [x] Identify repo and current production difference: 38 product records in main source; live website still shows 14.
+- [x] Diagnose and resolve stale release: previous production served 14 products while GitHub had 38. Current production serves reviewed 38-pack catalog (verified 2026-11-10).
 - [x] Verify all 38 source product image files exist in public/products (filenames).
 - [x] Diagnose previous CI false-positive: checked generic production assets, not exact build commit.
 - [x] Add live deployment.json fingerprint check to .github/workflows/deploy.yml on main.
@@ -22,11 +30,12 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Freeze automatic main-branch FTPS release: main/.github/workflows/deploy.yml now supports workflow_dispatch only, pending verified Orbit directory/backup (commit 29a8702).
 - [x] Inspect Hostinger's Orbit-specific File Manager: public_html contains index.html, assets, and separately dist plus .git/.github/src and project files; high confidence public_html is the domain document root. Screenshot received on 2026-11-10.
 - [ ] Confirm absolute /home/.../public_html folder path and matching FTP_SERVER_DIR in FTP Accounts (do not disclose credentials).
-- [x] Read-only staging-to-production diagnostic confirms live JS asset hash differs and /deployment.json returns 404 (run 42758542859); the new release has not reached production.
+- [x] Historical mismatch diagnosed and resolved: previously live /deployment.json returned 404 and JS differed; current deployed marker validates catalogVersion 3, 38 products and the expected JS hash (run 42766014457).
 - [ ] Compare document root with secret FTP_SERVER_DIR and FTP account mapping. DO NOT expose secret values.
 - [x] Identify Hostinger Git-to-root sync as active: main-branch Apache deny rules deployed to production, changing public HEAD statuses 200 → 403 while the old compiled JS remained unchanged (CI evidence 42762603138). FTP auto-deploy remains disabled; Git integration is the likely current publisher.
 - [ ] Confirm Git integration branch/path in Hostinger Deployments UI and ensure no parallel pipeline will overwrite a release.
-- [ ] Deploy latest production bundle and verify exact marker SHA, catalog count, assets and browser rendering on both www and apex domains.
+- [x] Merge compiled static release to GitHub main after staging / browser QA; verify actual apex domain marker, 38 products, 43 sitemap URLs, original image, product page and source protection. Runs 42766014457 and 42766299374.
+- [ ] Verify www-to-apex redirects, HTTP errors/caches and mobile network performance in further independent audit.
 - [x] Build a scoped, non-destructive static rollback capsule from main index.html/.htaccess and immutable CSS/JS via CI, with seven-day artifact retention (run 42762603138). Existing Git history and 2026-11-08 Hostinger backup are secondary recovery options. This is NOT a full hosting backup.
 - [ ] Verify rollback rehearsal against the actual serving domain and keep legacy assets untouched during the controlled production release.
 
@@ -85,7 +94,8 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Remove or clarify several unsupported homepage QA/certification and local CMS live-health assertions; full copy review still pending.
 - [ ] Complete human editorial review of all pages in approved language(s).
 - [ ] Establish acceptance matrix: critical forms deliver, editor actions persist cross-device, all approved SKUs display, no broken links.
-- [ ] Verify production after deployment with version marker, browser interactions and rollback readiness.
+- [x] Verify live production release marker, 38 product records, 43 sitemap URLs, static product pages, original artwork, restricted source HEAD and Chrome desktop/mobile interactions. Runs 42766014457 and 42766299374.
+- [ ] Rehearse restoring pinned pre-release branch on private staging; keep Git history, immutable assets and last Hostinger backup available.
 - [ ] Obtain owner final sign-off before declaring website fully complete.
 
 
@@ -99,7 +109,8 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Conservative X-Content-Type-Options, Referrer-Policy, X-Frame-Options and Permissions-Policy headers added to both FTP and root-hosting .htaccess variants; not yet verified on Hostinger.
 - [x] Safe staging build packaged as seven-day GitHub artifact, with no FTP push: https://github.com/creatifybd/orbit-lubricants/actions/runs/42757832132.
 - [x] Re-run staging production build and local HTTP tests after marquee, compare, navigation, admin and security-header edits; passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42758542859.
-- [ ] Before production merge, confirm fresh real-browser mobile/desktop QA, original-art SHA checks, exact Git-root static files, rollback capsule, release identity and production verification. Secure Firebase central CMS and analytics may be staged as separate follow-on releases, never misrepresented as already active.
+- [x] Before production merge: real desktop/mobile Chromium QA, original-product byte integrity, Git-root static release check, rollback capsule, source protection and version fingerprint passed. GitHub PR #1 merged into main as 3efbc890d01f058dc2b835d156b40908a7e15803.
+- [ ] Finish real Firebase CMS, lead delivery, analytics and Search Console in separate reviewed milestones, not implied by static-site success.
 
 
 ## Urgent hosting source-exposure risk (2026-11-10)
@@ -110,7 +121,7 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Keep the Nov 8 Hostinger automated backup as a secondary rollback point. Do not press Restore.
 - [x] Metadata-only live HEAD audit initially returned HTTP 200 for /.github/workflows/deploy.yml, /package.json, /src/App.jsx and /Selected%20Designs.zip; /.git/HEAD was 403. After a minimal main .htaccess safety commit, ALL five returned 403 (run 42762603138). No file bodies were downloaded.
 - [ ] Perform a fuller security/log review; a 403 response reduces direct access but cannot prove no previous download or other exposed paths.
-- [x] Apply minimal source/archive deny rules to production root .htaccess and verify live HTTP 403 results; more complete security headers remain staging-only until release.
+- [x] Deploy source/archive deny rules via GitHub and verify live HTTP 403. Conservative static hosting security headers also included in the new compiled release.
 - [ ] Move all repository source, archives and build infrastructure OUTSIDE public_html in a controlled post-backup release. The public document root should contain compiled `dist/` contents only, not a Git checkout.
 - [ ] Optionally inspect Hostinger Deployments to confirm the exact linked branch and current publishing configuration. Git-to-root behavior is supported by the live .htaccess propagation test.
 
