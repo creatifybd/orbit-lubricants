@@ -230,3 +230,16 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Continue indexing follow-up: successful Live Test eligibility is not actual indexed status; revisit `URL Inspection → Google Index` and Page Indexing report after Google processes the sitemap.
 
 Detailed reasoning: `docs/PRODUCT_SNIPPET_INVALID_ITEMS_DIAGNOSTIC.md`.
+
+## 38-product Google Images readiness and gallery — 2026-11-10
+
+- [x] Owner reports that Google Images currently displays mostly NOVA HD40; **do not misrepresent** a single surfaced image as evidence all 38 are indexed, nor claim that 76 sitemap references equal 76 distinct original photos.
+- [x] **Live technical audit all 38:** 38/38 image URLs HTTP 200, valid WebP MIME/bytes, SHA-256 contents all distinct, no noindex/X-Robots/robots blocks, exact canonical/OG/ImageObject and HTML image references on SKU pages; 9/9 application hubs link to their products. Report: https://github.com/creatifybd/orbit-lubricants/actions/runs/42852761957.
+- [x] Add a public **/product-gallery/** with all 38 original pack images, nine category sections, descriptive pack-name/grade/size captions, real product links and unique canonical. Original branded image files remain byte-identical.
+- [x] Expand sitemap from 52 to **53 page URLs**, with **114 references to the same 38 distinct original image files** (SKU + application + gallery), not 114 unique images.
+- [x] Chrome desktop/mobile, gallery links and original image integrity QA successful: https://github.com/creatifybd/orbit-lubricants/actions/runs/42854025322; zero original image changes/deletions.
+- [ ] Check Hostinger LIVE marker, /product-gallery/, 53 URLs/114 image references after merge before calling gallery live.
+- [ ] **Google's actual indexing of 38 product pages/images is unknown**: Search Console verification/sitemap submission happened Nov 10 and Indexing Report was still processing. Google decides crawling and ranking; continue Page Indexing/URL Inspection and Image Search Performance over days/weeks.
+- [ ] Real keyword ranking for grade-specific/generic queries requires manufacturer-approved technical content, useful buyer guides, genuine business authority and external citations. No fabricated SEO statistics, fake ratings, spammy submissions or keyword stuffing.
+
+Audit details: `docs/GOOGLE_IMAGES_ALL_38_AUDIT_20261110.md`.
