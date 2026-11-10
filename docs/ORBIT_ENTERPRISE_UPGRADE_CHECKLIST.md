@@ -243,3 +243,10 @@ Detailed reasoning: `docs/PRODUCT_SNIPPET_INVALID_ITEMS_DIAGNOSTIC.md`.
 - [ ] Real keyword ranking for grade-specific/generic queries requires manufacturer-approved technical content, useful buyer guides, genuine business authority and external citations. No fabricated SEO statistics, fake ratings, spammy submissions or keyword stuffing.
 
 Audit details: `docs/GOOGLE_IMAGES_ALL_38_AUDIT_20261110.md`.
+
+## GSC Search Performance processing — 2026-11-10
+- [x] Owner screenshot shows Google Search Console **Performance → 3 months** for `sc-domain:orbit-lubricants.com` displaying **“Processing data, please check again in a day or so”**; Search type (Web text) selector disabled. This does not mean traffic is zero, and the current evidence cannot establish image impressions or rankings.
+- [x] Published an evidence-grounded nine-family **Grade-wise Search Content Plan**, distinguishing SAE engine, gear, ATF/CVTF, DOT and bulk packaging safely: `docs/GRADE_WISE_SEARCH_CONTENT_PLAN_20261110.md`.
+- [ ] Recheck official Search Console Performance and Page indexing after processing completes. Then inspect **Search type → Image**, Pages and Queries; record only actual clicks/impressions/indexing.
+- [ ] Editorial review + production build of a substantial *single* grade selection guide; do not publish shallow keyword doorway pages, false grade compatibility, invented lab data, certification or ratings.
+- [ ] Configure owner OAuth Web Client ID and verified GSC property to retrieve Search Performance in live Orbit Admin; real account connection still unverified.
