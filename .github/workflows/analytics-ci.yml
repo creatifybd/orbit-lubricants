@@ -1,0 +1,54 @@
+name: Orbit analytics and privacy regression QA
+
+# Bounded, one-time test workflow on staging. No FTP, Firebase or
+# external analytics property can be altered by this workflow.
+on:
+  push:
+    branches: [orbit-analytics-consent-foundation]
+    paths:
+      - .github/workflows/analytics-ci.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbit-analytics-consent-qa
+  cancel-in-progress: false
+
+jobs:
+  privacy-qa:
+    name: Privacy unit tests, production build and Chrome consent checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout staging code
+        uses: actions/checkout@v4
+      - name: Install Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install app dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Verify PII-safe event whitelist
+        run: npm run test:analytics
+      - name: Build an isolated site with a TEST measurement ID
+        env:
+          VITE_GA4_MEASUREMENT_ID: G-TEST123456
+        run: npm run build
+      - name: Install Playwright driver (Chrome is pre-installed on runner)
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Verify real Chrome consent choices on local preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-analytics-preview.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in {1..25}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/tests/consent.browser.mjs
+          echo "No production deployment or real GA4 property was contacted."
