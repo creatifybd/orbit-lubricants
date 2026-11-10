@@ -149,3 +149,28 @@ Feature branch: orbit-enterprise-website-upgrade
 3. Google Cloud/Firebase Orbit project owner permissions or safe public web-app configuration; approve admin emails through secure channels.
 4. Google Search Console verified domain property and GA4/GTM account (IDs can be supplied without secrets).
 5. Original Orbit product master assets and evidence for unverified specs, product documentation, contact details and any approved content.
+
+
+## Verified milestones, latest — 2026-11-10
+
+### Technical SEO production
+- [x] Live public crawler audit tested all 43 sitemap URLs for HTTP 200, canonical metadata, titles/descriptions and Product/Breadcrumb data. Baseline had 12 warnings (11 duplicate pack variant titles, 1 www redirect), run 42770982021.
+- [x] Fixed pack-size-specific unique titles/descriptions and product schema, plus Orbit-only www-to-apex redirect, without changing original packaging visuals. PR #3 merged.
+- [x] Re-audited live: 43/43 URLs HTTP 200, 0 critical errors, **0 audit warnings**, www redirect verified: https://github.com/creatifybd/orbit-lubricants/actions/runs/42771614155.
+- [ ] Google Search Console indexing, click/impression data and search position NOT yet verified; sitemap HTTP accessibility does not mean pages are indexed.
+
+### Privacy and conversion measurement
+- [x] Implemented consent-first analytics adapter with strict PII-free event list, opt-in/out/revocation and Google Consent Mode v2 in **draft PR #2**, not live: https://github.com/creatifybd/orbit-lubricants/pull/2.
+- [x] Run privacy unit tests, fake GA4 test-ID production build and real Chrome opt-in/opt-out QA: https://github.com/creatifybd/orbit-lubricants/actions/runs/42770355507.
+- [ ] Verify Orbit-specific GA4 Measurement ID and owner privacy/consent notice before activating any live visitor tracking. Static product HTML still needs its own consent-aware coverage.
+- [ ] Firebase Auth/Firestore/Storage server-backed admin CMS and real enquiry delivery remain pending; no false `generate_lead` allowed from a local mailto draft.
+
+### Mobile accessibility, functional QA and performance
+- [x] Isolated Lighthouse baseline: Home Mobile P70/A82, Home Desktop P95/A89, Products Mobile P77/A85, SEO100. This is synthetic local preview data, not field CWV: https://github.com/creatifybd/orbit-lubricants/actions/runs/42771954468.
+- [x] Improved named mobile close controls, contrast, semantic heading order and first catalog product image priority **without modifying original product image bytes**.
+- [x] Real browser QA and release staging passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42774089870. PR #4 merged into main as 99385ed5fac18830fc1224da7161cec4b7a2443d.
+- [x] Exact live JS bundle/38-SKU/catalog-v3/43-sitemap/protected source verification passed after merge: https://github.com/creatifybd/orbit-lubricants/actions/runs/42774443705.
+- [x] Synthetic follow-up accessibility scores: Home Mobile 95, Home Desktop 95, Products Mobile 96. These are not WCAG certification.
+- [ ] Mobile performance STILL unresolved. Lab Home Mobile fluctuated/worsened (49–50 in two tests), primarily due to late Google web-font swapping causing layout shift. Experimental hero timing/loading changes were reverted; do not claim mobile performance improved.
+- [ ] Review actual real-user CrUX/field Core Web Vitals and approve a visually checked font loading strategy, responsive product thumbnails only if permitted without changing brand imagery.
+
