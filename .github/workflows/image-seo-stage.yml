@@ -1,4 +1,4 @@
-name: Orbit image discovery SEO — isolated review and release prep
+name: Orbit image discovery SEO — complete browser review and staging
 
 # One-time staging workflow only; no recurring schedule, no FTP or Firebase access.
 on:
