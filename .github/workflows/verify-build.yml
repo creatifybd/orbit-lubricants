@@ -86,6 +86,23 @@ jobs:
       - name: Compare live Orbit bundle fingerprint without changing production
         run: node scripts/diagnose-live.mjs
 
+      - name: Rehearse non-destructive Hostinger Git-root release (no push)
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/prepare-git-publish.mjs
+          test -f products/nova-hd40-1l/index.html
+          test -f products/index.html
+          test -f deployment.json
+          test -f sitemap.xml
+          test -f robots.txt
+          test -f .htaccess
+          if git diff --name-only --diff-filter=D | grep .; then
+            echo "::error::A tracked file was deleted during staging. Release aborted."
+            exit 1
+          fi
+          echo "Git-root release rehearsal passed, with no deletion or server changes."
+
       - name: Check public web-root exposure using HEAD only
         run: node scripts/probe-exposure.mjs
 
