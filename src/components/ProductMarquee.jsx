@@ -40,7 +40,7 @@ export function ProductMarquee({ products = [] }) {
   const secondRow = products.slice(midpoint);
 
   return (
-    <section className="orbit-product-marquee section" aria-labelledby="orbit-marquee-title">
+    <section data-orbit-section="product_marquee" className="orbit-product-marquee section" aria-labelledby="orbit-marquee-title">
       <div className="container orbit-marquee-head">
         <div>
           <span className="premium-kicker dark">Original product lineup</span>
