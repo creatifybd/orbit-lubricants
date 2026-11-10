@@ -1,0 +1,26 @@
+name: Audit live Orbit pack images and image search prerequisites
+
+on:
+  push:
+    branches: [orbit-all-images-discovery-audit-20261110]
+    paths: [.github/workflows/image-crawl-audit.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbit-one-time-image-crawl-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Read-only crawl of 38 images, metadata and nine categories
+        run: node scripts/audit-live-image-readiness.mjs
