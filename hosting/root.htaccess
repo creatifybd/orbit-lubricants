@@ -20,6 +20,10 @@
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Canonicalise ONLY Orbit's www hostname; other Hostinger domains are untouched.
+  RewriteCond %{HTTP_HOST} ^www\.orbit-lubricants\.com$ [NC]
+  RewriteRule ^ https://orbit-lubricants.com%{REQUEST_URI} [R=301,L,NE]
+
   # Protect private source directories that must never be hosted in public_html.
   # A future release should publish compiled dist CONTENTS only.
   RewriteRule ^(?:\.git|\.github|\.builds|\.env|src|scripts|hosting|deployment|docs|node_modules)(?:/|$) - [F,L,NC]
