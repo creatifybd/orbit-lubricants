@@ -69,7 +69,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
       </section>
 
       {/* Main Content */}
-      <section className="section">
+      <section data-orbit-section="contact_form" className="section">
         <div className="container">
           <div className="contact-layout" style={{
             display: 'grid',
