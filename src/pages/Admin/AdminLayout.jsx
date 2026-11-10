@@ -118,6 +118,21 @@ export const AdminLayout = ({ onReturnHome }) => {
 
       {/* Main Content Area */}
       <main className="admin-content">
+        <div
+          role="status"
+          style={{
+            marginBottom: '1.5rem',
+            padding: '1rem 1.25rem',
+            background: 'rgba(251, 191, 36, 0.12)',
+            border: '1px solid rgba(251, 191, 36, 0.35)',
+            borderRadius: '10px',
+            color: '#FDE68A',
+            lineHeight: 1.6,
+            fontSize: '0.9rem'
+          }}
+        >
+          <strong>Browser-only CMS preview.</strong> Edits and any locally stored enquiries are not shared with the live website or another device. This is not a secure central administration system. Export a local backup before making major changes.
+        </div>
         {activeTab === 'overview' && <DashboardOverview setActiveTab={setActiveTab} />}
         {activeTab === 'products' && <ProductManager />}
         {activeTab === 'content' && <ContentManager />}
