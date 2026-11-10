@@ -11,37 +11,90 @@ import { Contact } from './pages/Contact';
 import { LubricantFinder } from './components/LubricantFinder';
 import { AdminLayout } from './pages/Admin/AdminLayout';
 
-// Determine initial page from URL hash
+// Support old hash links and new crawlable paths, including trailing slashes.
+// Product detail pages are generated separately at /products/:slug/.
 function getInitialPage() {
-  const hash = window.location.hash.replace('#', '').replace('/', '').toLowerCase();
-  const path = window.location.pathname.replace('/', '').toLowerCase();
-  if (hash === 'admin' || path === 'admin') return 'admin';
-  if (hash === 'products' || path === 'products') return 'products';
-  if (hash === 'about' || path === 'about') return 'about';
-  if (hash === 'contact' || path === 'contact') return 'contact';
-  if (hash === 'finder' || path === 'finder') return 'finder';
+  const hash = window.location.hash.slice(1).split('/').filter(Boolean).join('/').toLowerCase();
+  const path = window.location.pathname.split('/').filter(Boolean).join('/').toLowerCase();
+  const routes = ['admin', 'products', 'about', 'contact', 'finder'];
+  // Legacy hash selection takes precedence over the underlying document URL.
+  if (routes.includes(hash)) return hash;
+  if (routes.includes(path)) return path;
   return 'home';
 }
+
+const PAGE_METADATA = {
+  home: {
+    title: 'Orbit Lubricants Bangladesh | Engine Oil, Gear Oil & Brake Fluid',
+    description: 'Explore Orbit Lubricants in Bangladesh: motorcycle, passenger-car and heavy-duty engine oils, gear oils, brake fluids and transmission fluids.'
+  },
+  products: {
+    title: 'Engine Oil, Gear Oil & Brake Fluid Catalog | Orbit Lubricants',
+    description: 'Browse Orbit Lubricants oils and fluids by application, viscosity, performance class and pack size.'
+  },
+  about: {
+    title: 'About Orbit Lubricants | Bangladesh Automotive Lubricants',
+    description: 'Learn about Orbit Lubricants and our automotive, motorcycle, heavy-duty and transmission fluid range.'
+  },
+  contact: {
+    title: 'Contact Orbit Lubricants | Product & Distributor Enquiries',
+    description: 'Contact Orbit Lubricants for product details, dealership and bulk supply enquiries in Bangladesh.'
+  },
+  finder: {
+    title: 'Lubricant Finder | Choose By Application | Orbit Lubricants',
+    description: 'Explore Orbit lubricants by application. Verify vehicle or equipment requirements before choosing a grade.'
+  },
+  admin: {
+    title: 'Local CMS Preview | Orbit Lubricants',
+    description: 'Browser-local content management preview, not a public management portal.'
+  }
+};
 
 export function AppContent() {
   const [activePage, setActivePage] = useState(getInitialPage);
   const [selectedProductForInquiry, setSelectedProductForInquiry] = useState(null);
 
-  // Sync URL hash with page state
+  // Use canonical paths for new navigation without reloading the React app.
+  // Existing #products links remain readable through getInitialPage.
   const handlePageChange = (pageId) => {
+    const url = pageId === 'home' ? '/' : `/${pageId}/`;
+    window.history.pushState({ page: pageId }, '', url);
     setActivePage(pageId);
-    window.location.hash = pageId === 'home' ? '' : pageId;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Listen for hash changes (e.g., user types #admin in URL)
+  // Keep canonical, description, Open Graph and title consistent with the visible route.
+  // Pre-rendered category pages contain the same metadata in their initial HTML.
   useEffect(() => {
-    const handleHashChange = () => {
-      const newPage = getInitialPage();
-      setActivePage(newPage);
+    const route = PAGE_METADATA[activePage] || PAGE_METADATA.home;
+    const pagePath = activePage === 'home' ? '/' : `/${activePage}/`;
+    const canonicalUrl = `https://orbit-lubricants.com${pagePath}`;
+
+    document.title = route.title;
+    const setMeta = (selector, attribute, value) => {
+      const element = document.head.querySelector(selector);
+      if (element) element.setAttribute(attribute, value);
     };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    setMeta('meta[name="description"]', 'content', route.description);
+    setMeta('meta[property="og:title"]', 'content', route.title);
+    setMeta('meta[property="og:description"]', 'content', route.description);
+    setMeta('meta[property="og:url"]', 'content', canonicalUrl);
+    setMeta('meta[name="robots"]', 'content', activePage === 'admin' ? 'noindex,nofollow' : 'index,follow,max-image-preview:large');
+    if (activePage !== 'admin') {
+      const canonical = document.head.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.setAttribute('href', canonicalUrl);
+    }
+  }, [activePage]);
+
+  // Keep browser back/forward buttons and legacy hash links working.
+  useEffect(() => {
+    const handleLocationChange = () => setActivePage(getInitialPage());
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
   }, []);
 
   if (activePage === 'admin') {

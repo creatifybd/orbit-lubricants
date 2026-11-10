@@ -44,7 +44,8 @@ const bulkPack = (id, name, packing, image, color) => product({
 });
 
 export const initialData = {
-  catalogVersion: 2,
+  // Version 3 forces stale browser-local 14-pack catalogs to refresh to the verified 38-pack lineup.
+  catalogVersion: 3,
   hero: {
     eyebrow: 'Automotive & heavy-duty lubricants', title: 'Engineered protection for every journey.',
     subtitle: 'Explore Orbit lubricants for motorcycles, passenger vehicles, CNG engines, heavy-duty diesel fleets and transmission systems.',

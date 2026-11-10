@@ -1,0 +1,22 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function orbitAdmin() {
+      return request.auth != null && request.auth.token.orbitAdmin == true;
+    }
+
+    // Public, editor-approved original product images only.
+    match /approvedProductImages/{productId}/{filename} {
+      allow read: if true;
+      allow create, update: if orbitAdmin()
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/(png|jpeg|webp)');
+      allow delete: if orbitAdmin();
+    }
+
+    // No public unreviewed uploads or customer documents.
+    match /{path=**} {
+      allow read, write: if false;
+    }
+  }
+}

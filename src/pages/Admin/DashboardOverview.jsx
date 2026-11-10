@@ -27,14 +27,14 @@ export const DashboardOverview = ({ setActiveTab }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.4rem' }}>
             <Sparkles style={{ color: '#F7941D' }} size={18} />
             <span style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontFamily: 'var(--font-mono)' }}>
-              LIVE SYSTEM HEALTH: OPTIMAL
+              LOCAL CMS PREVIEW — NOT A LIVE HEALTH CHECK
             </span>
           </div>
           <h2 style={{ color: '#FFFFFF', fontSize: '1.75rem', fontFamily: 'var(--font-display)' }}>
             Welcome to Orbit CMS Dashboard
           </h2>
           <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.94rem' }}>
-            Real-time management portal for Orbit Lubricant Industries.
+            This dashboard currently uses browser-local data. Changes here do not publish to the live website or sync across devices.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export const DashboardOverview = ({ setActiveTab }) => {
           </div>
           <div>
             <div style={{ fontSize: '0.8rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Pending Inquiries
+              Local Inquiry Records
             </div>
             <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#FFFFFF', fontFamily: 'var(--font-display)' }}>
               {newInquiriesCount}
@@ -135,10 +135,10 @@ export const DashboardOverview = ({ setActiveTab }) => {
           </div>
           <div>
             <div style={{ fontSize: '0.8rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Site Status
+              Browser Mode
             </div>
             <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#34D399', fontFamily: 'var(--font-display)' }}>
-              {settings.maintenanceMode ? 'Maintenance' : 'Live & Active'}
+              Local preview only
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ export const DashboardOverview = ({ setActiveTab }) => {
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
           <h3 style={{ color: '#FFFFFF', fontSize: '1.2rem', fontFamily: 'var(--font-display)' }}>
-            Recent Customer & Distributor Leads
+            Locally Stored Inquiry Records
           </h3>
           <button onClick={() => setActiveTab('inquiries')} className="btn btn-sm btn-outline" style={{ color: '#F8FAFC' }}>
             View All ({inquiries.length})

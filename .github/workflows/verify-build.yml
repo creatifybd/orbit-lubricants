@@ -1,0 +1,143 @@
+name: Orbit staging build verification
+
+on:
+  push:
+    branches:
+      - orbit-enterprise-website-upgrade
+    paths:
+      - .github/workflows/verify-build.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbit-staging-build-verification
+  cancel-in-progress: false
+
+jobs:
+  verify-build:
+    name: Verify production bundle without deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout staging code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Compile, generate SEO and validate product assets
+        run: npm run build
+
+      - name: Confirm generated release content
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f dist/sitemap.xml
+          test -f dist/.htaccess
+          test -f dist/robots.txt
+          test -f dist/seo-manifest.json
+          test -f dist/deployment.json
+          test -f dist/products/index.html
+          echo "Staging build verification passed. Nothing was deployed."
+
+      - name: Smoke-test real HTTP routes on isolated staging server
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-preview.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=0
+          for attempt in {1..20}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" != "1" ]; then
+            cat /tmp/orbit-preview.log
+            exit 1
+          fi
+          curl --fail --silent --show-error http://127.0.0.1:4173/ -o /tmp/orbit-home.html
+          curl --fail --silent --show-error http://127.0.0.1:4173/products/ -o /tmp/orbit-catalog.html
+          curl --fail --silent --show-error http://127.0.0.1:4173/products/nova-hd40-1l/ -o /tmp/orbit-product.html
+          curl --fail --silent --show-error http://127.0.0.1:4173/contact/ -o /tmp/orbit-contact.html
+          curl --fail --silent --show-error http://127.0.0.1:4173/sitemap.xml -o /tmp/orbit-sitemap.xml
+          curl --fail --silent --show-error http://127.0.0.1:4173/robots.txt -o /tmp/orbit-robots.txt
+          curl --fail --silent --show-error http://127.0.0.1:4173/products/nova-hd40-1l.webp -o /dev/null
+          grep -Fq '<link rel="canonical" href="https://orbit-lubricants.com/">' /tmp/orbit-home.html
+          grep -Fq 'Engine Oil, Gear Oil' /tmp/orbit-catalog.html
+          grep -Fq '<link rel="canonical" href="https://orbit-lubricants.com/products/nova-hd40-1l/">' /tmp/orbit-product.html
+          grep -Fq 'Orbit Nova HD40' /tmp/orbit-product.html
+          grep -Fq 'https://orbit-lubricants.com/products/nova-hd40-1l/' /tmp/orbit-sitemap.xml
+          grep -Fq 'Sitemap: https://orbit-lubricants.com/sitemap.xml' /tmp/orbit-robots.txt
+          grep -Fq 'Contact Orbit Lubricants' /tmp/orbit-contact.html
+          echo "Local HTTP production-route smoke test passed. No external deployment was performed."
+
+      - name: Compare live Orbit bundle fingerprint without changing production
+        run: node scripts/diagnose-live.mjs
+
+      - name: Rehearse non-destructive Hostinger Git-root release (no push)
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/prepare-git-publish.mjs
+          test -f products/nova-hd40-1l/index.html
+          test -f images/custom/home-category-car.webp
+          test -f products/index.html
+          test -f deployment.json
+          test -f sitemap.xml
+          test -f robots.txt
+          test -f .htaccess
+          if git diff --name-only --diff-filter=D | grep .; then
+            echo "::error::A tracked file was deleted during staging. Release aborted."
+            exit 1
+          fi
+          echo "Git-root release rehearsal passed, with no deletion or server changes."
+
+      - name: Check public web-root exposure using HEAD only
+        run: node scripts/probe-exposure.mjs
+
+      - name: Assemble rollback capsule from current main build (no hosting changes)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin main
+          mkdir -p rollback-capsule/assets
+          git show origin/main:index.html > rollback-capsule/index.html
+          git show origin/main:.htaccess > rollback-capsule/.htaccess
+          mapfile -t compiled_assets < <(grep -oE '/assets/[^"]+[.](js|css)' rollback-capsule/index.html | sort -u)
+          test "${#compiled_assets[@]}" -ge 2
+          for asset in "${compiled_assets[@]}"; do
+            file="${asset#/}"
+            case "$file" in assets/*) ;; *) echo "Invalid asset path"; exit 1 ;; esac
+            git show "origin/main:$file" > "rollback-capsule/$file"
+          done
+          echo "Prepared old index, htaccess and referenced immutable bundles. This is NOT a full site backup."
+
+      - name: Archive targeted rollback capsule (no credentials)
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-rollback-capsule
+          path: rollback-capsule/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Package verified staging site for manual Hostinger deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-staging-site
+          path: dist/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7

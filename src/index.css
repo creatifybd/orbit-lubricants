@@ -1642,7 +1642,8 @@ body { color: #17324d; background: #f8fbfe; }
 .catalog-search-clear:hover { color: #fff; background: #0a5aa5; }
 .catalog-filter-scroll {
   display: flex;
-  justify-content: center;
+  /* Left-align overflowed chips so the first filter never gets clipped. */
+  justify-content: flex-start;
   gap: .55rem;
   max-width: 100%;
   overflow-x: auto;
@@ -1743,3 +1744,66 @@ body { color: #17324d; background: #f8fbfe; }
 @media (prefers-reduced-motion: reduce) {
   .catalog-product-card, .catalog-product-visual img, .catalog-search-clear { transition: none !important; }
 }
+
+/* Product detail deep links are visible to customers and search crawlers. */
+.catalog-product-actions .catalog-product-deep-link { position: relative; z-index: 6; font-size: .73rem; font-weight: 750; color: #075b98; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.catalog-product-actions .catalog-product-deep-link:focus-visible { outline: 3px solid #f7931e; outline-offset: 4px; border-radius: 3px; }
+@media (max-width: 380px) { .catalog-product-actions { flex-wrap: wrap; } }
+
+/* Two-direction product display. Original catalog artwork is never recolored or stretched. */
+.orbit-product-marquee{overflow:hidden;background:#f5f8fc;padding-block:clamp(3rem,6vw,5rem);border-block:1px solid #e6edf4}
+.orbit-marquee-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:2rem}
+.orbit-marquee-head h2{font:800 clamp(1.75rem,3.6vw,2.8rem)/1.14 var(--font-display);margin:.5rem 0;color:#09263e}
+.orbit-marquee-head p{margin:.6rem 0 0;color:#52677b;max-width:62ch;line-height:1.65}
+.orbit-marquee-all-link{color:#075b98;font-weight:800;text-decoration:underline;text-underline-offset:5px;white-space:nowrap}
+.orbit-marquee-viewport{overflow:hidden;position:relative;width:100%;margin-top:1rem}
+.orbit-marquee-track{display:flex;width:max-content;animation:orbit-marquee-scroll 52s linear infinite;will-change:transform}
+.orbit-marquee-track-reverse{animation-direction:reverse}
+.orbit-marquee-viewport:hover .orbit-marquee-track,.orbit-marquee-viewport:focus-within .orbit-marquee-track{animation-play-state:paused}
+.orbit-marquee-group{display:flex;align-items:stretch;flex:0 0 auto;gap:16px;padding-right:16px}
+.orbit-marquee-product{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:0 0 160px;min-width:160px;min-height:225px;padding:14px;background:#fff;border:1px solid #e0eaf2;border-radius:16px;text-decoration:none;color:#12314a;box-shadow:0 8px 22px rgba(13,52,82,.04);transition:border-color .2s ease,box-shadow .2s ease}
+.orbit-marquee-product:hover,.orbit-marquee-product:focus-visible{border-color:#f7931e;box-shadow:0 8px 30px rgba(13,52,82,.12);outline:none}
+.orbit-marquee-product-media{display:flex;align-items:center;justify-content:center;height:142px;width:100%;padding:5px}
+.orbit-marquee-product-media img{max-height:100%;max-width:100%;width:auto;height:auto;object-fit:contain}
+.orbit-marquee-product-name{display:block;font-size:.75rem;font-weight:800;line-height:1.35;text-align:center;margin-top:8px;max-width:100%;white-space:normal}
+.orbit-marquee-product-pack{font-size:.71rem;color:#63788a;text-align:center;margin-top:3px}
+@keyframes orbit-marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:700px){.orbit-marquee-head{align-items:start;flex-direction:column;gap:1rem}.orbit-marquee-product{flex-basis:134px;min-width:134px;min-height:200px;padding:10px}.orbit-marquee-product-media{height:124px}.orbit-marquee-track{animation-duration:40s}}
+@media(prefers-reduced-motion:reduce){.orbit-marquee-viewport{overflow-x:auto;scrollbar-width:thin}.orbit-marquee-track{animation:none;will-change:auto}.orbit-marquee-group[aria-hidden="true"]{display:none}.orbit-marquee-product{transition:none}}
+
+/* Responsive catalog sorting and data-only specification comparison */
+.orbit-catalog-sort-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:1.2rem}
+.orbit-catalog-sort-row label{display:flex;align-items:center;gap:.7rem;font-size:.85rem;font-weight:800;color:#183955}
+.orbit-catalog-sort-row select.form-control{width:auto;min-width:185px;min-height:42px;padding:.5rem .7rem;border-radius:9px;background:#fff}
+.catalog-product-actions .catalog-compare{position:relative;z-index:6;display:inline-flex;align-items:center;gap:.35rem;height:36px;width:auto;padding:0 .6rem;background:#ecf5fc;color:#0c5085;border:1px solid #c9e1f2;border-radius:8px;font-size:.72rem;font-weight:800}
+.catalog-product-actions .catalog-compare:hover{background:#d8edfc;color:#063757;transform:none}
+.catalog-product-actions .catalog-compare.active{background:#e3f3e8;color:#176a3e;border-color:#b9e0c4}
+.catalog-product-actions .catalog-compare:disabled{cursor:not-allowed;opacity:.55}
+.catalog-product-actions .catalog-compare:focus-visible{outline:3px solid #f7931e;outline-offset:2px}
+.orbit-compare-region{padding:2rem 0 4rem;background:#f4f8fc;border-top:1px solid #e3eaf1}
+.orbit-compare-heading{display:flex;justify-content:space-between;align-items:start;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.orbit-compare-heading h2{color:#0a2540;font:800 clamp(1.4rem,2.5vw,1.8rem) var(--font-display);margin:0 0 .4rem}
+.orbit-compare-heading p{max-width:70ch;color:#546d82;font-size:.9rem;line-height:1.6}
+.orbit-compare-scroll{overflow-x:auto;border:1px solid #dce6ee;border-radius:15px;background:#fff}
+.orbit-compare-table{border-collapse:collapse;width:100%;min-width:560px;font-size:.9rem}
+.orbit-compare-table caption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.orbit-compare-table th,.orbit-compare-table td{text-align:left;vertical-align:top;padding:1rem;border-bottom:1px solid #e3eaf1;min-width:155px}
+.orbit-compare-table thead th{background:#edf5fc;color:#123654}
+.orbit-compare-table tbody th{font-weight:750;background:#f8fbfd;color:#35536b}
+.orbit-compare-table a{color:#075c98;text-decoration:underline;text-underline-offset:3px}
+.orbit-compare-table thead button{display:inline-flex;align-items:center;justify-content:center;margin-left:.5rem;border:1px solid #d6e0e9;color:#314b63;border-radius:6px;background:white;vertical-align:middle;width:28px;height:28px;cursor:pointer}
+.orbit-compare-note{color:#547085;font-size:.82rem;line-height:1.6;margin:1rem 0 0}
+@media(max-width:680px){.orbit-catalog-sort-row{align-items:start;flex-direction:column}.orbit-compare-region{padding:1.5rem 0 2.5rem}.catalog-product-actions{flex-wrap:wrap}}
+
+/* Refined catalog actions: two deliberate rows instead of cramped four-column links. */
+.catalog-product-actions{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:.65rem}
+.catalog-primary-actions,.catalog-secondary-actions{display:flex;align-items:center;justify-content:space-between;gap:.6rem;min-width:0}
+.catalog-primary-actions{flex-wrap:wrap}
+.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger{position:relative;z-index:6;display:inline-flex;align-items:center;gap:.28rem;flex:none;width:auto;height:auto;min-height:30px;padding:0;background:transparent;border:0;border-radius:3px;color:#082d4c;font:800 .72rem var(--font-display);cursor:pointer;text-decoration:none}
+.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger:hover{color:#dc7000;background:transparent;transform:none}
+.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger:focus-visible,.catalog-product-actions .catalog-primary-actions .catalog-product-deep-link:focus-visible{outline:3px solid #f7931e;outline-offset:3px}
+.catalog-product-actions .catalog-primary-actions .catalog-product-deep-link{position:relative;z-index:6;display:inline-block;white-space:nowrap;color:#075b98;font-size:.72rem;line-height:1.4;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.catalog-product-actions .catalog-secondary-actions .catalog-compare{width:auto;height:36px;padding-inline:.8rem;display:inline-flex;align-items:center;gap:.4rem;flex-shrink:0}
+.catalog-product-actions .catalog-secondary-actions .catalog-inquire{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:50%;position:relative;z-index:6}
+.catalog-product-actions .catalog-secondary-actions button:hover{transform:none}
+@media(max-width:350px){.catalog-primary-actions{gap:.45rem}.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger,.catalog-product-actions .catalog-primary-actions .catalog-product-deep-link{font-size:.68rem}}

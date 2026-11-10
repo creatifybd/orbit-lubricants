@@ -35,7 +35,7 @@ export const SiteSettings = () => {
           Site Settings & Backup System
         </h2>
         <p style={{ color: '#94A3B8', fontSize: '0.9rem' }}>
-          Control top announcement banner, brand logo, site title, and backup/restore CMS configuration.
+          Preview site content and export or import browser-local CMS data. Changes are not synced to the public website until the secure backend is configured.
         </p>
       </div>
 
@@ -129,7 +129,7 @@ export const SiteSettings = () => {
               Export CMS Data Backup
             </h4>
             <p style={{ color: '#94A3B8', fontSize: '0.88rem', marginBottom: '1.25rem' }}>
-              Download a complete JSON snapshot of all products, inquiries, and page content for off-site backup.
+              Download a JSON copy of the content stored in this browser. This is not a server backup and may contain local inquiry details.
             </p>
             <button onClick={exportDataJSON} className="btn btn-primary" style={{ width: '100%', gap: '8px' }}>
               <Download size={18} />
@@ -158,7 +158,7 @@ export const SiteSettings = () => {
               />
               <button type="submit" className="btn btn-outline" style={{ width: '100%', color: '#FFF', gap: '8px' }}>
                 <Upload size={18} />
-                <span>Import JSON Configuration</span>
+                <span>Import Local Preview Data</span>
               </button>
             </form>
           </div>
