@@ -81,6 +81,9 @@ jobs:
           grep -Fq 'Contact Orbit Lubricants' /tmp/orbit-contact.html
           echo "Local HTTP production-route smoke test passed. No external deployment was performed."
 
+      - name: Compare live Orbit bundle fingerprint without changing production
+        run: node scripts/diagnose-live.mjs
+
       - name: Package verified staging site for manual Hostinger deployment
         uses: actions/upload-artifact@v4
         with:
