@@ -78,9 +78,8 @@ export const CmsProvider = ({ children }) => {
   }, [data]);
 
   useEffect(() => {
-    document.title = data.settings?.siteTitle || 'Orbit Lubricants';
-    const description = document.querySelector('meta[name="description"]');
-    if (description && data.settings?.siteDescription) description.setAttribute('content', data.settings.siteDescription);
+    // Route-level title/description/canonical metadata are managed by AppContent.
+    // Do not overwrite product/catalog SEO metadata with the global CMS title.
     document.documentElement.style.setProperty('--orbit-orange', data.settings?.primaryColor || '#F7931E');
     document.documentElement.style.setProperty('--orbit-blue', data.settings?.secondaryColor || '#1A6CB4');
   }, [data.settings]);
