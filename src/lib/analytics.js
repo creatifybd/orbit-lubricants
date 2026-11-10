@@ -16,12 +16,18 @@ const EVENT_NAMES = new Set([
   'view_search_results',
   'product_compare',
   'enquiry_email_prepared',
+  'section_view',
 ]);
 
 const PAGE_PATHS = new Set(['/', '/products/', '/about/', '/contact/', '/finder/']);
 const CATEGORY_KEY = /^[a-z0-9-]{1,64}$/;
 const ITEM_KEY = /^[a-z0-9-]{1,100}$/;
 const MAX_ITEMS = 3;
+const SECTION_IDS = new Set([
+  'home_hero', 'applications', 'featured_products', 'product_marquee',
+  'corporate', 'confidence', 'contact_cta', 'products_catalog',
+  'contact_form', 'about_story'
+]);
 
 export function getMeasurementId() {
   const id = import.meta.env?.VITE_GA4_MEASUREMENT_ID || '';
@@ -76,6 +82,12 @@ export function sanitizeOrbitEvent(name, payload = {}) {
       technical: 'technical',
       other: 'other',
     })[payload.enquiry_type] || 'other';
+    return data;
+  }
+  if (name === 'section_view') {
+    const id = String(payload.section_id || '');
+    if (!SECTION_IDS.has(id)) return null;
+    data.section_id = id;
     return data;
   }
   if (name === 'product_compare') {
