@@ -1,4 +1,4 @@
-name: Orbit one-time production SEO and source-security audit
+name: Orbit post-release SEO and source-security verification
 
 on:
   push:
