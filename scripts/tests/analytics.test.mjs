@@ -77,3 +77,12 @@ test('without consent or GA4 config no telemetry can be sent', () => {
   assert.equal(trackOrbitEvent('page_view', { page_path: '/' }), false);
   assert.equal(setOrbitAnalyticsChoice('unknown'), false);
 });
+
+
+test('section visibility events are whitelist-only and cannot contain PII', () => {
+  assert.deepEqual(sanitizeOrbitEvent('section_view', {
+    section_id: 'product_marquee', email:'private@example.com', message:'sensitive'
+  }), {event:'section_view',section_id:'product_marquee'});
+  assert.equal(sanitizeOrbitEvent('section_view', {section_id:'random-user-name'}), null);
+  assert.equal(sanitizeOrbitEvent('section_view', {section_id:'admin'}), null);
+});
