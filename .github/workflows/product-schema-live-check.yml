@@ -1,0 +1,26 @@
+name: Orbit live Google Product snippets schema cleanup verification
+
+on:
+  push:
+    branches: [orbit-live-product-schema-readonly-audit]
+    paths: [.github/workflows/product-schema-live-check.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbit-product-schema-single-live-check
+  cancel-in-progress: false
+
+jobs:
+  live-schema-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect 3 representative live SKU pages, image links, schema and sitemap
+        run: node scripts/check-live-product-schema.mjs
