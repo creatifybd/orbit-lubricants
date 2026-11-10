@@ -1,0 +1,54 @@
+name: Orbit one-time Lighthouse performance and accessibility baseline
+
+# This audit runs once when its workflow file is introduced. No cron or
+# recurring GitHub Actions use. Purely reads the public Orbit website.
+on:
+  push:
+    branches: [orbit-one-time-performance-audit]
+    paths: [.github/workflows/performance-audit.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbit-one-time-lighthouse-audit
+  cancel-in-progress: false
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run bounded Lighthouse audits against live Orbit website
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p qa-lighthouse
+          npx --yes lighthouse@12.8.2 'https://orbit-lubricants.com/' \
+            --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
+            --output=json --output-path=qa-lighthouse/home-mobile.json \
+            --only-categories=performance,accessibility,best-practices,seo --quiet
+          npx --yes lighthouse@12.8.2 'https://orbit-lubricants.com/' \
+            --preset=desktop --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
+            --output=json --output-path=qa-lighthouse/home-desktop.json \
+            --only-categories=performance,accessibility,best-practices,seo --quiet
+          npx --yes lighthouse@12.8.2 'https://orbit-lubricants.com/products/' \
+            --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
+            --output=json --output-path=qa-lighthouse/products-mobile.json \
+            --only-categories=performance,accessibility,best-practices,seo --quiet
+          node scripts/summarize-lighthouse.mjs
+      - name: Save reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-lighthouse-baseline
+          path: qa-lighthouse/
+          if-no-files-found: warn
+          retention-days: 7
