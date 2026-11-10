@@ -35,7 +35,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
     <div>
       <section className="premium-hero" aria-roledescription="carousel" aria-label="Orbit product applications">
         <div className="hero-slides" aria-live="polite">
-          {heroSlides.map((slide, index) => <img key={slide.image} className={`hero-slide-image ${index === heroSlide ? 'active' : ''}`} src={bundledHeroImages[index] || slide.image} alt="" fetchPriority={index === 0 ? 'high' : 'auto'} />)}
+          {heroSlides.map((slide, index) => <img key={slide.image} className={`hero-slide-image ${index === heroSlide ? 'active' : ''}`} src={bundledHeroImages[index] || slide.image} alt="" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'low'} decoding="async" />)}
         </div>
         <div className="hero-slide-overlay" />
         <div className="container premium-hero-grid" key={heroSlide}>
