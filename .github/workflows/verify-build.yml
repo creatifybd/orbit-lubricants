@@ -92,6 +92,7 @@ jobs:
           set -euo pipefail
           node scripts/prepare-git-publish.mjs
           test -f products/nova-hd40-1l/index.html
+          test -f images/custom/home-category-car.webp
           test -f products/index.html
           test -f deployment.json
           test -f sitemap.xml
