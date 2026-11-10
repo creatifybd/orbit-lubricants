@@ -9,9 +9,15 @@ const check = (condition, message) => {
   if (!condition) errors.push(message);
 };
 
-const files = ['index.html', 'robots.txt', 'sitemap.xml', 'seo-manifest.json', 'products/index.html', 'about/index.html', 'contact/index.html', 'finder/index.html'];
+const files = ['index.html', '.htaccess', 'robots.txt', 'sitemap.xml', 'seo-manifest.json', 'products/index.html', 'about/index.html', 'contact/index.html', 'finder/index.html'];
 for (const name of files) {
   check(existsSync(join(dist, name)), 'Missing static build asset: ' + name);
+}
+
+if (existsSync(join(dist, '.htaccess'))) {
+  const apache = readFileSync(join(dist, '.htaccess'), 'utf8');
+  check(apache.includes('RewriteRule ^(?:\\.git|\\.github'), 'Apache source-access deny rules missing');
+  check(apache.includes('X-Content-Type-Options'), 'Production safety headers missing');
 }
 
 if (!errors.length) {
