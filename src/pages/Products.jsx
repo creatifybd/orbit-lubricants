@@ -92,7 +92,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
       </section>
 
       {/* Catalog & Filter Section */}
-      <section className="section">
+      <section data-orbit-section="products_catalog" className="section">
         <div className="container">
           {/* Search & Filter Bar */}
           <div className="catalog-toolbar">
