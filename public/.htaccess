@@ -20,6 +20,10 @@
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Protect private source directories that must never be hosted in public_html.
+  # A future release should publish compiled dist CONTENTS only.
+  RewriteRule ^(?:\.git|\.github|\.builds|\.env|src|scripts|hosting|deployment|docs|node_modules)(?:/|$) - [F,L,NC]
+  RewriteRule ^(?:package(?:-lock)?\.json|vite\.config\.js|deploy\.ps1|index\.source\.html|.*\.(?:zip|sql|bak|tar|tgz))$ - [F,L,NC]
   RewriteRule ^src/main\.jsx$ /legacy-entry.js [L]
 </IfModule>
 
