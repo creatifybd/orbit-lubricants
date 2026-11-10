@@ -86,6 +86,11 @@ export const Footer = ({ setActivePage }) => {
                   </li>
                 ))}
               </ul>
+              <p style={{ margin: '1rem 0 0' }}>
+                <a href="/product-gallery/" style={{ color: '#075a9b', fontWeight: 750, textDecoration: 'underline' }}>
+                  View all 38 original product pack images
+                </a>
+              </p>
               <h3 style={{
                 color: '#43566B', fontSize: '0.77rem', textTransform: 'uppercase',
                 letterSpacing: '0.08em', margin: '1.6rem 0 0.8rem', fontWeight: 800
