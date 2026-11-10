@@ -1,0 +1,74 @@
+name: Verify Orbit production release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - deployment.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbit-production-verification
+  cancel-in-progress: false
+
+jobs:
+  verify-live:
+    name: Verify public Orbit only (read-only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - name: Checkout versioned production release metadata
+        uses: actions/checkout@v4
+      - name: Verify live serving release and source protections
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected_asset="$(grep -oE '/assets/[^"]+[.]js' index.html | head -n 1)"
+          test -n "$expected_asset"
+          expected_commit="$(node -p 'JSON.parse(require("fs").readFileSync("deployment.json","utf8")).commit')"
+          test -n "$expected_commit"
+          echo "Expected bundled JS: $expected_asset"
+          echo "Expected build source: $expected_commit"
+          for attempt in $(seq 1 18); do
+            echo "Read-only production verification attempt $attempt/18"
+            if node --input-type=module <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const base='https://orbit-lubricants.com';
+          const expected=JSON.parse(readFileSync('deployment.json','utf8'));
+          const html=readFileSync('index.html','utf8');
+          const bundle=html.match(/<script[^>]*src="([^"]+[.]js)"/)?.[1];
+          if(!bundle) throw Error('Staging entry script missing');
+          const fetchText=async path=>{
+            const res=await fetch(base+path,{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(12000)});
+            if(!res.ok)throw Error(path+': HTTP '+res.status);
+            return res.text();
+          };
+          const marker=JSON.parse(await fetchText('/deployment.json?release-check='+Date.now()));
+          if(marker.commit!==expected.commit || marker.productCount!==38 || marker.catalogVersion!==3){
+            throw Error('Live version marker mismatch: '+JSON.stringify(marker));
+          }
+          const liveHtml=await fetchText('/?release-check='+Date.now());
+          if(!liveHtml.includes(bundle))throw Error('Live HTML still serves a stale JS bundle');
+          const landing=await fetchText('/products/nova-hd40-1l/');
+          if(!landing.includes('Orbit Nova HD40') || !landing.includes('BreadcrumbList'))throw Error('Product landing page missing');
+          const sitemap=await fetchText('/sitemap.xml');
+          if((sitemap.match(/<loc>/g)||[]).length!==43)throw Error('Sitemap does not expose 43 URLs');
+          const robots=await fetchText('/robots.txt');
+          if(!robots.includes('Sitemap: https://orbit-lubricants.com/sitemap.xml'))throw Error('Robots sitemap missing');
+          await fetchText('/products/nova-hd40-1l.webp');
+          for(const path of ['/src/App.jsx','/package.json','/.github/workflows/deploy.yml']){
+            const res=await fetch(base+path,{method:'HEAD',signal:AbortSignal.timeout(12000)});
+            if(res.status!==403 && res.status!==404)throw Error('Public source exposure: '+path+' HTTP '+res.status);
+          }
+          console.log('LIVE ORBIT VERIFIED: 38 products; catalog version 3; 43 indexed URLs; correct JS; original pack artwork; protected source.');
+          NODE
+            then
+              exit 0
+            fi
+            sleep 12
+          done
+          echo "::error::Orbit production is not serving this reviewed release after repeated checks. Investigate the Hostinger Git deployment before treating it as successful."
+          exit 1
