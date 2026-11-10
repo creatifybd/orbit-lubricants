@@ -3,6 +3,7 @@ import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
 import { Search, Sparkles, Layers, X } from 'lucide-react';
+import { trackOrbitEvent } from '../lib/analytics';
 
 export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
   const { data } = useCms();
@@ -15,11 +16,11 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
   const [comparisonIds, setComparisonIds] = useState([]);
 
   const toggleComparison = (item) => {
-    setComparisonIds((current) => (
-      current.includes(item.id)
-        ? current.filter((id) => id !== item.id)
-        : current.length < 3 ? [...current, item.id] : current
-    ));
+    const next = comparisonIds.includes(item.id)
+      ? comparisonIds.filter((id) => id !== item.id)
+      : comparisonIds.length < 3 ? [...comparisonIds, item.id] : comparisonIds;
+    setComparisonIds(next);
+    trackOrbitEvent('product_compare', { item_count: next.length });
   };
   const comparedProducts = comparisonIds.map((id) => products.find((p) => p.id === id)).filter(Boolean);
   const displayName = (categoryId) => categories.find((cat) => cat.id === categoryId)?.name || categoryId;
@@ -42,6 +43,14 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
 
     return matchesCategory && matchesSearch;
   });
+
+  useEffect(() => {
+    if (!searchQuery.trim()) return undefined;
+    const timer = setTimeout(() => trackOrbitEvent('view_search_results', {
+      result_count: filteredProducts.length
+    }), 700);
+    return () => clearTimeout(timer);
+  }, [searchQuery, filteredProducts.length]);
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortOrder === 'name') return a.name.localeCompare(b.name, undefined, { numeric: true });
@@ -156,7 +165,10 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
                   key={product.id}
                   product={product}
                   prioritizeImage={index === 0}
-                  onSelect={(p) => setSelectedProduct(p)}
+                  onSelect={(p) => {
+                    setSelectedProduct(p);
+                    trackOrbitEvent('view_item', { item_id: p.id, item_category: p.category });
+                  }}
                   onInquire={handleInquireFromModal}
                   onToggleCompare={toggleComparison}
                   isCompared={comparisonIds.includes(product.id)}
