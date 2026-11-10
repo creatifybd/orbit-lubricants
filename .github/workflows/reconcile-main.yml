@@ -1,0 +1,58 @@
+name: Reconcile Orbit staging with protected production main
+
+on:
+  push:
+    branches: [orbit-enterprise-website-upgrade]
+    paths:
+      - .github/workflows/reconcile-main.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-staging-reconcile-main
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Merge latest production protections without changing main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --no-tags origin main
+          if ! git merge --no-ff --no-commit origin/main; then
+            mapfile -t conflicts < <(git diff --name-only --diff-filter=U)
+            printf 'Conflicts:\n%s\n' "${conflicts[*]}"
+            if [ "${#conflicts[@]}" -ne 1 ] || [ "${conflicts[0]}" != ".htaccess" ]; then
+              echo "::error::Unexpected merge conflict; stop without modifying staging or production."
+              exit 1
+            fi
+            # Staging .htaccess already denies public source and archives.
+            # It also includes the complete compiled static release rules.
+            git checkout --ours -- .htaccess
+            git add .htaccess
+          fi
+          test -z "$(git diff --name-only --diff-filter=U)"
+          grep -Fq 'workflow_dispatch:' .github/workflows/deploy.yml
+          if grep -Fq 'branches: [main]' .github/workflows/deploy.yml; then
+            echo "::error::Unexpected FTP auto-deploy trigger in merged candidate."
+            exit 1
+          fi
+          if git diff --cached --quiet; then
+            echo "Staging already includes current main."
+            exit 0
+          fi
+          git commit -m "Reconcile current Orbit production security with staged static release"
+          git push origin HEAD:orbit-enterprise-website-upgrade
+          echo "Reconciled staging only. Production main was not changed."
