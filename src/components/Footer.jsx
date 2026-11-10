@@ -5,7 +5,7 @@ import orbitLogo from '../assets/brand/orbit-logo.png';
 
 export const Footer = ({ setActivePage }) => {
   const { data } = useCms();
-  const { contactInfo, standards, settings } = data || {};
+  const { contactInfo, standards, settings, categories = [] } = data || {};
 
   return (
     <>
@@ -82,6 +82,24 @@ export const Footer = ({ setActivePage }) => {
                       <ArrowUpRight size={14} style={{ color: '#F7931E' }} />
                       {link.label}
                     </button>
+                  </li>
+                ))}
+              </ul>
+              <h3 style={{
+                color: '#43566B', fontSize: '0.77rem', textTransform: 'uppercase',
+                letterSpacing: '0.08em', margin: '1.6rem 0 0.8rem', fontWeight: 800
+              }}>
+                Explore by application
+              </h3>
+              <ul style={{ listStyle: 'none', display: 'grid', gap: '0.5rem', padding: 0, margin: 0 }}>
+                {categories.map(category => (
+                  <li key={category.id}>
+                    <a
+                      href={`/applications/${category.id}/`}
+                      style={{ color: '#183c5b', fontSize: '0.82rem', fontWeight: 650, textDecoration: 'none' }}
+                    >
+                      {category.name}
+                    </a>
                   </li>
                 ))}
               </ul>
