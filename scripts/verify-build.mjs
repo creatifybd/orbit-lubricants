@@ -51,7 +51,7 @@ if (!errors.length) {
 
     if (existsSync(productHtmlPath)) {
       const html = readFileSync(productHtmlPath, 'utf8');
-      const title = html.match(/<title>([^<]+)<\\/title>/i)?.[1] || '';
+      const title = html.match(new RegExp('<title>([^<]+)</title>', 'i'))?.[1] || '';
       check(Boolean(title), 'Missing page title: ' + item.id);
       check(!productTitles.has(title), 'Duplicate SEO title: ' + title);
       productTitles.add(title);
