@@ -8,7 +8,8 @@ import { initialData } from '../src/data/initialData.js';
  * Copy only verified compiled release files into the Git checkout root.
  * Hostinger's legacy Git integration serves the checkout itself, not dist/.
  * This step NEVER deletes files, never touches secrets, and refuses to replace
- * any existing master product/image bytes with different ones.
+ * any existing master product/image bytes with different ones, while allowing
+ * previously absent original assets to be introduced unchanged.
  *
  * Use only on a temporary staging checkout, after npm run build and QA.
  * Production is updated later by a separately approved Git merge/release.
@@ -33,8 +34,10 @@ function publish(relativePath, { immutable = false, requiredExisting = false } =
   mustExist(sourcePath);
 
   const alreadyExists = existsSync(targetPath);
+  // A newly approved asset may exist in dist/public but not yet in root.
+  // Adding those exact source bytes is safe; changing an existing original is not.
   if (requiredExisting && !alreadyExists) {
-    throw new Error('Expected original brand asset is missing from Git checkout: ' + relativePath);
+    console.log('Adding new original asset without transformation:', relativePath);
   }
   if (alreadyExists && (immutable || requiredExisting)) {
     if (digest(sourcePath) !== digest(targetPath)) {
