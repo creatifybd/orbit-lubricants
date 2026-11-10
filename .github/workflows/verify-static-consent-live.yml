@@ -1,0 +1,26 @@
+name: Verify live Orbit static SEO consent release
+
+on:
+  push:
+    branches: [orbit-live-static-consent-audit]
+    paths: [.github/workflows/verify-static-consent-live.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbit-live-static-seo-consent-audit
+  cancel-in-progress: false
+
+jobs:
+  read-only-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify all 47 public pages, hashed script and lack of live GA4 ID
+        run: node scripts/verify-live-static-consent.mjs
