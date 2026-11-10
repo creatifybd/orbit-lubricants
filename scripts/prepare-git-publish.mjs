@@ -82,7 +82,8 @@ walk('assets', (path) => publish(path, { immutable: true }));
 for (const path of [
   'index.html', '.htaccess', 'robots.txt', 'sitemap.xml',
   'deployment.json', 'seo-manifest.json',
-  'products/index.html', 'about/index.html', 'contact/index.html', 'finder/index.html'
+  'products/index.html', 'about/index.html', 'contact/index.html', 'finder/index.html',
+  'product-gallery/index.html'
 ]) publish(path);
 
 for (const product of initialData.products) {
