@@ -24,9 +24,11 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Confirm absolute /home/.../public_html folder path and matching FTP_SERVER_DIR in FTP Accounts (do not disclose credentials).
 - [x] Read-only staging-to-production diagnostic confirms live JS asset hash differs and /deployment.json returns 404 (run 42758542859); the new release has not reached production.
 - [ ] Compare document root with secret FTP_SERVER_DIR and FTP account mapping. DO NOT expose secret values.
-- [ ] Check Hostinger Git deployment vs FTPS deployment: ensure only one canonical source of truth.
+- [x] Identify Hostinger Git-to-root sync as active: main-branch Apache deny rules deployed to production, changing public HEAD statuses 200 → 403 while the old compiled JS remained unchanged (CI evidence 42762603138). FTP auto-deploy remains disabled; Git integration is the likely current publisher.
+- [ ] Confirm Git integration branch/path in Hostinger Deployments UI and ensure no parallel pipeline will overwrite a release.
 - [ ] Deploy latest production bundle and verify exact marker SHA, catalog count, assets and browser rendering on both www and apex domains.
-- [ ] Make a recoverable hosting backup, document rollback and validate it before server-side mutations.
+- [x] Build a scoped, non-destructive static rollback capsule from main index.html/.htaccess and immutable CSS/JS via CI, with seven-day artifact retention (run 42762603138). Existing Git history and 2026-11-08 Hostinger backup are secondary recovery options. This is NOT a full hosting backup.
+- [ ] Verify rollback rehearsal against the actual serving domain and keep legacy assets untouched during the controlled production release.
 
 ## P1: Reliable backend and account security
 - [ ] Choose/verify dedicated Orbit Firebase project with owner access.
@@ -97,19 +99,32 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Conservative X-Content-Type-Options, Referrer-Policy, X-Frame-Options and Permissions-Policy headers added to both FTP and root-hosting .htaccess variants; not yet verified on Hostinger.
 - [x] Safe staging build packaged as seven-day GitHub artifact, with no FTP push: https://github.com/creatifybd/orbit-lubricants/actions/runs/42757832132.
 - [x] Re-run staging production build and local HTTP tests after marquee, compare, navigation, admin and security-header edits; passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42758542859.
-- [ ] Make final pre-release approval gate: production host mapping, recoverable backup, security audit, original-art validation, product info approval and working backend.
+- [ ] Before production merge, confirm fresh real-browser mobile/desktop QA, original-art SHA checks, exact Git-root static files, rollback capsule, release identity and production verification. Secure Firebase central CMS and analytics may be staged as separate follow-on releases, never misrepresented as already active.
 
 
 ## Urgent hosting source-exposure risk (2026-11-10)
 - [x] Hostinger Orbit-specific `public_html` screenshot shows `.git`, `.github`, `src`, `hosting`, `public`, `dist`, `package.json`, `package-lock.json`, `index.source.html` and `Selected Designs.zip` beside the production `index.html` / `assets`. Repository deployment to the web root is strongly suspected but not proven; investigate Hostinger Deployments/Git auto-deploy.
 - [x] Locate Hostinger Files > Backups > Restore and download; a files backup from 2026-11-08 22:06 is available (owner screenshot 2026-11-10).
 - [x] Hostinger backup plan checked on 2026-11-10: Manual backups locked on this plan; automated backups are weekly, latest 2026-11-08 22:06 and next scheduled 2026-11-15. No new paid plan is required for our manual snapshot workaround.
-- [ ] Download the CURRENT Orbit-only public_html folder through the Hostinger File Manager parent view (select public_html > Download, preferably as ZIP) directly to the owner's computer; verify archive contains index.html, .htaccess, assets, images and products before any production mutation. Do not create a publicly accessible archive inside public_html.
+- [x] Honor owner preference to avoid manual full-folder download before a strictly additive static release. Prepare versioned immutable assets and a small rollback capsule instead; do not delete live files or untracked customer data. This is a risk-reduction strategy, not a zero-risk guarantee.
 - [ ] Keep the Nov 8 Hostinger automated backup as a secondary rollback point. Do not press Restore.
-- [ ] Confirm whether `/.git/HEAD`, `/package.json` and any project archive are externally accessible (403 or 404 expected); no proof of public exposure yet. If accessible, block at server immediately and inspect logs/rotate affected secrets.
-- [x] Add deny rules for .git/.github, development source and archives to staging Apache .htaccess variants; **not yet live**. Review and deploy only after backup and root verification.
+- [x] Metadata-only live HEAD audit initially returned HTTP 200 for /.github/workflows/deploy.yml, /package.json, /src/App.jsx and /Selected%20Designs.zip; /.git/HEAD was 403. After a minimal main .htaccess safety commit, ALL five returned 403 (run 42762603138). No file bodies were downloaded.
+- [ ] Perform a fuller security/log review; a 403 response reduces direct access but cannot prove no previous download or other exposed paths.
+- [x] Apply minimal source/archive deny rules to production root .htaccess and verify live HTTP 403 results; more complete security headers remain staging-only until release.
 - [ ] Move all repository source, archives and build infrastructure OUTSIDE public_html in a controlled post-backup release. The public document root should contain compiled `dist/` contents only, not a Git checkout.
-- [ ] Inspect Hostinger Deployments to check whether an additional automatic Git deploy wrote the full repo to public_html.
+- [ ] Optionally inspect Hostinger Deployments to confirm the exact linked branch and current publishing configuration. Git-to-root behavior is supported by the live .htaccess propagation test.
+
+
+## Scoped Git-release candidate — tested
+- [x] Demonstrate that a safe main-branch .htaccess update propagates to the live Hostinger root without FTP; live old JS remained functional and unchanged.
+- [x] Build an immutable rollback capsule from the currently served main index / old hashed CSS+JS and Apache config (run 42762603138).
+- [x] Verify changed product/source artwork SHA-256 identities; reject changing existing product/brand asset bytes.
+- [x] Correct legacy root rewrite rules to avoid hiding new /products/:slug/ static SEO pages.
+- [x] Generate a release marker with the source commit and exact product count.
+- [x] Test a Git-root release rehearsal on an isolated GitHub runner, with no file deletions and no server access (run 42763228412).
+- [x] Commit 68 safe compiled/supporting release candidate files to STAGING only (build workflow 42763388086; commit 95a62d2). Public main unaffected by this step.
+- [ ] Complete one-time desktop/mobile Chromium QA before production merge.
+- [ ] Verify root static artifact is synced through the Hostinger active deployment, then perform live 38-SKU, security, page route and HTTP 200 checks.
 
 ## Required owner access (never send passwords/keys in chat)
 1. Hostinger hPanel account sign-in, or sanitized screenshots of the domain website root, FTP account mapping and active deployment configuration.
