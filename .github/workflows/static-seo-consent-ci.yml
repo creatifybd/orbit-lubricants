@@ -67,6 +67,9 @@ jobs:
           done
           node scripts/tests/static-analytics.browser.mjs --configured
 
+      - name: Remove only untracked test-bundle artifacts from the Git checkout
+        run: node scripts/cleanup-fake-ga4-assets.mjs
+
       - name: Rebuild without ANY GA4 property and prepare only safe static files
         shell: bash
         run: |
@@ -74,8 +77,12 @@ jobs:
           unset VITE_GA4_MEASUREMENT_ID
           npm run build
           node scripts/prepare-git-publish.mjs
-          if grep -Fq 'G-TEST123456' assets/orbit-static-analytics-*.js; then
-            echo "::error::Test stream unexpectedly entered the staged release."
+          if grep -Rl --include='*.js' -F 'G-TEST123456' assets/ | grep -q .; then
+            echo "::error::Any fake stream in production-root assets aborts the release."
+            exit 1
+          fi
+          if grep -Rl --include='*.js' -F 'G-TEST123456' dist/assets/ | grep -q .; then
+            echo "::error::Any fake stream in dist assets aborts the release."
             exit 1
           fi
           test "$(grep -c 'data-orbit-kind="product"' products/nova-hd40-1l/index.html)" -eq 1
