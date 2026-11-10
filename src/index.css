@@ -1793,3 +1793,16 @@ body { color: #17324d; background: #f8fbfe; }
 .orbit-compare-table thead button{display:inline-flex;align-items:center;justify-content:center;margin-left:.5rem;border:1px solid #d6e0e9;color:#314b63;border-radius:6px;background:white;vertical-align:middle;width:28px;height:28px;cursor:pointer}
 .orbit-compare-note{color:#547085;font-size:.82rem;line-height:1.6;margin:1rem 0 0}
 @media(max-width:680px){.orbit-catalog-sort-row{align-items:start;flex-direction:column}.orbit-compare-region{padding:1.5rem 0 2.5rem}.catalog-product-actions{flex-wrap:wrap}}
+
+/* Refined catalog actions: two deliberate rows instead of cramped four-column links. */
+.catalog-product-actions{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:.65rem}
+.catalog-primary-actions,.catalog-secondary-actions{display:flex;align-items:center;justify-content:space-between;gap:.6rem;min-width:0}
+.catalog-primary-actions{flex-wrap:wrap}
+.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger{position:relative;z-index:6;display:inline-flex;align-items:center;gap:.28rem;flex:none;width:auto;height:auto;min-height:30px;padding:0;background:transparent;border:0;border-radius:3px;color:#082d4c;font:800 .72rem var(--font-display);cursor:pointer;text-decoration:none}
+.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger:hover{color:#dc7000;background:transparent;transform:none}
+.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger:focus-visible,.catalog-product-actions .catalog-primary-actions .catalog-product-deep-link:focus-visible{outline:3px solid #f7931e;outline-offset:3px}
+.catalog-product-actions .catalog-primary-actions .catalog-product-deep-link{position:relative;z-index:6;display:inline-block;white-space:nowrap;color:#075b98;font-size:.72rem;line-height:1.4;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.catalog-product-actions .catalog-secondary-actions .catalog-compare{width:auto;height:36px;padding-inline:.8rem;display:inline-flex;align-items:center;gap:.4rem;flex-shrink:0}
+.catalog-product-actions .catalog-secondary-actions .catalog-inquire{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:50%;position:relative;z-index:6}
+.catalog-product-actions .catalog-secondary-actions button:hover{transform:none}
+@media(max-width:350px){.catalog-primary-actions{gap:.45rem}.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger,.catalog-product-actions .catalog-primary-actions .catalog-product-deep-link{font-size:.68rem}}
