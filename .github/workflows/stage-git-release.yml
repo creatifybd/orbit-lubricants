@@ -43,6 +43,7 @@ jobs:
           test -f products/nova-hd40-1l/index.html
           grep -Fq 'catalog-filter-scroll' src/index.css
           grep -Fq '"productCount": 38' deployment.json
+          grep -Fq '"catalogVersion": 3' deployment.json
 
       - name: Commit only allowlisted published files to staging
         shell: bash
