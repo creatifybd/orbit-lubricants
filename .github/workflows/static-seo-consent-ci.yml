@@ -1,0 +1,118 @@
+name: Orbit static SEO analytics consent and coverage release QA
+
+# One-time build and Chrome verification on branch only. Never runs on a schedule.
+on:
+  push:
+    branches: [orbit-static-seo-consent-coverage]
+    paths: [.github/workflows/static-seo-consent-ci.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-static-analytics-one-time
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Run all analytics security and reporting unit tests
+        run: |
+          npm ci --no-audit --no-fund
+          npm run test:analytics
+
+      - name: Install existing Chrome driver
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+
+      - name: Verify production-disabled build + full functional browsing
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -z "${VITE_GA4_MEASUREMENT_ID:-}"
+          npm run build
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-static-qa.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in {1..25}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/qa-browser.mjs
+          node scripts/tests/static-analytics.browser.mjs --disabled
+
+      - name: Verify fake-test GA4 consent and SKU/list data in isolated Chrome
+        env:
+          VITE_GA4_MEASUREMENT_ID: G-TEST123456
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run build
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-static-tag-qa.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in {1..25}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/tests/static-analytics.browser.mjs --configured
+
+      - name: Rebuild without ANY GA4 property and prepare only safe static files
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset VITE_GA4_MEASUREMENT_ID
+          npm run build
+          node scripts/prepare-git-publish.mjs
+          if grep -Fq 'G-TEST123456' assets/orbit-static-analytics-*.js; then
+            echo "::error::Test stream unexpectedly entered the staged release."
+            exit 1
+          fi
+          test "$(grep -c 'data-orbit-kind="product"' products/nova-hd40-1l/index.html)" -eq 1
+          test "$(grep -c 'data-orbit-kind="category"' applications/motorcycle/index.html)" -eq 1
+          test -f deployment.json
+          echo "Production candidate has no configured Google Analytics stream."
+
+      - name: Stage strictly allowlisted compiled release files (no deletions)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets applications products images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::Tracked file deletion detected."
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          if [ "$count" -gt 105 ]; then
+            echo "::error::Unexpectedly large release candidate ($count files)."
+            exit 1
+          fi
+          echo "Safe candidate file updates: $count"
+          if git diff --cached --quiet; then
+            echo "Static output already matches reviewed release."
+            exit 0
+          fi
+          git commit -m "Stage verified opt-in static SEO analytics with tracking disabled"
+          git push origin HEAD:orbit-static-seo-consent-coverage
+          echo "Staging only. Production remains unchanged until reviewed merge."
+
+      - name: Preserve browser QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-static-analytics-screenshots
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
