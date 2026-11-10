@@ -1,4 +1,4 @@
-name: Orbit mobile accessibility and LCP release QA
+name: Orbit post-fix mobile accessibility and hero stability QA
 
 # Bounded, single-trigger validation. No FTP or production mutation.
 on:
