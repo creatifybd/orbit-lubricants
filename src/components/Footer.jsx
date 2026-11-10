@@ -55,9 +55,9 @@ export const Footer = ({ setActivePage }) => {
 
             {/* Col 2: Navigation Links */}
             <div>
-              <h4 style={{ color: 'rgba(34,31,31,0.4)', fontSize: '0.78rem', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.08em', fontWeight: 800 }}>
+              <h2 style={{ color: '#43566B', fontSize: '0.78rem', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.08em', fontWeight: 800 }}>
                 Quick Navigation
-              </h4>
+              </h2>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                 {[
                   { id: 'home', label: 'Home Page' },
@@ -89,9 +89,9 @@ export const Footer = ({ setActivePage }) => {
 
             {/* Col 3: Contact Details */}
             <div>
-              <h4 style={{ color: 'rgba(34,31,31,0.4)', fontSize: '0.78rem', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.08em', fontWeight: 800 }}>
+              <h2 style={{ color: '#43566B', fontSize: '0.78rem', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.08em', fontWeight: 800 }}>
                 Corporate Address
-              </h4>
+              </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.88rem', color: '#221F1F', fontWeight: 600 }}>
                 <div style={{ display: 'flex', gap: '10px' }}>
                   <MapPin size={16} style={{ color: '#F7931E', flexShrink: 0, marginTop: '2px' }} />
@@ -114,13 +114,13 @@ export const Footer = ({ setActivePage }) => {
 
             {/* Col 4: Social Channels & Hotline */}
             <div>
-              <h4 style={{ color: 'rgba(34,31,31,0.4)', fontSize: '0.78rem', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.08em', fontWeight: 800 }}>
+              <h2 style={{ color: '#43566B', fontSize: '0.78rem', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.08em', fontWeight: 800 }}>
                 Customer Care & Hotline
-              </h4>
+              </h2>
               <div style={{ marginBottom: '1.25rem' }}>
                 <a href="tel:01709643307" style={{
                   display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  background: '#F7931E', color: '#FFFFFF', padding: '0.5rem 1.2rem',
+                  background: '#F7931E', color: '#102C40', padding: '0.5rem 1.2rem',
                   borderRadius: '19px', textDecoration: 'none', fontWeight: 800,
                   fontSize: '0.92rem', boxShadow: '0 4px 14px rgba(247, 147, 30, 0.3)'
                 }}>
