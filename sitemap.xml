@@ -1,46 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url><loc>https://orbit-lubricants.com/</loc></url>
   <url><loc>https://orbit-lubricants.com/products/</loc></url>
   <url><loc>https://orbit-lubricants.com/about/</loc></url>
   <url><loc>https://orbit-lubricants.com/contact/</loc></url>
   <url><loc>https://orbit-lubricants.com/finder/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/nova-hd40-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/nova-hd50-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/revx-atf-dex-iii-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/xpower-10w30-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/xpower-10w40-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/xpower-20w40-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/xpower-20w50-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/boostx-cng-20w50-2l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/nova-hd50-3l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/supreme-20w50-4litres/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/elite-hde-15w40-5l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/nova-hd40-5l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/nova-hd50-5l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/optima-hde-20w50-5l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/optima-hde-20w50-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/elite-hde-15w40-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/supreme-20w50-1litre/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/revx-cvtf-tc-4l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/revx-cvtf-fe-4l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/brako-dot3-355ml/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/brako-dot3-500ml/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/gearx-80w90-1litre/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/gearx-85w140-1litre/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/gearx-80w90-4litres/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/gearx-85w140-4litres/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/orbit-pail-silver/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/orbit-pail-gold/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/orbit-pail-white/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/orbit-pail-blue/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/orbit-drum-blue/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/ride-sae40-600ml/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/ride-sae40-1l/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/supreme-0w20-4litres/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/supreme-10w30-4litres/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/supreme-10w40-4litres/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/supreme-5w30-4litres/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/supreme-5w40-4litres/</loc></url>
-  <url><loc>https://orbit-lubricants.com/products/revx-atf-dex-iii-4l/</loc></url>
+  <url><loc>https://orbit-lubricants.com/applications/motorcycle/</loc><image:image><image:loc>https://orbit-lubricants.com/products/xpower-10w30-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/xpower-10w40-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/xpower-20w40-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/xpower-20w50-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/applications/automotive/</loc><image:image><image:loc>https://orbit-lubricants.com/products/supreme-20w50-api-sl-4l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/supreme-20w50-api-sl-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/supreme-0w20-api-sq-4l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/supreme-10w30-api-sn-4l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/supreme-10w40-api-sn-4l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/supreme-5w30-api-sq-4l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/supreme-5w40-api-sq-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/applications/cng/</loc><image:image><image:loc>https://orbit-lubricants.com/products/boostx-cng-20w50-2l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/applications/heavy-duty/</loc><image:image><image:loc>https://orbit-lubricants.com/products/elite-hde-15w40-5l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/optima-hde-20w50-5l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/optima-hde-20w50-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/elite-hde-15w40-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/applications/transmission/</loc><image:image><image:loc>https://orbit-lubricants.com/products/revx-atf-dex-iii-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/revx-cvtf-tc-4l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/revx-cvtf-fe-4l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/revx-atf-dex-iii-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/applications/gear-oil/</loc><image:image><image:loc>https://orbit-lubricants.com/products/gearx-80w90-gl4-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/gearx-85w140-gl4-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/gearx-80w90-gl4-4l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/gearx-85w140-gl4-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/applications/brake-fluid/</loc><image:image><image:loc>https://orbit-lubricants.com/products/brako-dot3-355ml.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/brako-dot3-500ml.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/applications/monograde/</loc><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd40-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd50-1l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd50-3l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd40-5l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd50-5l.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/ride-sae40-api-sfcd-600ml.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/ride-sae40-api-sfcd-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/applications/bulk-pack/</loc><image:image><image:loc>https://orbit-lubricants.com/products/orbit-pail-silver.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/orbit-pail-gold.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/orbit-pail-white.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/orbit-pail-blue.webp</image:loc></image:image><image:image><image:loc>https://orbit-lubricants.com/products/orbit-drum-blue.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/nova-hd40-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd40-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/nova-hd50-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd50-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/revx-atf-dex-iii-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/revx-atf-dex-iii-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/xpower-10w30-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/xpower-10w30-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/xpower-10w40-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/xpower-10w40-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/xpower-20w40-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/xpower-20w40-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/xpower-20w50-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/xpower-20w50-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/boostx-cng-20w50-2l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/boostx-cng-20w50-2l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/nova-hd50-3l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd50-3l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/supreme-20w50-4litres/</loc><image:image><image:loc>https://orbit-lubricants.com/products/supreme-20w50-api-sl-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/elite-hde-15w40-5l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/elite-hde-15w40-5l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/nova-hd40-5l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd40-5l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/nova-hd50-5l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/nova-hd50-5l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/optima-hde-20w50-5l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/optima-hde-20w50-5l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/optima-hde-20w50-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/optima-hde-20w50-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/elite-hde-15w40-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/elite-hde-15w40-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/supreme-20w50-1litre/</loc><image:image><image:loc>https://orbit-lubricants.com/products/supreme-20w50-api-sl-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/revx-cvtf-tc-4l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/revx-cvtf-tc-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/revx-cvtf-fe-4l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/revx-cvtf-fe-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/brako-dot3-355ml/</loc><image:image><image:loc>https://orbit-lubricants.com/products/brako-dot3-355ml.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/brako-dot3-500ml/</loc><image:image><image:loc>https://orbit-lubricants.com/products/brako-dot3-500ml.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/gearx-80w90-1litre/</loc><image:image><image:loc>https://orbit-lubricants.com/products/gearx-80w90-gl4-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/gearx-85w140-1litre/</loc><image:image><image:loc>https://orbit-lubricants.com/products/gearx-85w140-gl4-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/gearx-80w90-4litres/</loc><image:image><image:loc>https://orbit-lubricants.com/products/gearx-80w90-gl4-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/gearx-85w140-4litres/</loc><image:image><image:loc>https://orbit-lubricants.com/products/gearx-85w140-gl4-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/orbit-pail-silver/</loc><image:image><image:loc>https://orbit-lubricants.com/products/orbit-pail-silver.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/orbit-pail-gold/</loc><image:image><image:loc>https://orbit-lubricants.com/products/orbit-pail-gold.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/orbit-pail-white/</loc><image:image><image:loc>https://orbit-lubricants.com/products/orbit-pail-white.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/orbit-pail-blue/</loc><image:image><image:loc>https://orbit-lubricants.com/products/orbit-pail-blue.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/orbit-drum-blue/</loc><image:image><image:loc>https://orbit-lubricants.com/products/orbit-drum-blue.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/ride-sae40-600ml/</loc><image:image><image:loc>https://orbit-lubricants.com/products/ride-sae40-api-sfcd-600ml.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/ride-sae40-1l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/ride-sae40-api-sfcd-1l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/supreme-0w20-4litres/</loc><image:image><image:loc>https://orbit-lubricants.com/products/supreme-0w20-api-sq-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/supreme-10w30-4litres/</loc><image:image><image:loc>https://orbit-lubricants.com/products/supreme-10w30-api-sn-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/supreme-10w40-4litres/</loc><image:image><image:loc>https://orbit-lubricants.com/products/supreme-10w40-api-sn-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/supreme-5w30-4litres/</loc><image:image><image:loc>https://orbit-lubricants.com/products/supreme-5w30-api-sq-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/supreme-5w40-4litres/</loc><image:image><image:loc>https://orbit-lubricants.com/products/supreme-5w40-api-sq-4l.webp</image:loc></image:image></url>
+  <url><loc>https://orbit-lubricants.com/products/revx-atf-dex-iii-4l/</loc><image:image><image:loc>https://orbit-lubricants.com/products/revx-atf-dex-iii-4l.webp</image:loc></image:image></url>
 </urlset>
