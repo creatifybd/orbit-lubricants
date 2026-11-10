@@ -1,8 +1,9 @@
 name: Build and Deploy to Hostinger
 
+# Deployment remains manual-only until Orbit's Hostinger document root,
+# FTP_SERVER_DIR, rollback backup and real live marker check are verified.
+# This prevents unrelated main-branch changes from uploading into an unknown path.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
