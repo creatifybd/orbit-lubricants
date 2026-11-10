@@ -44,6 +44,7 @@ jobs:
           test -f dist/.htaccess
           test -f dist/robots.txt
           test -f dist/seo-manifest.json
+          test -f dist/deployment.json
           test -f dist/products/index.html
           echo "Staging build verification passed. Nothing was deployed."
 
@@ -96,7 +97,7 @@ jobs:
           mkdir -p rollback-capsule/assets
           git show origin/main:index.html > rollback-capsule/index.html
           git show origin/main:.htaccess > rollback-capsule/.htaccess
-          mapfile -t compiled_assets < <(grep -oE '/assets/[^"]+\\.(js|css)' rollback-capsule/index.html | sort -u)
+          mapfile -t compiled_assets < <(grep -oE '/assets/[^"]+[.](js|css)' rollback-capsule/index.html | sort -u)
           test "${#compiled_assets[@]}" -ge 2
           for asset in "${compiled_assets[@]}"; do
             file="${asset#/}"
@@ -105,7 +106,7 @@ jobs:
           done
           echo "Prepared old index, htaccess and referenced immutable bundles. This is NOT a full site backup."
 
-      - name: Archive targeted rollback capsule (non-public)
+      - name: Archive targeted rollback capsule (no credentials)
         uses: actions/upload-artifact@v4
         with:
           name: orbit-rollback-capsule
