@@ -183,7 +183,9 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Nine crawlable application-category pages with original pack images, factual copy, internal links and CollectionPage + ItemList schema added. Sitemap now **52 URLs**, including 38 SKU detail URLs.
 - [x] Product WebPage preferred-image/ImageObject metadata, descriptive alt, OG image alt and Google large preview options deployed.
 - [x] Browser + production verification successful: https://github.com/creatifybd/orbit-lubricants/actions/runs/42776586816 and https://github.com/creatifybd/orbit-lubricants/actions/runs/42776817335.
-- [ ] Google Search Console domain ownership, sitemap submission, Image Search impressions and actual Google indexing **not confirmed**. 52 sitemap entries != 52 indexed Google results.
+- [x] Owner verified Search Console **Domain property** `orbit-lubricants.com` by DNS TXT record (Nov 10, 2026); TXT record must remain in DNS.
+- [x] Owner submitted clean `https://orbit-lubricants.com/sitemap.xml` to the verified Domain property. Search Console shows **Success**, last read Nov 10, 2026, **52 discovered pages**. A second accidental UTM-query sitemap submission also shows Success/52 discovered; retain the clean URL as canonical.
+- [ ] **Actual page indexing, Image Search impressions, Google queries and ranking are NOT verified**. 52 discovered URLs do not imply 52 indexed URLs.
 - [ ] Bing Webmaster verification/Import GSC, sitemap submission and optional IndexNow key remain subject to owner account access.
 - [ ] Competitor-level generic search rankings require original useful content, real TDS/SDS, business trust and external genuine authority; no ranking guarantee.
 
@@ -209,6 +211,7 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Add Google Search Console **Web Search** and **Image Search** read-only API reports for finalized 28/90-day clicks, impressions, CTR, average position, top queries and landing pages.
 - [x] Restrict property identifiers to Orbit `sc-domain:orbit-lubricants.com` or `https://orbit-lubricants.com/`; no access to Joytun or arbitrary third-party properties.
 - [x] Unit query/API/authorization tests, Vite build and Chrome mock-owner Web/Image dashboard test successful: https://github.com/creatifybd/orbit-lubricants/actions/runs/42790107789.
-- [ ] Owner must verify Search Console property and create/approve public Google OAuth Web Client ID with correct domain origin/scope; actual Google API connection unverified.
-- [ ] Submit sitemap in the verified account (52 URLs, 76 image references) and inspect URL indexing & actual Google Images Performance. No organic position/rank is claimed without real account reports.
+- [x] Owner verified Orbit's Search Console Domain property by DNS TXT (Nov 10, 2026). Google OAuth Web Client ID still needs creation/approval and actual Admin reporting API connection remains unverified.
+- [x] Submit clean sitemap to verified Search Console property: `https://orbit-lubricants.com/sitemap.xml`; status **Success**, 52 discovered URLs and last read Nov 10, 2026 per owner's screenshot.
+- [ ] Next: inspect Page Indexing report plus representative product URL `https://orbit-lubricants.com/products/nova-hd40-1l/`; assess actual Google Images Performance after processing. Do not infer rankings/indexing from sitemap success.
 - [ ] Obtain final owner privacy consent copy and G-Measurement ID to activate consent-aware GA4 visitor metrics; this is separate from Search Console reporting.
