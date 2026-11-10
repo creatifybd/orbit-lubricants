@@ -9,7 +9,7 @@ const check = (condition, message) => {
   if (!condition) errors.push(message);
 };
 
-const files = ['index.html', '.htaccess', 'robots.txt', 'sitemap.xml', 'seo-manifest.json', 'products/index.html', 'about/index.html', 'contact/index.html', 'finder/index.html'];
+const files = ['index.html', '.htaccess', 'robots.txt', 'sitemap.xml', 'seo-manifest.json', 'deployment.json', 'products/index.html', 'about/index.html', 'contact/index.html', 'finder/index.html'];
 for (const name of files) {
   check(existsSync(join(dist, name)), 'Missing static build asset: ' + name);
 }
@@ -23,6 +23,11 @@ if (existsSync(join(dist, '.htaccess'))) {
 if (!errors.length) {
   const sitemap = readFileSync(join(dist, 'sitemap.xml'), 'utf8');
   const manifest = JSON.parse(readFileSync(join(dist, 'seo-manifest.json'), 'utf8'));
+  const release = JSON.parse(readFileSync(join(dist, 'deployment.json'), 'utf8'));
+  check(release.productCount === initialData.products.length, 'Release identity has incorrect product count');
+  check(release.catalogVersion === initialData.catalogVersion, 'Release identity has incorrect catalog version');
+  check(Boolean(release.commit), 'Release identity missing commit');
+  if (process.env.GITHUB_SHA) check(release.commit === process.env.GITHUB_SHA, 'Release marker commit differs from running workflow');
   const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   const requiredPaths = ['/', '/products/', '/about/', '/contact/', '/finder/'];
 
