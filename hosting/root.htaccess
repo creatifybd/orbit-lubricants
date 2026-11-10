@@ -26,3 +26,14 @@
   RewriteRule ^logo\.png$ public/logo.png [L]
   RewriteRule ^logo-dark-bg\.png$ public/logo-dark-bg.png [L]
 </IfModule>
+
+# Conservative browser security headers (avoid restrictive CSP until third-party audit).
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  <Files "legacy-entry.js">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </Files>
+</IfModule>
