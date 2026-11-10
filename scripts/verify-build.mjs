@@ -36,7 +36,7 @@ if (!errors.length) {
   check(paths.length === 5 + initialData.categories.length + initialData.products.length, 'Expected all product and application URLs in sitemap');
   check(manifest.routes === paths.length, 'Sitemap route count differs from SEO manifest');
   check(sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'), 'Google image sitemap namespace is missing');
-  const imageLocations = [...sitemap.matchAll(/<image:loc>([^<]+)<\\/image:loc>/g)].map((match) => match[1]);
+  const imageLocations = [...sitemap.matchAll(new RegExp('<image:loc>([^<]+)</image:loc>', 'g'))].map((match) => match[1]);
   check(imageLocations.length === initialData.products.length * 2, 'Image sitemap is missing product/catalog original images');
   check(manifest.imageReferences === imageLocations.length, 'SEO manifest image total is incorrect');
   for (const category of initialData.categories) {
