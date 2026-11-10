@@ -1,0 +1,64 @@
+name: Orbit SEO warning remediation — staging release check
+
+on:
+  push:
+    branches: [orbit-production-seo-security-audit]
+    paths:
+      - .github/workflows/seo-fix-build.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-seo-fix-staging-only
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Compile and stage repaired page metadata without deleting assets
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Compile validated static release
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run build
+          node scripts/prepare-git-publish.mjs
+          grep -Fq 'Canonicalise ONLY Orbit' .htaccess
+          grep -Fq 'Disallow: /admin' robots.txt
+          test -f products/nova-hd40-1l/index.html
+          test -f products/brako-dot3-500ml/index.html
+      - name: Commit allowlisted published HTML/config to staging only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets products images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::Deletion detected; release aborted."
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          if [ "$count" -gt 90 ]; then
+            echo "::error::Unexpectedly large diff; release aborted."
+            exit 1
+          fi
+          echo "Safe changed static files: $count"
+          if git diff --cached --quiet; then
+            echo "No static files changed."
+            exit 0
+          fi
+          git commit -m "Stage unique product pack metadata and Orbit-only www canonical redirect"
+          git push origin HEAD:orbit-production-seo-security-audit
+          echo "Staged only; live production main unchanged."

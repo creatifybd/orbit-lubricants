@@ -1,0 +1,36 @@
+name: Orbit one-time production SEO and source-security audit
+
+on:
+  push:
+    branches: [orbit-production-seo-security-audit]
+    paths:
+      - .github/workflows/site-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbit-one-time-live-seo-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit existing public Orbit website (read-only)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify live sitemap and HTTP/SEO/security
+        run: node scripts/audit-live-seo.mjs
+      - name: Save full audit observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-live-seo-audit
+          path: orbit-live-audit.json
+          if-no-files-found: warn
+          retention-days: 7
