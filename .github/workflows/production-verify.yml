@@ -67,7 +67,7 @@ jobs:
             const res=await fetch(base+path,{method:'HEAD',signal:AbortSignal.timeout(12000)});
             if(res.status!==403 && res.status!==404)throw Error('Public source exposure: '+path+' HTTP '+res.status);
           }
-          console.log('LIVE ORBIT VERIFIED: 38 products; catalog version 3; 43 indexed URLs; correct JS; original pack artwork; protected source.');
+          console.log('LIVE ORBIT VERIFIED: 38 products; catalog version 3; 52 crawlable sitemap URLs; 76 image references; correct JS; original pack artwork; protected source.');
           NODE
             then
               exit 0
