@@ -6,8 +6,9 @@ import { ProductManager } from './ProductManager';
 import { ContentManager } from './ContentManager';
 import { InquiriesManager } from './InquiriesManager';
 import { SiteSettings } from './SiteSettings';
+import { AnalyticsDashboard } from './AnalyticsDashboard';
 import { 
-  LayoutDashboard, Package, FileText, Mail, Settings, 
+  LayoutDashboard, Package, FileText, Mail, Settings, BarChart3,
   LogOut, Globe, Shield, Sparkles 
 } from 'lucide-react';
 
@@ -21,6 +22,7 @@ export const AdminLayout = ({ onReturnHome }) => {
 
   const menuItems = [
     { id: 'overview', label: 'Dashboard Overview', icon: LayoutDashboard },
+    { id: 'analytics', label: 'Website Analytics', icon: BarChart3 },
     { id: 'products', label: 'Product Manager', icon: Package },
     { id: 'content', label: 'Content CMS', icon: FileText },
     { id: 'inquiries', label: 'Leads & Inquiries', icon: Mail },
@@ -134,6 +136,7 @@ export const AdminLayout = ({ onReturnHome }) => {
           <strong>Browser-only CMS preview.</strong> Edits and any locally stored enquiries are not shared with the live website or another device. This is not a secure central administration system. Export a local backup before making major changes.
         </div>
         {activeTab === 'overview' && <DashboardOverview setActiveTab={setActiveTab} />}
+        {activeTab === 'analytics' && <AnalyticsDashboard />}
         {activeTab === 'products' && <ProductManager />}
         {activeTab === 'content' && <ContentManager />}
         {activeTab === 'inquiries' && <InquiriesManager />}

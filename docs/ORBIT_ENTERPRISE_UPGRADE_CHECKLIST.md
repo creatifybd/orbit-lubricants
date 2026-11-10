@@ -174,3 +174,30 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Mobile performance STILL unresolved. Lab Home Mobile fluctuated/worsened (49–50 in two tests), primarily due to late Google web-font swapping causing layout shift. Experimental hero timing/loading changes were reverted; do not claim mobile performance improved.
 - [ ] Review actual real-user CrUX/field Core Web Vitals and approve a visually checked font loading strategy, responsive product thumbnails only if permitted without changing brand imagery.
 
+
+
+## Organic discovery & no-cost analytics milestone — 2026-11-10
+
+### Google/Bing image SEO — production
+- [x] Google-compliant image sitemap extension deployed, original source bytes unchanged: 38 SKU photos × individual product and parent application hub = **76 image references**.
+- [x] Nine crawlable application-category pages with original pack images, factual copy, internal links and CollectionPage + ItemList schema added. Sitemap now **52 URLs**, including 38 SKU detail URLs.
+- [x] Product WebPage preferred-image/ImageObject metadata, descriptive alt, OG image alt and Google large preview options deployed.
+- [x] Browser + production verification successful: https://github.com/creatifybd/orbit-lubricants/actions/runs/42776586816 and https://github.com/creatifybd/orbit-lubricants/actions/runs/42776817335.
+- [ ] Google Search Console domain ownership, sitemap submission, Image Search impressions and actual Google indexing **not confirmed**. 52 sitemap entries != 52 indexed Google results.
+- [ ] Bing Webmaster verification/Import GSC, sitemap submission and optional IndexNow key remain subject to owner account access.
+- [ ] Competitor-level generic search rankings require original useful content, real TDS/SDS, business trust and external genuine authority; no ranking guarantee.
+
+### GA4 owner reporting — staging, unconnected
+- [x] Consent-gated front-end GA4 adapter implemented: no Google tag until valid owner-provided Measurement ID and visitor opt-in; privacy controls grant/deny/revoke, no advertising consents.
+- [x] Built real-data Owner Analytics UI with Google OAuth analytics.readonly, in-memory token, GA4 Data API report requests and responsive KPI/table views: realtime active users, sessions, pageviews, product item views, page popularity, acquisition channels, interaction/section events.
+- [x] Add section visibility and product selection events with fixed names/IDs; never transmit names, emails, phone numbers, messages or raw on-site search strings. No fake generate_lead from mailto.
+- [x] Unit privacy/API tests (17/17), Vite build and real Chrome mock-owner report/desktop/mobile QA passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42778364523.
+- [ ] **No visitor tracking is activated or proven in GA4**; production build intentionally omits VITE_GA4_MEASUREMENT_ID. Actual GA4 Property ID, G-Measurement ID, OAuth Client ID, consent text approval and Tag Assistant/DebugView tests are needed.
+- [ ] Static product SEO landing pages still need shared consent-aware analytics; no complete Google Analytics data coverage until configured.
+- [ ] Owner GA4 reports currently tested with mocked API; real Google OAuth and Data API access must be verified with the actual property.
+- [ ] Central secure Firebase Auth/Firestore CMS, verifiable enquiry delivery and Search Console reporting inside Admin still need account setup.
+- [ ] Maintain free Spark plan; do not silently enable Firebase Cloud Functions/Blaze or any paid service.
+
+### Verified owner project
+- [x] Owner screenshot showed Firebase project `orbit-lubricants` on Spark free plan with one app registered.
+- [ ] Confirm whether app is Web App, obtain safe public Firebase Web App configuration and inspect Google Auth/Firestore activation before building secure cross-device admin.

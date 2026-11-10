@@ -10,6 +10,8 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { LubricantFinder } from './components/LubricantFinder';
 import { AdminLayout } from './pages/Admin/AdminLayout';
+import { PrivacyPreferences } from './components/PrivacyPreferences';
+import { trackOrbitEvent } from './lib/analytics';
 
 // Support old hash links and new crawlable paths, including trailing slashes.
 // Product detail pages are generated separately at /products/:slug/.
@@ -71,6 +73,7 @@ export function AppContent() {
     const canonicalUrl = `https://orbit-lubricants.com${pagePath}`;
 
     document.title = route.title;
+    if (activePage !== 'admin') trackOrbitEvent('page_view', { page_path: pagePath });
     const setMeta = (selector, attribute, value) => {
       const element = document.head.querySelector(selector);
       if (element) element.setAttribute(attribute, value);
@@ -96,6 +99,28 @@ export function AppContent() {
       window.removeEventListener('hashchange', handleLocationChange);
     };
   }, []);
+
+  // One anonymous impression per visible content section, after consent.
+  // Raw scroll coordinates or visitor identity are never captured.
+  useEffect(() => {
+    if (activePage === 'admin' || !('IntersectionObserver' in window)) return undefined;
+    const nodes = [...document.querySelectorAll('[data-orbit-section]')];
+    if (!nodes.length) return undefined;
+    const observed = new Set();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const sectionId = entry.target.getAttribute('data-orbit-section');
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.35 ||
+          document.visibilityState !== 'visible' || observed.has(sectionId)) continue;
+        if (trackOrbitEvent('section_view', { section_id: sectionId })) {
+          observed.add(sectionId);
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: [0.35, 0.6] });
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, [activePage]);
 
   if (activePage === 'admin') {
     return <AdminLayout onReturnHome={() => handlePageChange('home')} />;
@@ -137,6 +162,7 @@ export function AppContent() {
       </main>
 
       <Footer setActivePage={handlePageChange} />
+      <PrivacyPreferences />
       <Toast />
     </div>
   );

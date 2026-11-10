@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCms } from '../context/CmsContext';
 import { Phone, Mail, MapPin, Clock, Send, Sparkles } from 'lucide-react';
+import { trackOrbitEvent } from '../lib/analytics';
 
 export const Contact = ({ selectedProductForInquiry }) => {
   const { data } = useCms();
@@ -31,6 +32,12 @@ export const Contact = ({ selectedProductForInquiry }) => {
       formData.message.trim()
     ].join(String.fromCharCode(10));
     const to = contactInfo.email || 'info@orbit-lubricants.com';
+    // This is a local email draft, not a delivered lead.
+    const enquiryType = formData.type === 'Becoming a Distributor' ? 'distributor'
+      : formData.type === 'Industrial Lubricants Quotation' ? 'industrial'
+      : formData.type === 'Automotive / Fleet Supply' ? 'fleet'
+      : formData.type === 'Technical Support & Oil Survey' ? 'technical' : 'other';
+    trackOrbitEvent('enquiry_email_prepared', { enquiry_type: enquiryType });
     setPreparedDraft({
       subject,
       body,
@@ -62,7 +69,7 @@ export const Contact = ({ selectedProductForInquiry }) => {
       </section>
 
       {/* Main Content */}
-      <section className="section">
+      <section data-orbit-section="contact_form" className="section">
         <div className="container">
           <div className="contact-layout" style={{
             display: 'grid',

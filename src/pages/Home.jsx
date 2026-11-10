@@ -4,6 +4,7 @@ import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
 import { ProductMarquee } from '../components/ProductMarquee';
+import { trackOrbitEvent } from '../lib/analytics';
 import heroAutomotive from '../assets/hero/automotive.webp';
 import heroHeavyDuty from '../assets/hero/heavy-duty.webp';
 import heroManufacturing from '../assets/hero/manufacturing.webp';
@@ -33,7 +34,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
 
   return (
     <div>
-      <section className="premium-hero" aria-roledescription="carousel" aria-label="Orbit product applications">
+      <section data-orbit-section="home_hero" className="premium-hero" aria-roledescription="carousel" aria-label="Orbit product applications">
         <div className="hero-slides" aria-live="polite">
           {heroSlides.map((slide, index) => <img key={slide.image} className={`hero-slide-image ${index === heroSlide ? 'active' : ''}`} src={bundledHeroImages[index] || slide.image} alt="" fetchPriority={index === 0 ? 'high' : 'auto'} />)}
         </div>
@@ -60,7 +61,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         </div>
       </section>
 
-      <section className="section range-section">
+      <section data-orbit-section="applications" className="section range-section">
         <div className="container">
           <div className="section-heading-row">
             <div><span className="premium-kicker dark">Product portfolio</span><h2>Choose by application</h2></div>
@@ -83,18 +84,22 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         </div>
       </section>
 
-      <section className="section featured-section">
+      <section data-orbit-section="featured_products" className="section featured-section">
         <div className="container">
           <div className="section-head center"><span className="premium-kicker dark">Current lineup</span><h2>Featured products</h2><p>{products.length} updated packs, organized by application and label-stated performance classification.</p></div>
           <div className="premium-product-grid">
-            {featured.map((item) => <ProductCard key={item.id} product={item} onSelect={setSelectedProduct} onInquire={inquire} />)}
+            {featured.map((item) => <ProductCard key={item.id} product={item} onSelect={(product) => {
+              trackOrbitEvent('select_item', { item_id: product.id, item_category: product.category });
+              trackOrbitEvent('view_item', { item_id: product.id, item_category: product.category });
+              setSelectedProduct(product);
+            }} onInquire={inquire} />)}
           </div>
         </div>
       </section>
 
       <ProductMarquee products={products} />
 
-      <section className="section corporate-showcase-section">
+      <section data-orbit-section="corporate" className="section corporate-showcase-section">
         <div className="container">
           <div className="mjl-showcase-grid">
             <button type="button" className="mjl-showcase-card" onClick={() => setActivePage('about')}>
@@ -140,7 +145,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         </div>
       </section>
 
-      <section className="section confidence-section">
+      <section data-orbit-section="confidence" className="section confidence-section">
         <div className="container confidence-grid">
           <div><span className="premium-kicker">Clear product information</span><h2>Choose with confidence.</h2><p>Every catalog entry separates pack-label facts from selection guidance. For final compatibility, always follow the vehicle or equipment manufacturer’s manual.</p><button className="btn btn-primary" onClick={() => setActivePage('finder')}>Open lubricant finder <ArrowRight size={17} /></button></div>
           <div className="confidence-list">
@@ -153,7 +158,7 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         </div>
       </section>
 
-      <section className="catalog-cta">
+      <section data-orbit-section="contact_cta" className="catalog-cta">
         <div className="container catalog-cta-inner"><div><span className="premium-kicker">Distribution & bulk supply</span><h2>Need product or sales support?</h2></div><button className="btn btn-primary btn-lg" onClick={() => setActivePage('contact')}>Contact Orbit <ArrowRight size={18} /></button></div>
       </section>
 
