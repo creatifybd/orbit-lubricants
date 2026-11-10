@@ -1807,3 +1807,43 @@ body { color: #17324d; background: #f8fbfe; }
 .catalog-product-actions .catalog-secondary-actions .catalog-inquire{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:50%;position:relative;z-index:6}
 .catalog-product-actions .catalog-secondary-actions button:hover{transform:none}
 @media(max-width:350px){.catalog-primary-actions{gap:.45rem}.catalog-product-actions .catalog-primary-actions .catalog-spec-trigger,.catalog-product-actions .catalog-primary-actions .catalog-product-deep-link{font-size:.68rem}}
+
+
+/* Orbit Analytics consent panel — optional, no tracking tags before consent. */
+.orbit-consent-panel {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 10000;
+  padding: 16px; background: rgba(9, 35, 56, .95);
+  box-shadow: 0 -12px 35px rgba(9, 35, 56, .18);
+  color: #fff;
+}
+.orbit-consent-inner {
+  max-width: 1120px; margin: 0 auto; display: flex;
+  align-items: center; justify-content: space-between;
+  gap: 24px;
+}
+.orbit-consent-header {
+  display: flex; align-items: flex-start; gap: 16px; flex: 1; min-width: 0;
+}
+.orbit-consent-symbol { color: #f6a244; display: inline-flex; padding-top: 3px; }
+.orbit-consent-header h2 { font-size: 1.08rem; font-weight: 800; line-height: 1.35; color: #fff; margin: 0 0 6px; }
+.orbit-consent-header p { font-size: .82rem; color: #d7e6f2; line-height: 1.65; max-width: 720px; margin: 0; }
+.orbit-consent-close { border: 1px solid #54718a; background: transparent; color: white; border-radius: 8px; cursor: pointer; min-width: 36px; height: 36px; display: inline-grid; place-items: center; }
+.orbit-consent-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+.orbit-consent-actions button { min-height: 42px; border-radius: 9px; padding: 10px 14px; cursor: pointer; font-size: .82rem; font-weight: 800; line-height: 1.3; }
+.orbit-consent-reject { border: 1px solid #8eafc5; background: transparent; color: #fff; }
+.orbit-consent-accept { border: 1px solid #f69a2d; background: #f69a2d; color: #09243c; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.orbit-consent-panel button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@media(max-width:850px) {
+  .orbit-consent-inner { flex-direction: column; align-items: stretch; gap: 16px; }
+  .orbit-consent-actions { justify-content: stretch; }
+  .orbit-consent-actions button { flex: 1; }
+}
+@media(max-width:460px) {
+  .orbit-consent-panel { padding: 16px 12px; }
+  .orbit-consent-header { gap: 10px; }
+  .orbit-consent-header p { font-size: .79rem; }
+  .orbit-consent-actions { flex-direction: column; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .orbit-consent-panel *, .orbit-consent-panel *::before, .orbit-consent-panel *::after { transition: none !important; animation: none !important; }
+}
