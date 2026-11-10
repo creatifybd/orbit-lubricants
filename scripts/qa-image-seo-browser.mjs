@@ -45,8 +45,8 @@ try {
   const galleryImgs = page.locator('figure.card img');
   assert.equal(await galleryImgs.count(), 38, 'Must show all 38 original product photos in one crawlable page');
   assert.equal(await page.locator('section.group').count(), 9, 'Gallery must have all nine application groups');
-  assert.equal(await page.locator('figure.card a[href^="/products/"]').count(), 76,
-    'All gallery photos and descriptions should link to the matching product detail');
+  assert.equal(await page.locator('figure.card a[href^="/products/"]').count(), 114,
+    'All 38 gallery photos, product titles and detail links should open the matching SKU page');
   const gallerySrcs = await galleryImgs.evaluateAll(nodes => nodes.map(node => ({
     src: node.getAttribute('src'), alt: node.getAttribute('alt')
   })));
