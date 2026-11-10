@@ -1,4 +1,4 @@
-name: Orbit original pack image gallery - safe one-time QA and staging
+name: Orbit 38 original pack gallery - corrected three-link browser QA and staging
 
 on:
   push:
