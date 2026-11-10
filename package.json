@@ -8,7 +8,8 @@
     "build": "vite build && node scripts/build-seo.mjs && node scripts/verify-build.mjs",
     "preview": "vite preview",
     "verify:build": "node scripts/verify-build.mjs",
-    "test:analytics": "node --test scripts/tests/analytics.test.mjs scripts/tests/ga4reports.test.mjs"
+    "test:analytics": "node --test scripts/tests/analytics.test.mjs scripts/tests/ga4reports.test.mjs",
+    "test:gsc": "node --test scripts/tests/searchConsoleReports.test.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.475.0",
