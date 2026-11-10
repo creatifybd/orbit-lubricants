@@ -25,9 +25,23 @@
   RewriteRule ^(?:\.git|\.github|\.builds|\.env|src|scripts|hosting|deployment|docs|node_modules)(?:/|$) - [F,L,NC]
   RewriteRule ^(?:package(?:-lock)?\.json|vite\.config\.js|deploy\.ps1|index\.source\.html|.*\.(?:zip|sql|bak|tar|tgz))$ - [F,L,NC]
   RewriteRule ^src/main\.jsx$ legacy-entry.js [L]
+
+  # Already-published static paths (including /products/:slug/index.html)
+  # must take precedence over legacy public/* fallbacks.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^images/(.*)$ public/images/$1 [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^products/(.*)$ public/products/$1 [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^logo\.png$ public/logo.png [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^logo-dark-bg\.png$ public/logo-dark-bg.png [L]
 </IfModule>
 
