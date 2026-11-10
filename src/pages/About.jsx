@@ -32,7 +32,7 @@ export const About = () => {
       </section>
 
       {/* ── Company Overview Story ── */}
-      <section className="section">
+      <section data-orbit-section="about_story" className="section">
         <div className="container" style={{ maxWidth: '920px' }}>
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <span className="eyebrow">COMPANY OVERVIEW</span>
