@@ -19,7 +19,9 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Add live deployment.json fingerprint check to .github/workflows/deploy.yml on main.
 - [x] Run minimal GitHub Actions smoke workflow on main.
 - [x] Investigate pre-job GitHub Actions failures: the smoke test succeeded on re-run (attempt 2) on Nov 10. Earlier incident matches GitHub service disruption; no evidence of account suspension. Run: https://github.com/creatifybd/orbit-lubricants/actions/runs/42674052980.
+- [x] Freeze automatic main-branch FTPS release: main/.github/workflows/deploy.yml now supports workflow_dispatch only, pending verified Orbit directory/backup (commit 29a8702).
 - [ ] Verify Hostinger > Websites > orbit-lubricants.com > website document root.
+- [x] Read-only staging-to-production diagnostic confirms live JS asset hash differs and /deployment.json returns 404 (run 42758542859); the new release has not reached production.
 - [ ] Compare document root with secret FTP_SERVER_DIR and FTP account mapping. DO NOT expose secret values.
 - [ ] Check Hostinger Git deployment vs FTPS deployment: ensure only one canonical source of truth.
 - [ ] Deploy latest production bundle and verify exact marker SHA, catalog count, assets and browser rendering on both www and apex domains.
@@ -29,7 +31,8 @@ Feature branch: orbit-enterprise-website-upgrade
 - [ ] Choose/verify dedicated Orbit Firebase project with owner access.
 - [ ] Replace localStorage-only owner passcodes with Firebase Auth + verified admin allowlist or custom claims.
 - [ ] Move product/CMS/site settings into secured Firestore, image assets into approved Storage bucket.
-- [ ] Write and test least-privilege Firestore and Storage rules; enable backups, activity/audit logging.
+- [x] Draft default-deny Firestore and Storage security rules in deployment/firebase/ (not deployed or emulator-tested).
+- [ ] Test rules with Firebase Emulator; deploy to verified Orbit project, enable backups and audit logging.
 - [ ] Implement centrally delivered enquiries using protected backend and email alert; spam controls/rate limits; test end-to-end.
 - [x] Replace misleading local-only inquiry success with clearly labeled email-draft fallback. A real backend delivery confirmation remains pending.
 - [x] Public site remains functional without backend credentials, using catalog data in the build. Backend content publishing will be added after Firebase connection.
@@ -84,13 +87,15 @@ Feature branch: orbit-enterprise-website-upgrade
 
 
 ## Additional verified staging improvements (2026-11-10)
+- [x] Add conservative Hostinger deployment and rollback playbook at docs/HOSTINGER_SAFE_DEPLOYMENT.md.
+- [x] Add secured Firebase CMS/enquiry integration plan at docs/CMS_MIGRATION_SECURITY.md (planning and rule files only, no live backend).
 - [x] React navigation now exposes real `href` links in the top-level navbar for crawlers and standard browser actions; SPA click navigation retained.
 - [x] SPA route changes update document title, description, canonical URL and Open Graph metadata; browser-local CMS settings no longer flatten all route titles.
 - [x] Contact form shows an honest, copyable email draft instead of claiming a localStorage-only enquiry reached the team.
 - [x] Admin pages identify the current CMS as browser-only preview, not secure centralized administration or live performance monitoring.
 - [x] Conservative X-Content-Type-Options, Referrer-Policy, X-Frame-Options and Permissions-Policy headers added to both FTP and root-hosting .htaccess variants; not yet verified on Hostinger.
 - [x] Safe staging build packaged as seven-day GitHub artifact, with no FTP push: https://github.com/creatifybd/orbit-lubricants/actions/runs/42757832132.
-- [ ] Run production staging QA again after the latest code changes, before considering release.
+- [x] Re-run staging production build and local HTTP tests after marquee, compare, navigation, admin and security-header edits; passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42758542859.
 - [ ] Make final pre-release approval gate: production host mapping, recoverable backup, security audit, original-art validation, product info approval and working backend.
 
 ## Required owner access (never send passwords/keys in chat)
