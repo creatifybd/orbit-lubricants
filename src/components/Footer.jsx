@@ -1,4 +1,5 @@
 import React from 'react';
+import { hasAnalyticsConfiguration } from '../lib/analytics';
 import { useCms } from '../context/CmsContext';
 import { Phone, Mail, MapPin, Clock, ArrowUpRight, Facebook, Linkedin, Youtube, Instagram } from 'lucide-react';
 import orbitLogo from '../assets/brand/orbit-logo.png';
@@ -182,8 +183,15 @@ export const Footer = ({ setActivePage }) => {
             <div>
               © {new Date().getFullYear()} Orbit Lubricant Industries. All Rights Reserved.
             </div>
-            <div>
-              Automotive & heavy-duty lubricant solutions
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+              <span>Automotive &amp; heavy-duty lubricant solutions</span>
+              {hasAnalyticsConfiguration() && (
+                <button type="button"
+                  onClick={() => window.dispatchEvent(new Event('orbit:privacy-open'))}
+                  style={{ border: 0, background: 'transparent', textDecoration: 'underline',
+                    textUnderlineOffset: '3px', cursor: 'pointer', color: '#385875', fontWeight: 700 }}
+                >Analytics preferences</button>
+              )}
             </div>
           </div>
         </div>
