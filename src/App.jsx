@@ -10,6 +10,8 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { LubricantFinder } from './components/LubricantFinder';
 import { AdminLayout } from './pages/Admin/AdminLayout';
+import { PrivacyPreferences } from './components/PrivacyPreferences';
+import { trackOrbitEvent } from './lib/analytics';
 
 // Support old hash links and new crawlable paths, including trailing slashes.
 // Product detail pages are generated separately at /products/:slug/.
@@ -71,6 +73,7 @@ export function AppContent() {
     const canonicalUrl = `https://orbit-lubricants.com${pagePath}`;
 
     document.title = route.title;
+    if (activePage !== 'admin') trackOrbitEvent('page_view', { page_path: pagePath });
     const setMeta = (selector, attribute, value) => {
       const element = document.head.querySelector(selector);
       if (element) element.setAttribute(attribute, value);
@@ -137,6 +140,7 @@ export function AppContent() {
       </main>
 
       <Footer setActivePage={handlePageChange} />
+      <PrivacyPreferences />
       <Toast />
     </div>
   );
