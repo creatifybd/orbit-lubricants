@@ -46,6 +46,41 @@ jobs:
           test -f dist/products/index.html
           echo "Staging build verification passed. Nothing was deployed."
 
+      - name: Smoke-test real HTTP routes on isolated staging server
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-preview.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=0
+          for attempt in {1..20}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" != "1" ]; then
+            cat /tmp/orbit-preview.log
+            exit 1
+          fi
+          curl --fail --silent --show-error http://127.0.0.1:4173/ -o /tmp/orbit-home.html
+          curl --fail --silent --show-error http://127.0.0.1:4173/products/ -o /tmp/orbit-catalog.html
+          curl --fail --silent --show-error http://127.0.0.1:4173/products/nova-hd40-1l/ -o /tmp/orbit-product.html
+          curl --fail --silent --show-error http://127.0.0.1:4173/contact/ -o /tmp/orbit-contact.html
+          curl --fail --silent --show-error http://127.0.0.1:4173/sitemap.xml -o /tmp/orbit-sitemap.xml
+          curl --fail --silent --show-error http://127.0.0.1:4173/robots.txt -o /tmp/orbit-robots.txt
+          curl --fail --silent --show-error http://127.0.0.1:4173/products/nova-hd40-1l.webp -o /dev/null
+          grep -Fq '<link rel="canonical" href="https://orbit-lubricants.com/">' /tmp/orbit-home.html
+          grep -Fq 'Engine Oil, Gear Oil' /tmp/orbit-catalog.html
+          grep -Fq '<link rel="canonical" href="https://orbit-lubricants.com/products/nova-hd40-1l/">' /tmp/orbit-product.html
+          grep -Fq 'Orbit Nova HD40' /tmp/orbit-product.html
+          grep -Fq 'https://orbit-lubricants.com/products/nova-hd40-1l/' /tmp/orbit-sitemap.xml
+          grep -Fq 'Sitemap: https://orbit-lubricants.com/sitemap.xml' /tmp/orbit-robots.txt
+          grep -Fq 'Contact Orbit Lubricants' /tmp/orbit-contact.html
+          echo "Local HTTP production-route smoke test passed. No external deployment was performed."
+
       - name: Package verified staging site for manual Hostinger deployment
         uses: actions/upload-artifact@v4
         with:
