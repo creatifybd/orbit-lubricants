@@ -162,7 +162,7 @@ Feature branch: orbit-enterprise-website-upgrade
 ### Privacy and conversion measurement
 - [x] Implemented consent-first analytics adapter with strict PII-free event list, opt-in/out/revocation and Google Consent Mode v2 in **draft PR #2**, not live: https://github.com/creatifybd/orbit-lubricants/pull/2.
 - [x] Run privacy unit tests, fake GA4 test-ID production build and real Chrome opt-in/opt-out QA: https://github.com/creatifybd/orbit-lubricants/actions/runs/42770355507.
-- [ ] Verify Orbit-specific GA4 Measurement ID and owner privacy/consent notice before activating any live visitor tracking. Static product HTML still needs its own consent-aware coverage.
+- [ ] Verify Orbit-specific GA4 Measurement ID and owner privacy/consent notice before activating any live visitor tracking. Standalone product/category consent code is ready but not activated.
 - [ ] Firebase Auth/Firestore/Storage server-backed admin CMS and real enquiry delivery remain pending; no false `generate_lead` allowed from a local mailto draft.
 
 ### Mobile accessibility, functional QA and performance
@@ -193,7 +193,8 @@ Feature branch: orbit-enterprise-website-upgrade
 - [x] Add section visibility and product selection events with fixed names/IDs; never transmit names, emails, phone numbers, messages or raw on-site search strings. No fake generate_lead from mailto.
 - [x] Unit privacy/API tests (17/17), Vite build and real Chrome mock-owner report/desktop/mobile QA passed: https://github.com/creatifybd/orbit-lubricants/actions/runs/42778364523.
 - [ ] **No visitor tracking is activated or proven in GA4**; production build intentionally omits VITE_GA4_MEASUREMENT_ID. Actual GA4 Property ID, G-Measurement ID, OAuth Client ID, consent text approval and Tag Assistant/DebugView tests are needed.
-- [ ] Static product SEO landing pages still need shared consent-aware analytics; no complete Google Analytics data coverage until configured.
+- [x] Implement and browser-test shared consent-aware analytics across all 38 standalone product pages and 9 application category pages, using hashed same-origin JS, no GA4 ID in published build.
+- [ ] Activate actual Orbit visitor measurement after GA4 stream/privacy approval and real DebugView verification; code coverage is not evidence of collected traffic.
 - [ ] Owner GA4 reports currently tested with mocked API; real Google OAuth and Data API access must be verified with the actual property.
 - [ ] Central secure Firebase Auth/Firestore CMS, verifiable enquiry delivery and Search Console reporting inside Admin still need account setup.
 - [ ] Maintain free Spark plan; do not silently enable Firebase Cloud Functions/Blaze or any paid service.
