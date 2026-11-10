@@ -1,0 +1,96 @@
+name: Orbit Search Console reporting — Web/Image owner QA
+
+# Single-run, bounded QA on a staging branch. No Search Console account
+# connection, no sitemap submission, and no paid Firebase services.
+on:
+  push:
+    branches: [orbit-search-console-owner-reporting]
+    paths: [.github/workflows/gsc-owner-stage.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-gsc-owner-one-time-qa
+  cancel-in-progress: false
+
+jobs:
+  qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Verify privacy and Search Console query unit tests
+        run: |
+          npm ci --no-audit --no-fund
+          npm run test:analytics
+          npm run test:gsc
+
+      - name: Verify compile and all original product assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -z "${VITE_GA4_MEASUREMENT_ID:-}"
+          npm run build
+          node scripts/prepare-git-publish.mjs
+          test -f applications/motorcycle/index.html
+          test -f products/nova-hd40-1l/index.html
+          test -f assets/orbit-static-analytics-5e6fc890a4a200.js
+          if grep -Rl --include='*.js' -F 'G-TEST123456' assets/ | grep -q .; then
+            echo "::error::Test GA4 stream present in release candidate."
+            exit 1
+          fi
+
+      - name: Install local Chrome driver
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+
+      - name: Test real Chrome flows with simulated Google Search Console API
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-gsc-preview.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in {1..25}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/qa-browser.mjs
+          node scripts/tests/gsc-owner.browser.mjs
+
+      - name: Stage safe compiled HTML + JS on feature branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets applications products images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::Deleted file; abort."
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          test "$count" -le 100
+          if git diff --cached --quiet; then
+            echo "Existing static bundle already correct."
+            exit 0
+          fi
+          git commit -m "Stage tested read-only Web/Image Search Console owner dashboard"
+          git push origin HEAD:orbit-search-console-owner-reporting
+          echo "Staging branch updated; production main not changed."
+      - name: Keep short-lived browser QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-gsc-owner-qa
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
