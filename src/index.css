@@ -1914,3 +1914,24 @@ body { color: #17324d; background: #f8fbfe; }
 @media(max-width:1220px) { .orbit-analytics-setup { grid-template-columns: 1fr 1fr; } .orbit-analytics-setup>button { grid-column:1/-1; } .orbit-analytics-stats { grid-template-columns: repeat(3,minmax(0,1fr)); } }
 @media(max-width:780px) { .orbit-analytics-report-grid { grid-template-columns: minmax(0,1fr); } .orbit-analytics-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } .orbit-analytics-setup { grid-template-columns: minmax(0,1fr); } .orbit-analytics-setup>button { grid-column:auto; } }
 @media(max-width:420px) { .orbit-analytics-stats { grid-template-columns:minmax(0,1fr); } .orbit-analytics-head-status { border-radius:12px; } .orbit-analytics-actions>* { width:100%; } }
+
+
+/* Orbit Search Console reports: clear Web/Image distinction on the Owner dashboard */
+.orbit-analytics-search-switch { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0 0 .8rem; }
+.orbit-analytics-search-switch button {
+  display: inline-flex; align-items: center; gap: .55rem;
+  border: 1px solid #476985; background: #112e49; color: #d7e9f6;
+  padding: .7rem 1rem; border-radius: 10px; font-weight: 750; cursor: pointer;
+}
+.orbit-analytics-search-switch button.selected {
+  color: #09243b; background: #ffbb65; border-color: #ffbb65;
+}
+.orbit-analytics-search-switch button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.orbit-search-stats { grid-template-columns: repeat(4,minmax(0,1fr)); }
+.orbit-search-stats .orbit-analytics-stat strong { font-size: clamp(1.2rem,2vw,2rem); }
+.orbit-analytics-table-wrap th:nth-child(1),.orbit-analytics-table-wrap td:nth-child(1) {
+  text-align: left;
+}
+@media(max-width:1100px) { .orbit-search-stats { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:540px) { .orbit-search-stats { grid-template-columns: 1fr 1fr; } }
+@media(max-width:390px) { .orbit-search-stats { grid-template-columns: 1fr; } }
