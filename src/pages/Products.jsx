@@ -11,6 +11,19 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
   const [selectedCategory, setSelectedCategory] = useState(() => sessionStorage.getItem('orbit_catalog_category') || 'all');
   const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem('orbit_catalog_search') || '');
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [sortOrder, setSortOrder] = useState('catalog');
+  const [comparisonIds, setComparisonIds] = useState([]);
+
+  const toggleComparison = (item) => {
+    setComparisonIds((current) => (
+      current.includes(item.id)
+        ? current.filter((id) => id !== item.id)
+        : current.length < 3 ? [...current, item.id] : current
+    ));
+  };
+  const comparedProducts = comparisonIds.map((id) => products.find((p) => p.id === id)).filter(Boolean);
+  const displayName = (categoryId) => categories.find((cat) => cat.id === categoryId)?.name || categoryId;
+
 
   useEffect(() => {
     sessionStorage.removeItem('orbit_catalog_search');
@@ -28,6 +41,15 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
     const matchesSearch = !normalizedQuery || searchable.includes(normalizedQuery);
 
     return matchesCategory && matchesSearch;
+  });
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortOrder === 'name') return a.name.localeCompare(b.name, undefined, { numeric: true });
+    if (sortOrder === 'grade') return (a.viscosity || '').localeCompare(b.viscosity || '', undefined, { numeric: true })
+      || a.name.localeCompare(b.name);
+    if (sortOrder === 'pack') return (a.packing || '').localeCompare(b.packing || '', undefined, { numeric: true })
+      || a.name.localeCompare(b.name);
+    return 0;
   });
 
   const handleInquireFromModal = (prod) => {
@@ -72,7 +94,8 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
                 style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--steel)' }} 
               />
               <input
-                type="text"
+                type="search"
+                aria-label="Search Orbit products by name, grade or pack size"
                 className="form-control"
                 placeholder="Search by product, viscosity or label-stated classification..."
                 value={searchQuery}
@@ -107,18 +130,36 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
                 </button>
               ))}
             </div>
-            <p className="catalog-results-count" aria-live="polite">Showing {filteredProducts.length} of {products.length} products</p>
+            <div className="orbit-catalog-sort-row">
+              <p className="catalog-results-count" aria-live="polite">Showing {filteredProducts.length} of {products.length} products</p>
+              <label htmlFor="orbit-product-sort">Sort by
+                <select
+                  id="orbit-product-sort"
+                  className="form-control"
+                  value={sortOrder}
+                  onChange={(event) => setSortOrder(event.target.value)}
+                >
+                  <option value="catalog">Catalog order</option>
+                  <option value="name">Product name A–Z</option>
+                  <option value="grade">Viscosity / grade</option>
+                  <option value="pack">Pack label</option>
+                </select>
+              </label>
+            </div>
           </div>
 
           {/* Product Grid */}
-          {filteredProducts.length > 0 ? (
+          {sortedProducts.length > 0 ? (
             <div className="catalog-grid">
-              {filteredProducts.map(product => (
+              {sortedProducts.map(product => (
                 <ProductCard
                   key={product.id}
                   product={product}
                   onSelect={(p) => setSelectedProduct(p)}
                   onInquire={handleInquireFromModal}
+                  onToggleCompare={toggleComparison}
+                  isCompared={comparisonIds.includes(product.id)}
+                  disableCompare={comparisonIds.length >= 3}
                 />
               ))}
             </div>
@@ -141,6 +182,43 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
           )}
         </div>
       </section>
+
+      {comparedProducts.length > 0 && (
+        <section className="orbit-compare-region" aria-labelledby="orbit-compare-title">
+          <div className="container">
+            <div className="orbit-compare-heading">
+              <div>
+                <h2 id="orbit-compare-title">Compare label information</h2>
+                <p>Comparing {comparedProducts.length} of up to 3 products. These values reflect published pack information, not an OEM compatibility approval.</p>
+              </div>
+              <button type="button" className="btn btn-outline btn-sm" onClick={() => setComparisonIds([])}>Clear comparison</button>
+            </div>
+            <div className="orbit-compare-scroll">
+              <table className="orbit-compare-table">
+                <caption>Orbit product pack information comparison</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Specification</th>
+                    {comparedProducts.map((item) => (
+                      <th scope="col" key={item.id}>
+                        <a href={`/products/${item.id}/`}>{item.name}</a>
+                        <button type="button" onClick={() => toggleComparison(item)} aria-label={`Remove ${item.name} from comparison`}><X size={16} /></button>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Application</th>{comparedProducts.map((item) => <td key={item.id}>{displayName(item.category)}</td>)}</tr>
+                  <tr><th scope="row">Viscosity / fluid grade</th>{comparedProducts.map((item) => <td key={item.id}>{item.viscosity || 'Not stated'}</td>)}</tr>
+                  <tr><th scope="row">Label classification</th>{comparedProducts.map((item) => <td key={item.id}>{item.apiGrade || 'Not stated'}</td>)}</tr>
+                  <tr><th scope="row">Pack format</th>{comparedProducts.map((item) => <td key={item.id}>{item.packing || 'Not stated'}</td>)}</tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="orbit-compare-note">For product suitability, follow the vehicle or equipment manufacturer’s manual. Never substitute a grade based on this table alone.</p>
+          </div>
+        </section>
+      )}
 
       {/* Product Detail Modal */}
       {selectedProduct && (
