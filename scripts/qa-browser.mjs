@@ -42,6 +42,13 @@ try {
   await desktop.goto(base + '/products/', { waitUntil: 'domcontentloaded' });
   await desktop.locator('.catalog-product-card').first().waitFor();
   assert.equal(await desktop.locator('.catalog-product-card').count(), 38, 'Catalog is not showing all 38 products');
+  const chipBounds = await desktop.evaluate(() => {
+    const container = document.querySelector('.catalog-filter-scroll');
+    const first = container?.querySelector('button');
+    return { left: container?.getBoundingClientRect().left, first: first?.getBoundingClientRect().left };
+  });
+  assert.ok(chipBounds.first >= chipBounds.left - 2,
+    'Desktop catalog filters clip the first chip at their natural scroll position');
   await desktop.locator('.catalog-compare').nth(0).click();
   await desktop.locator('.catalog-compare').nth(1).click();
   await desktop.locator('.orbit-compare-table').waitFor();
