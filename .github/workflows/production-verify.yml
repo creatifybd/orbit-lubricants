@@ -55,7 +55,11 @@ jobs:
           const landing=await fetchText('/products/nova-hd40-1l/');
           if(!landing.includes('Orbit Nova HD40') || !landing.includes('BreadcrumbList'))throw Error('Product landing page missing');
           const sitemap=await fetchText('/sitemap.xml');
-          if((sitemap.match(/<loc>/g)||[]).length!==43)throw Error('Sitemap does not expose 43 URLs');
+          if((sitemap.match(/<loc>/g)||[]).length!==52)throw Error('Sitemap does not expose 52 URLs');
+          if((sitemap.match(/<image:loc>/g)||[]).length!==76)throw Error('Image sitemap does not expose original 76 pack image references');
+          if(!sitemap.includes('https://orbit-lubricants.com/products/nova-hd40-1l.webp'))throw Error('Original Nova pack image missing from image sitemap');
+          const application=await fetchText('/applications/motorcycle/');
+          if(!application.includes('Motorcycle Oils') || !application.includes('CollectionPage'))throw Error('Motorcycle application hub not served');
           const robots=await fetchText('/robots.txt');
           if(!robots.includes('Sitemap: https://orbit-lubricants.com/sitemap.xml'))throw Error('Robots sitemap missing');
           await fetchText('/products/nova-hd40-1l.webp');
