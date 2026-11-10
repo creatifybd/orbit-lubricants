@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function orbitAdmin() {
+      return request.auth != null && request.auth.token.orbitAdmin == true;
+    }
+
+    // Public marketing content only. Never put passwords, customer PII,
+    // admin-only options or unapproved product claims in this document.
+    match /publicSite/{documentId} {
+      allow get: if documentId == 'content' || orbitAdmin();
+      allow list: if false;
+      allow create, update, delete: if orbitAdmin();
+    }
+
+    // A visitor may read a published product. All publishing, edits and
+    // deletions must be performed by an authenticated approved editor.
+    match /products/{productId} {
+      allow get, list: if orbitAdmin() || resource.data.published == true;
+      allow create, update, delete: if orbitAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow get, list: if orbitAdmin() || resource.data.published == true;
+      allow create, update, delete: if orbitAdmin();
+    }
+
+    // Enquiries are private. Visitors submit through an authenticated/verified
+    // server-side endpoint with App Check, rate limits and validation.
+    // The server SDK bypasses these rules and must have narrow IAM privileges.
+    match /inquiries/{inquiryId} {
+      allow get, list: if orbitAdmin();
+      allow create, update, delete: if false;
+    }
+
+    match /settings/{documentId} {
+      allow get: if documentId == 'public' || orbitAdmin();
+      allow list: if false;
+      allow create, update, delete: if orbitAdmin();
+    }
+
+    // Everything else is blocked unless explicitly reviewed and added.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
