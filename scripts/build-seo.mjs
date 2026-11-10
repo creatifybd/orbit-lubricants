@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { initialData } from '../src/data/initialData.js';
 import { buildCategoryPages } from './build-category-pages.mjs';
+import { buildImageGallery } from './build-image-gallery.mjs';
 
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const origin = 'https://orbit-lubricants.com';
@@ -140,7 +141,7 @@ footer{background:#09263e;color:#deebf4;padding:32px 0}footer a{color:white}
 </style>
 </head>
 <body>
-<header><nav class="container" aria-label="Primary"><a href="/"><img src="/logo.png" alt="Orbit Lubricants"></a><a href="/products/">Products</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav></header>
+<header><nav class="container" aria-label="Primary"><a href="/"><img src="/logo.png" alt="Orbit Lubricants"></a><a href="/products/">Products</a><a href="/product-gallery/">Original Pack Gallery</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav></header>
 <main class="container">
 <div class="crumbs"><a href="/">Home</a> / <a href="/products/">Products</a> / <a href="/applications/${esc(p.category)}/">${esc(category)}</a> / ${esc(p.name)} — ${esc(p.packing)}</div>
 <article class="layout"><div class="visual"><img src="${esc(p.image)}" width="600" height="600" alt="${esc(descriptiveAlt)}" loading="eager" fetchpriority="high"></div>
@@ -193,10 +194,12 @@ for (const p of catalog) {
   writeFileSync(join(dir, 'index.html'), renderProductPage(p));
 }
 const applicationPages = buildCategoryPages({ dist, categories: initialData.categories, products: catalog, staticAnalyticsSrc });
-const paths = ['/', '/products/', '/about/', '/contact/', '/finder/',
+const gallery = buildImageGallery({ dist, categories: initialData.categories, products: catalog });
+const paths = ['/', '/products/', '/about/', '/contact/', '/finder/', '/product-gallery/',
   ...applicationPages.map((page) => page.path),
   ...catalog.map((p) => `/products/${p.id}/`)];
 const imageMap = new Map();
+imageMap.set('/product-gallery/', gallery.images);
 for (const p of catalog) imageMap.set(`/products/${p.id}/`, [p.image]);
 for (const page of applicationPages) imageMap.set(page.path, page.images);
 const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -210,7 +213,7 @@ const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
   + '\n</urlset>\n';
 writeFileSync(join(dist, 'sitemap.xml'), sitemap);
 writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: ${origin}/sitemap.xml\n`);
-writeFileSync(join(dist, 'seo-manifest.json'), JSON.stringify({ products: catalog.length, applications: applicationPages.length, routes: paths.length, imageReferences: catalog.length * 2 }, null, 2));
+writeFileSync(join(dist, 'seo-manifest.json'), JSON.stringify({ products: catalog.length, applications: applicationPages.length, gallery: gallery.count, routes: paths.length, imageReferences: catalog.length * 3 }, null, 2));
 const release = {
   commit: process.env.GITHUB_SHA || 'local-development',
   productCount: catalog.length,
@@ -218,4 +221,4 @@ const release = {
   builtAt: new Date().toISOString()
 };
 writeFileSync(join(dist, 'deployment.json'), JSON.stringify(release, null, 2) + '\n');
-console.log(`Generated ${catalog.length} product detail pages, ${applicationPages.length} category hubs and ${paths.length} image-enhanced sitemap URLs; static analytics client: ${staticAnalyticsFile}; visitor GA4 ${ga4Id ? 'configured' : 'disabled'}.`);
+console.log(`Generated ${catalog.length} product detail pages, ${applicationPages.length} category hubs, original pack gallery and ${paths.length} image-enhanced sitemap URLs; static analytics client: ${staticAnalyticsFile}; visitor GA4 ${ga4Id ? 'configured' : 'disabled'}.`);

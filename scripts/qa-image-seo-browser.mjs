@@ -37,11 +37,30 @@ try {
   assert.equal((await page.locator('link[rel="canonical"]').getAttribute('href')),
     'https://orbit-lubricants.com' + new URL(page.url()).pathname);
 
+
+  // The all-in-one gallery should be a genuinely useful image page with
+  // human-readable captions and links, not a crawler-only doorway collection.
+  await page.goto(base + '/product-gallery/', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('heading', { level: 1, name: /Orbit Lubricants Product Gallery/ }).waitFor();
+  const galleryImgs = page.locator('figure.card img');
+  assert.equal(await galleryImgs.count(), 38, 'Must show all 38 original product photos in one crawlable page');
+  assert.equal(await page.locator('section.group').count(), 9, 'Gallery must have all nine application groups');
+  assert.equal(await page.locator('figure.card a[href^="/products/"]').count(), 114,
+    'All 38 gallery photos, product titles and detail links should open the matching SKU page');
+  const gallerySrcs = await galleryImgs.evaluateAll(nodes => nodes.map(node => ({
+    src: node.getAttribute('src'), alt: node.getAttribute('alt')
+  })));
+  assert.equal(new Set(gallerySrcs.map(x => x.src)).size, 38, 'No repeated gallery image allowed');
+  assert.ok(gallerySrcs.every(x => x.src.startsWith('/products/') && x.alt.includes('original Orbit Lubricants product pack')),
+    'All original images require meaningful alt text');
+  assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),
+    'https://orbit-lubricants.com/product-gallery/');
+
   const sitemapResponse = await context.request.get(base + '/sitemap.xml');
   assert.equal(sitemapResponse.status(), 200);
   const xml = await sitemapResponse.text();
-  assert.equal((xml.match(/<loc>/g) || []).length, 52, 'Expected 52 category and product URL entries');
-  assert.equal((xml.match(/<image:loc>/g) || []).length, 76, 'Expected 76 original product image references');
+  assert.equal((xml.match(/<loc>/g) || []).length, 53, 'Expected 53 website and gallery URL entries');
+  assert.equal((xml.match(/<image:loc>/g) || []).length, 114, 'Expected 114 references to 38 original pack images');
   for (const slug of ['nova-hd40-1l','xpower-10w30-1l']) {
     if (!xml.includes('/products/' + slug + '.webp')) continue;
     const img = await context.request.head(base + '/products/' + slug + '.webp');
@@ -49,7 +68,7 @@ try {
   }
 
   assert.deepEqual(errors, [], 'Browser exceptions while navigating SEO category/product pages');
-  console.log('ORBIT IMAGE SEO BROWSER QA PASSED: live-style app links, static category/product, schema images, 52 sitemap pages, 76 image references.');
+  console.log('ORBIT IMAGE SEO BROWSER QA PASSED: live-style app links, static category/product, schema images, 53 sitemap pages, 114 image references.');
   await context.close();
 } finally {
   await browser.close();

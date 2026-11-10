@@ -9,7 +9,7 @@ const check = (condition, message) => {
   if (!condition) errors.push(message);
 };
 
-const files = ['index.html', '.htaccess', 'robots.txt', 'sitemap.xml', 'seo-manifest.json', 'deployment.json', 'products/index.html', 'about/index.html', 'contact/index.html', 'finder/index.html'];
+const files = ['index.html', '.htaccess', 'robots.txt', 'sitemap.xml', 'seo-manifest.json', 'deployment.json', 'products/index.html', 'about/index.html', 'contact/index.html', 'finder/index.html', 'product-gallery/index.html'];
 for (const name of files) {
   check(existsSync(join(dist, name)), 'Missing static build asset: ' + name);
 }
@@ -29,7 +29,7 @@ if (!errors.length) {
   check(Boolean(release.commit), 'Release identity missing commit');
   if (process.env.GITHUB_SHA) check(release.commit === process.env.GITHUB_SHA, 'Release marker commit differs from running workflow');
   const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-  const requiredPaths = ['/', '/products/', '/about/', '/contact/', '/finder/'];
+  const requiredPaths = ['/', '/products/', '/about/', '/contact/', '/finder/', '/product-gallery/'];
   const staticClients = new Set();
   const verifyStaticClient = (html, kind, id) => {
     const match = html.match(/<script defer src="(\/assets\/orbit-static-analytics-[a-f0-9]{14}\.js)"/);
@@ -43,11 +43,12 @@ if (!errors.length) {
 
   check(manifest.products === initialData.products.length, 'SEO manifest product count differs from catalog');
   check(manifest.applications === initialData.categories.length, 'SEO manifest application category count differs from source');
-  check(paths.length === 5 + initialData.categories.length + initialData.products.length, 'Expected all product and application URLs in sitemap');
+  check(manifest.gallery === initialData.products.length, 'SEO gallery pack count differs from original catalog');
+  check(paths.length === 6 + initialData.categories.length + initialData.products.length, 'Expected all product and application URLs in sitemap');
   check(manifest.routes === paths.length, 'Sitemap route count differs from SEO manifest');
   check(sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'), 'Google image sitemap namespace is missing');
   const imageLocations = [...sitemap.matchAll(new RegExp('<image:loc>([^<]+)</image:loc>', 'g'))].map((match) => match[1]);
-  check(imageLocations.length === initialData.products.length * 2, 'Image sitemap is missing product/catalog original images');
+  check(imageLocations.length === initialData.products.length * 3, 'Image sitemap is missing product/catalog original images');
   check(manifest.imageReferences === imageLocations.length, 'SEO manifest image total is incorrect');
   for (const category of initialData.categories) {
     const categoryUrl = 'https://orbit-lubricants.com/applications/' + category.id + '/';
@@ -66,6 +67,26 @@ if (!errors.length) {
     }
   }
   check(new Set(paths).size === paths.length, 'Duplicate sitemap URLs detected');
+  const galleryPath = join(dist, 'product-gallery', 'index.html');
+  check(existsSync(galleryPath), 'Original pack gallery file missing');
+  if (existsSync(galleryPath)) {
+    const gallery = readFileSync(galleryPath, 'utf8');
+    check(gallery.includes('<link rel="canonical" href="https://orbit-lubricants.com/product-gallery/">'), 'Gallery canonical missing');
+    check(gallery.includes('"@type":"CollectionPage"'), 'Gallery is missing CollectionPage metadata');
+    check(gallery.includes('"@type":"BreadcrumbList"'), 'Gallery breadcrumb metadata missing');
+    check((gallery.match(/<figure class="card">/g) || []).length === initialData.products.length,
+      'Gallery does not display every original pack');
+    for (const product of initialData.products) {
+      check(gallery.includes('<img src="' + product.image + '"') ||
+        gallery.includes('<img src="' + product.image + '"'), 'Missing gallery original image: ' + product.id);
+      check(gallery.includes('/products/' + product.id + '/'), 'Missing gallery product detail link: ' + product.id);
+    }
+    for (const category of initialData.categories) {
+      check(gallery.includes('id="' + category.id + '"'), 'Missing image gallery application group: ' + category.id);
+    }
+    check(!gallery.includes('"@type":"Product"'), 'Gallery must not invent Product rich results without true prices/reviews');
+  }
+
 
   for (const route of requiredPaths) {
     check(paths.includes('https://orbit-lubricants.com' + route), 'Missing sitemap route: ' + route);
@@ -79,8 +100,8 @@ if (!errors.length) {
 
     check(paths.includes(url), 'Product missing from sitemap: ' + item.id);
     const expectedImageUrl = 'https://orbit-lubricants.com' + item.image;
-    check(imageLocations.filter((itemUrl) => itemUrl === expectedImageUrl).length === 2,
-      'Missing or duplicate product image references: ' + item.id);
+    check(imageLocations.filter((itemUrl) => itemUrl === expectedImageUrl).length === 3,
+      'Missing original product image references across SKU, category and gallery: ' + item.id);
     check(existsSync(productHtmlPath), 'Missing product landing page: ' + item.id);
     check(existsSync(imagePath), 'Missing original product asset: ' + item.image);
 

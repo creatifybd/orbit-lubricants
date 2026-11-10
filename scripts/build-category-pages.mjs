@@ -102,7 +102,7 @@ export function buildCategoryPages({ dist, categories, products, staticAnalytics
       '.product-text{padding:20px;flex:1;display:flex;flex-direction:column}.product h2{font-size:1.16rem;line-height:1.35;margin:0 0 10px}.product p{color:#485e70;line-height:1.6;margin:0 0 12px}' +
       'dl{margin:0 0 14px}dl>div{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid #eaf0f4}dt{font-weight:700;flex:1}dd{margin:0;flex:1}.detail{margin-top:auto;font-weight:700}' +
       'footer{background:#09263e;color:white;line-height:1.7}footer a{color:#fff}@media(max-width:570px){.catalog{grid-template-columns:1fr}}</style></head><body>' +
-      '<header><nav class="wrap nav" aria-label="Primary"><a href="/"><img src="/logo.png" alt="Orbit Lubricants"></a><a href="/products/">All products</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav></header>' +
+      '<header><nav class="wrap nav" aria-label="Primary"><a href="/"><img src="/logo.png" alt="Orbit Lubricants"></a><a href="/products/">All products</a><a href="/product-gallery/">Original Pack Gallery</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav></header>' +
       '<main class="wrap"><div class="crumb"><a href="/">Home</a> / <a href="/products/">Products</a> / ' + escapeHtml(category.name) + '</div>' +
       '<h1>' + escapeHtml(category.name) + ' — Orbit Lubricants Bangladesh</h1><p class="intro">' + escapeHtml(intro) + '</p>' +
       '<p class="hint">Showing ' + group.length + ' available pack formats from the Orbit catalog. Specifications are as stated in the available product records, not independent performance certifications. Follow your equipment manufacturer’s requirements.</p>' +
