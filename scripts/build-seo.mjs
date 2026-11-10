@@ -15,6 +15,7 @@ const productUrl = (p) => `${origin}/products/${p.id}/`;
 const imageUrl = (p) => new URL(p.image.startsWith('/') ? p.image.slice(1) : p.image, origin + '/').href;
 const jsonLd = (data) => JSON.stringify(data).replace(/</g, '\\u003c');
 const unique = new Set();
+const uniqueTitles = new Set();
 
 if (catalog.length === 0) throw new Error('Refusing to publish an empty Orbit catalog');
 
@@ -25,12 +26,20 @@ function renderProductPage(p) {
   unique.add(p.id);
   const description = p.description || `Explore ${p.name} from Orbit Lubricants.`;
   const category = categoryNames.get(p.category) || p.category || 'Lubricants';
+  // Pack size is a meaningful distinction between otherwise identical variants.
+  // This avoids duplicate titles and descriptions without inventing product claims.
+  const title = `${p.name} — ${p.packing} | Orbit Lubricants`;
+  if (uniqueTitles.has(title)) throw new Error('Duplicate product SEO title: ' + title);
+  uniqueTitles.add(title);
+  const seoDescription = `${description} Pack format: ${p.packing}. View product-label information and details.`;
   const specifications = Object.entries(p.specs || {}).filter(([, value]) => value !== undefined && value !== null && String(value).trim());
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: p.name,
-    description,
+    name: `${p.name} — ${p.packing}`,
+    sku: p.id,
+    size: p.packing,
+    description: seoDescription,
     image: [imageUrl(p)],
     url: productUrl(p),
     brand: { '@type': 'Brand', name: brand },
@@ -49,18 +58,18 @@ function renderProductPage(p) {
     ],
   };
   const rows = specifications.map(([key, value]) => `<tr><th scope="row">${esc(key)}</th><td>${esc(value)}</td></tr>`).join('');
-  const title = `${p.name} | ${esc(category)} | Orbit Lubricants Bangladesh`;
+
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
-<meta name="description" content="${esc(description).slice(0, 250)}">
+<meta name="description" content="${esc(seoDescription).slice(0, 250)}">
 <link rel="canonical" href="${esc(productUrl(p))}">
 <meta property="og:type" content="product">
 <meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(description).slice(0, 250)}">
+<meta property="og:description" content="${esc(seoDescription).slice(0, 250)}">
 <meta property="og:url" content="${esc(productUrl(p))}">
 <meta property="og:image" content="${esc(imageUrl(p))}">
 <meta name="twitter:card" content="summary_large_image">
