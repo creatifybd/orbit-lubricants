@@ -167,6 +167,7 @@ export const Products = ({ setActivePage, setSelectedProductForInquiry }) => {
                   prioritizeImage={index === 0}
                   onSelect={(p) => {
                     setSelectedProduct(p);
+                    trackOrbitEvent('select_item', { item_id: p.id, item_category: p.category });
                     trackOrbitEvent('view_item', { item_id: p.id, item_category: p.category });
                   }}
                   onInquire={handleInquireFromModal}
