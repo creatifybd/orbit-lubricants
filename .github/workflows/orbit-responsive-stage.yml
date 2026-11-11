@@ -1,0 +1,93 @@
+name: Orbit mobile responsiveness + remove product marquee - bounded QA
+
+# One-off build audit. No recurring automation and no FTP deployment.
+on:
+  push:
+    branches: [orbit-mobile-responsive-remove-marquee-20261111]
+    paths: [.github/workflows/orbit-responsive-stage.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: orbit-mobile-no-marquee-one-off
+  cancel-in-progress: false
+
+jobs:
+  audit-stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Build with no unapproved GA4 visitor tracking and run all security tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          test -z "${VITE_GA4_MEASUREMENT_ID:-}"
+          npm run test:analytics
+          npm run test:gsc
+          npm run build
+          node scripts/prepare-git-publish.mjs
+          test -f products/nova-hd40-1l/index.html
+          test -f product-gallery/index.html
+          test -f deployment.json
+          if grep -Rl --include='*.js' -F 'G-TEST123456' assets/ | grep -q .; then
+            echo "::error::Fake analytics test stream was staged"
+            exit 1
+          fi
+      - name: Install Chrome test driver (temporary; not committed)
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Test 13 sizes and nine routes plus existing desktop/mobile regression suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/orbit-mobile-preview.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            if curl -fsS -o /dev/null http://127.0.0.1:4173/; then break; fi
+            sleep 1
+          done
+          node scripts/qa-browser.mjs
+          node scripts/qa-image-seo-browser.mjs
+          node scripts/tests/responsive-all-devices.browser.mjs
+      - name: Stage only reviewed built website files; never touch original art
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .htaccess index.html assets applications products product-gallery images about contact finder robots.txt sitemap.xml deployment.json seo-manifest.json
+          if git diff --cached --name-only --diff-filter=D | grep -q .; then
+            echo "::error::Release deletes existing website files"
+            exit 1
+          fi
+          count="$(git diff --cached --name-only | wc -l)"
+          echo "Compiled static updates staged: $count"
+          if [ "$count" -gt 90 ]; then
+            echo "::error::Unexpectedly many compiled changes"
+            exit 1
+          fi
+          if git diff --cached --quiet; then
+            echo "Build files already match reviewed branch"
+            exit 0
+          fi
+          git commit -m "Stage verified responsive Orbit homepage without product marquee"
+          git push origin HEAD:orbit-mobile-responsive-remove-marquee-20261111
+          echo "Staging only; production main is unchanged"
+      - name: Preserve multi-device screenshots and measured overflow report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-mobile-responsive-audit
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
