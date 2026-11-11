@@ -258,7 +258,7 @@ Audit details: `docs/GOOGLE_IMAGES_ALL_38_AUDIT_20261110.md`.
 - [x] Run production build, privacy/Google reporting unit checks and existing catalog/image SEO Chrome regressions.
 - [x] **15 representative viewports × nine routes = 136 recorded Chrome responsive checks**; zero document horizontal overflows and no browser JS errors. Tested 320–1920px wide plus 812×375 landscape. Stage QA: https://github.com/creatifybd/orbit-lubricants/actions/runs/42989392582.
 - [x] Review staged diff; zero deletions, zero original branded image changes.
-- [ ] Merge after final review and verify actual Hostinger deployment fingerprint & live homepage compiled JS (not merely a green build).
+- [x] **Live deployed and verified:** PR #11 merged to main; Hostinger production verification confirmed exact release marker, current compiled JS, product detail page, original images, 53 sitemap URLs/114 image references and protected source: https://github.com/creatifybd/orbit-lubricants/actions/runs/42989928750. Inspected published bundle `assets/index.source-B5spJvsi.js`: old marquee heading/class absent, Featured Products retained and corrected navigation breakpoint included.
 - [ ] Physical iOS Safari / Android Chrome testing remains separate; automated viewport QA is not proof that every device combination is pixel-perfect.
 
 See `docs/RESPONSIVE_QA_MARQUEE_REMOVAL_20261111.md`.
