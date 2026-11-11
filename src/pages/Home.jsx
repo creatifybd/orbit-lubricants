@@ -3,7 +3,6 @@ import { ArrowLeft, ArrowRight, Check, ChevronRight, Gauge, Headphones, PackageC
 import { useCms } from '../context/CmsContext';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
-import { ProductMarquee } from '../components/ProductMarquee';
 import { trackOrbitEvent } from '../lib/analytics';
 import heroAutomotive from '../assets/hero/automotive.webp';
 import heroHeavyDuty from '../assets/hero/heavy-duty.webp';
