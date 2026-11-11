@@ -96,8 +96,6 @@ export const Home = ({ setActivePage, setSelectedProductForInquiry }) => {
         </div>
       </section>
 
-      <ProductMarquee products={products} />
-
       <section data-orbit-section="corporate" className="section corporate-showcase-section">
         <div className="container">
           <div className="mjl-showcase-grid">
