@@ -250,3 +250,15 @@ Audit details: `docs/GOOGLE_IMAGES_ALL_38_AUDIT_20261110.md`.
 - [ ] Recheck official Search Console Performance and Page indexing after processing completes. Then inspect **Search type → Image**, Pages and Queries; record only actual clicks/impressions/indexing.
 - [ ] Editorial review + production build of a substantial *single* grade selection guide; do not publish shallow keyword doorway pages, false grade compatibility, invented lab data, certification or ratings.
 - [ ] Configure owner OAuth Web Client ID and verified GSC property to retrieve Search Performance in live Orbit Admin; real account connection still unverified.
+
+## Responsive QA and homepage marquee removal — 2026-11-11
+
+- [x] Remove Homepage two-row **Product Marquee** component and its animation styling as explicitly requested. Keep the Featured Products, Product Catalog, 38 original images, Image Gallery and existing SEO/analytics sections.
+- [x] Detect and fix a real navigation overflow bug: desktop `Get a Quote` button extended 21px beyond a **1120px** viewport. Set accessible mobile/tablet menu breakpoint to **1240px** and test immediately below/at threshold.
+- [x] Run production build, privacy/Google reporting unit checks and existing catalog/image SEO Chrome regressions.
+- [x] **15 representative viewports × nine routes = 136 recorded Chrome responsive checks**; zero document horizontal overflows and no browser JS errors. Tested 320–1920px wide plus 812×375 landscape. Stage QA: https://github.com/creatifybd/orbit-lubricants/actions/runs/42989392582.
+- [x] Review staged diff; zero deletions, zero original branded image changes.
+- [ ] Merge after final review and verify actual Hostinger deployment fingerprint & live homepage compiled JS (not merely a green build).
+- [ ] Physical iOS Safari / Android Chrome testing remains separate; automated viewport QA is not proof that every device combination is pixel-perfect.
+
+See `docs/RESPONSIVE_QA_MARQUEE_REMOVAL_20261111.md`.

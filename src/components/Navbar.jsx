@@ -13,7 +13,9 @@ export const Navbar = ({ activePage, setActivePage }) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth < 1120;
+      // Full desktop links and quote CTA exceed the viewport near 1120px.
+      // Use the accessible drawer on narrower laptop/tablet layouts instead.
+      const mobile = window.innerWidth < 1240;
       setIsMobile(mobile);
       if (!mobile) setMobileOpen(false);
     };

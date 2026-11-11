@@ -33,7 +33,8 @@ try {
 
   await desktop.goto(base + '/', { waitUntil: 'domcontentloaded' });
   await desktop.locator('.premium-hero').waitFor();
-  assert.ok(await desktop.locator('.orbit-marquee-product').count() >= 38, 'The two-row product marquee is missing');
+  assert.equal(await desktop.locator('.orbit-product-marquee, .orbit-marquee-product').count(), 0,
+    'Requested product marquee must be completely absent from the homepage');
   assert.ok(await desktop.getByRole('link', { name: 'Products & Technology' }).count(), 'No crawlable desktop Products link');
   await settleScreenshot(desktop);
   await desktop.screenshot({ path: shots + '/desktop-home.png', fullPage: true });
