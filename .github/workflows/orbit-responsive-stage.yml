@@ -1,4 +1,4 @@
-name: Orbit mobile responsiveness + remove product marquee - bounded QA
+name: Orbit responsive 15-viewport QA (1240px nav fix) and marquee removal
 
 # One-off build audit. No recurring automation and no FTP deployment.
 on:
@@ -45,7 +45,7 @@ jobs:
           fi
       - name: Install Chrome test driver (temporary; not committed)
         run: npm install --no-save --package-lock=false playwright@1.56.1
-      - name: Test 13 sizes and nine routes plus existing desktop/mobile regression suite
+      - name: Test 15 sizes and nine routes plus existing desktop/mobile regression suite
         shell: bash
         run: |
           set -euo pipefail
