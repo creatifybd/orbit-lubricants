@@ -13,7 +13,9 @@ const sizes = [
   { label: 'tablet-portrait', width: 768, height: 1024 },
   { label: 'tablet-landscape', width: 1024, height: 768 },
   { label: 'phone-landscape', width: 812, height: 375 },
-  { label: 'laptop-nav-breakpoint', width: 1120, height: 800 },
+  { label: 'tablet-wide-1120', width: 1120, height: 800 },
+  { label: 'tablet-wide-1239', width: 1239, height: 800 },
+  { label: 'desktop-nav-boundary-1240', width: 1240, height: 800 },
   { label: 'laptop-1280', width: 1280, height: 800 },
   { label: 'desktop-1440', width: 1440, height: 900 },
   { label: 'wide-desktop', width: 1920, height: 1080 }
@@ -126,7 +128,7 @@ try {
     // Verify real navigation drawer at mobile widths and visible desktop navigation at desktop widths.
     try{
       await page.goto(base+'/',{waitUntil:'domcontentloaded'});
-      if(size.width<1120){
+      if(size.width<1240){
         const toggle=page.getByRole('button',{name:'Toggle menu'});
         await toggle.waitFor();
         await toggle.click();
@@ -171,7 +173,7 @@ try {
     failures
   },null,2));
   assert.deepEqual(failures,[],'Responsive QA found regressions. Read viewport-report.json and failing messages');
-  console.log('ORBIT RESPONSIVE QA PASSED: 13 sizes, 9 routes, mobile drawer, 38 cards, responsive comparison, zero document overflow and no marquee.');
+  console.log('ORBIT RESPONSIVE QA PASSED: 15 sizes, 9 routes, mobile drawer, 38 cards, responsive comparison, zero document overflow and no marquee.');
   await context.close();
 }finally{
   await browser.close();
